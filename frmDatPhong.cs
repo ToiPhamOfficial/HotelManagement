@@ -9,6 +9,8 @@ namespace HotelManagement
 {
     public partial class frmDatPhong : Form
     {
+        DataContext db = new DataContext();
+
         public frmDatPhong()
         {
             InitializeComponent();
@@ -30,32 +32,29 @@ namespace HotelManagement
             var ngayNhan = dtpNgayNhan.Value;
             var ngayTra = dtpNgayTra.Value;
 
-            using (var db = new DataContext())
-            {
-                var occupiedPhongIds = db.DatPhongs
-                    .Where(dp => dp.TrangThai != "Đã trả" && dp.TrangThai != "Hủy")
-                    .Where(dp => !(ngayTra <= dp.NgayNhanPhong || ngayNhan >= dp.NgayTraPhong))
-                    .Select(dp => dp.MaPhong)
-                    .ToList();
+            var occupiedPhongIds = db.DatPhongs
+                .Where(dp => dp.TrangThai != "Đã trả" && dp.TrangThai != "Hủy")
+                .Where(dp => !(ngayTra <= dp.NgayNhanPhong || ngayNhan >= dp.NgayTraPhong))
+                .Select(dp => dp.MaPhong)
+                .ToList();
 
-                var danhSachPhong = (from p in db.Phongs
-                              join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
-                              where p.TrangThai == "Trống" && !occupiedPhongIds.Contains(p.MaPhong)
-                              orderby p.Tang, p.SoPhong
-                              select new
-                              {
-                                  p.MaPhong,
-                                  p.SoPhong,
-                                  p.Tang,
-                                  lp.TenLoai,
-                                  lp.GiaMoiDem,
-                                  lp.GiaMoiGio
-                              }).ToList();
+            var danhSachPhong = (from p in db.Phongs
+                            join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
+                            where p.TrangThai == "Trống" && !occupiedPhongIds.Contains(p.MaPhong)
+                            orderby p.Tang, p.SoPhong
+                            select new
+                            {
+                                p.MaPhong,
+                                p.SoPhong,
+                                p.Tang,
+                                lp.TenLoai,
+                                lp.GiaMoiDem,
+                                lp.GiaMoiGio
+                            }).ToList();
 
-                dgvPhongTrong.DataSource = danhSachPhong;
-                int soNgay = (int)(ngayTra - ngayNhan).TotalDays;
-                lblSoNgay.Text = $"Số đêm: {soNgay} | Số phòng trống: {danhSachPhong.Count}";
-            }
+            dgvPhongTrong.DataSource = danhSachPhong;
+            int soNgay = (int)(ngayTra - ngayNhan).TotalDays;
+            lblSoNgay.Text = $"Số đêm: {soNgay} | Số phòng trống: {danhSachPhong.Count}";
         }
 
         private void BtnTimKH_Click(object sender, EventArgs e)
@@ -67,21 +66,18 @@ namespace HotelManagement
                 return;
             }
 
-            using (var db = new DataContext())
+            var kh = db.KhachHangs.FirstOrDefault(k => k.TrangThai && (k.CCCD == keyword || k.SoDienThoai == keyword));
+
+            if (kh == null)
             {
-                var kh = db.KhachHangs.FirstOrDefault(k => k.TrangThai && (k.CCCD == keyword || k.SoDienThoai == keyword));
-
-                if (kh == null)
-                {
-                    MessageBox.Show("Không tìm thấy khách hàng!", "Thông báo");
-                    return;
-                }
-
-                txtMaKH.Text = kh.MaKhachHang.ToString();
-                txtTenKH.Text = kh.HoTen;
-                txtCCCD.Text = kh.CCCD;
-                txtSDT.Text = kh.SoDienThoai;
+                MessageBox.Show("Không tìm thấy khách hàng!", "Thông báo");
+                return;
             }
+
+            txtMaKH.Text = kh.MaKhachHang.ToString();
+            txtTenKH.Text = kh.HoTen;
+            txtCCCD.Text = kh.CCCD;
+            txtSDT.Text = kh.SoDienThoai;
         }
 
         private void TinhTien()
@@ -171,12 +167,10 @@ namespace HotelManagement
 
         private void btnThemKH_Click(object sender, EventArgs e)
         {
-            using (var f = new frmKhachHang(true))
-            {
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                }
-            }
+            // Mở form quản lý khách hàng để thêm mới rồi quay lại tìm
+            frmKhachHang f = new frmKhachHang();
+            f.ShowDialog();
+            f.Dispose();
         }
 
         private bool DatPhong(DatPhong dp)
@@ -204,24 +198,21 @@ namespace HotelManagement
 
             try
             {
-                using (var db = new DataContext())
+                bool isConflict = db.DatPhongs.Any(d =>
+                    d.MaPhong == dp.MaPhong &&
+                    d.TrangThai != "Đã trả" && d.TrangThai != "Hủy" &&
+                    !(dp.NgayTraPhong <= d.NgayNhanPhong || dp.NgayNhanPhong >= d.NgayTraPhong));
+
+                if (isConflict)
                 {
-                    bool isConflict = db.DatPhongs.Any(d =>
-                        d.MaPhong == dp.MaPhong &&
-                        d.TrangThai != "Đã trả" && d.TrangThai != "Hủy" &&
-                        !(dp.NgayTraPhong <= d.NgayNhanPhong || dp.NgayNhanPhong >= d.NgayTraPhong));
-
-                    if (isConflict)
-                    {
-                        MessageBox.Show("Phòng đã được đặt trong khoảng thời gian này!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-
-                    db.DatPhongs.Add(dp);
-                    db.SaveChanges();
-                    MessageBox.Show("Đặt phòng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
+                    MessageBox.Show("Phòng đã được đặt trong khoảng thời gian này!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
+
+                db.DatPhongs.Add(dp);
+                db.SaveChanges();
+                MessageBox.Show("Đặt phòng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
             catch (Exception ex)
             {

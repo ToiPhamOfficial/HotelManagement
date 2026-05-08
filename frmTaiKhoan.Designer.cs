@@ -23,6 +23,8 @@ namespace HotelManagement
         private Button btnThem;
         private Button btnCapNhat;
         private Button btnXoa;
+        private Button btnLuu;
+        private Button btnHuy;
         private Button btnLamMoi;
 
         private Panel pnlRight;
@@ -55,6 +57,8 @@ namespace HotelManagement
             this.btnThem = new Button();
             this.btnCapNhat = new Button();
             this.btnXoa = new Button();
+            this.btnLuu = new Button();
+            this.btnHuy = new Button();
             this.btnLamMoi = new Button();
             this.pnlRight = new Panel();
             this.txtTimKiem = new TextBox();
@@ -82,6 +86,8 @@ namespace HotelManagement
             this.pnlLeft.Controls.Add(this.btnThem);
             this.pnlLeft.Controls.Add(this.btnCapNhat);
             this.pnlLeft.Controls.Add(this.btnXoa);
+            this.pnlLeft.Controls.Add(this.btnLuu);
+            this.pnlLeft.Controls.Add(this.btnHuy);
             this.pnlLeft.Controls.Add(this.btnLamMoi);
             this.pnlLeft.Dock = DockStyle.Left;
             this.pnlLeft.Location = new Point(0, 0);
@@ -197,14 +203,11 @@ namespace HotelManagement
             this.btnThem.Location = new Point(13, 300);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new Size(120, 33);
-            this.btnThem.Text = "➕ Thêm";
+            this.btnThem.Text = "Thêm";
             this.btnThem.AutoSize = true;
             this.btnThem.UseVisualStyleBackColor = false;
-            //this.btnThem.Click += new EventHandler(this.btnThem_Click);
+            this.btnThem.Click += new EventHandler(this.btnThem_Click);
 
-            // 
-            // btnCapNhat
-            // 
             this.btnCapNhat.BackColor = Color.FromArgb(52, 152, 219);
             this.btnCapNhat.Cursor = Cursors.Hand;
             this.btnCapNhat.FlatStyle = FlatStyle.Flat;
@@ -212,14 +215,11 @@ namespace HotelManagement
             this.btnCapNhat.Location = new Point(143, 300);
             this.btnCapNhat.Name = "btnCapNhat";
             this.btnCapNhat.Size = new Size(120, 33);
-            this.btnCapNhat.Text = "✏️ Cập Nhật";
+            this.btnCapNhat.Text = "Sửa";
             this.btnCapNhat.AutoSize = true;
             this.btnCapNhat.UseVisualStyleBackColor = false;
-            //this.btnCapNhat.Click += new EventHandler(this.btnCapNhat_Click);
+            this.btnCapNhat.Click += new EventHandler(this.btnCapNhat_Click);
 
-            // 
-            // btnXoa
-            // 
             this.btnXoa.BackColor = Color.FromArgb(231, 76, 60);
             this.btnXoa.Cursor = Cursors.Hand;
             this.btnXoa.FlatStyle = FlatStyle.Flat;
@@ -227,14 +227,37 @@ namespace HotelManagement
             this.btnXoa.Location = new Point(13, 345);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new Size(120, 33);
-            this.btnXoa.Text = "🗑️ Xóa/Khóa";
+            this.btnXoa.Text = "Xóa/Khóa";
             this.btnXoa.AutoSize = true;
             this.btnXoa.UseVisualStyleBackColor = false;
-            //this.btnXoa.Click += new EventHandler(this.btnXoa_Click);
+            this.btnXoa.Click += new EventHandler(this.btnXoa_Click);
 
-            // 
-            // btnLamMoi
-            // 
+            this.btnLuu.BackColor = Color.FromArgb(39, 174, 96);
+            this.btnLuu.Cursor = Cursors.Hand;
+            this.btnLuu.FlatStyle = FlatStyle.Flat;
+            this.btnLuu.ForeColor = Color.White;
+            this.btnLuu.Location = new Point(13, 390);
+            this.btnLuu.Name = "btnLuu";
+            this.btnLuu.Size = new Size(120, 33);
+            this.btnLuu.Text = "Lưu";
+            this.btnLuu.AutoSize = true;
+            this.btnLuu.Enabled = false;
+            this.btnLuu.UseVisualStyleBackColor = false;
+            this.btnLuu.Click += new EventHandler(this.btnLuu_Click);
+
+            this.btnHuy.BackColor = Color.Gray;
+            this.btnHuy.Cursor = Cursors.Hand;
+            this.btnHuy.FlatStyle = FlatStyle.Flat;
+            this.btnHuy.ForeColor = Color.White;
+            this.btnHuy.Location = new Point(143, 390);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Size = new Size(120, 33);
+            this.btnHuy.Text = "Không lưu";
+            this.btnHuy.AutoSize = true;
+            this.btnHuy.Enabled = false;
+            this.btnHuy.UseVisualStyleBackColor = false;
+            this.btnHuy.Click += new EventHandler(this.btnHuy_Click);
+
             this.btnLamMoi.BackColor = Color.Gray;
             this.btnLamMoi.Cursor = Cursors.Hand;
             this.btnLamMoi.FlatStyle = FlatStyle.Flat;
@@ -242,10 +265,10 @@ namespace HotelManagement
             this.btnLamMoi.Location = new Point(143, 345);
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new Size(120, 33);
-            this.btnLamMoi.Text = "🔃 Làm Mới";
+            this.btnLamMoi.Text = "Làm Mới";
             this.btnLamMoi.AutoSize = true;
             this.btnLamMoi.UseVisualStyleBackColor = false;
-            //this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
+            this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
 
             // 
             // pnlRight
@@ -268,7 +291,7 @@ namespace HotelManagement
             this.txtTimKiem.Name = "txtTimKiem";
             this.txtTimKiem.Size = new Size(700, 25);
             this.txtTimKiem.TabIndex = 0;
-            //this.txtTimKiem.TextChanged += new EventHandler(this.txtTimKiem_TextChanged);
+            this.txtTimKiem.TextChanged += new EventHandler(this.txtTimKiem_TextChanged);
 
             // 
             // dgvTaiKhoan
@@ -292,7 +315,7 @@ namespace HotelManagement
             this.dgvTaiKhoan.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             this.dgvTaiKhoan.Size = new Size(700, 545);
             this.dgvTaiKhoan.TabIndex = 1;
-            //this.dgvTaiKhoan.SelectionChanged += new EventHandler(this.dgvTaiKhoan_SelectionChanged);
+            this.dgvTaiKhoan.CellEnter += new DataGridViewCellEventHandler(this.dgvTaiKhoan_CellEnter);
 
             // 
             // frmTaiKhoan
@@ -303,8 +326,8 @@ namespace HotelManagement
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
             this.Name = "frmTaiKhoan";
-            this.Text = "🔑 Quản Lý Tài Khoản";
-            //this.Load += new EventHandler(this.frmTaiKhoan_Load);
+            this.Text = "Quan Ly Tai Khoan";
+            this.Load += new EventHandler(this.frmTaiKhoan_Load);
             this.pnlLeft.ResumeLayout(false);
             this.pnlLeft.PerformLayout();
             this.pnlRight.ResumeLayout(false);

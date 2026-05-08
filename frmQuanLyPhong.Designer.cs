@@ -31,6 +31,8 @@ namespace HotelManagement
         private Button btnThem;
         private Button btnCapNhat;
         private Button btnXoa;
+        private Button btnLuu;
+        private Button btnHuy;
         private Button btnCapNhatTT;
         private Button btnLamMoi;
 
@@ -61,6 +63,8 @@ namespace HotelManagement
             btnThem = new Button();
             btnCapNhat = new Button();
             btnXoa = new Button();
+            btnLuu = new Button();
+            btnHuy = new Button();
             btnCapNhatTT = new Button();
             btnLamMoi = new Button();
             pnlRight = new Panel();
@@ -161,7 +165,7 @@ namespace HotelManagement
             btnThem.ForeColor = Color.White;
             btnThem.Location = new Point(10, 407);
             btnThem.Size = new Size(125, 35);
-            btnThem.Text = "➕ Thêm";
+            btnThem.Text = "Thêm";
             btnThem.AutoSize = true;
             btnThem.Click += btnThem_Click;
 
@@ -173,7 +177,7 @@ namespace HotelManagement
             btnCapNhat.ForeColor = Color.White;
             btnCapNhat.Location = new Point(145, 407);
             btnCapNhat.Size = new Size(125, 35);
-            btnCapNhat.Text = "✏️ Cập Nhật";
+            btnCapNhat.Text = "Sửa";
             btnCapNhat.AutoSize = true;
             btnCapNhat.Click += btnCapNhat_Click;
 
@@ -183,11 +187,37 @@ namespace HotelManagement
             btnXoa.FlatAppearance.BorderSize = 0;
             btnXoa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnXoa.ForeColor = Color.White;
-            btnXoa.Location = new Point(10, 457);
+            btnXoa.Location = new Point(10, 452);
             btnXoa.Size = new Size(125, 35);
-            btnXoa.Text = "🗑️ Xóa";
+            btnXoa.Text = "Xóa";
             btnXoa.AutoSize = true;
             btnXoa.Click += btnXoa_Click;
+
+            btnLuu.BackColor = Color.FromArgb(39, 174, 96);
+            btnLuu.Cursor = Cursors.Hand;
+            btnLuu.FlatStyle = FlatStyle.Flat;
+            btnLuu.FlatAppearance.BorderSize = 0;
+            btnLuu.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnLuu.ForeColor = Color.White;
+            btnLuu.Location = new Point(10, 497);
+            btnLuu.Size = new Size(125, 35);
+            btnLuu.Text = "Lưu";
+            btnLuu.AutoSize = true;
+            btnLuu.Enabled = false;
+            btnLuu.Click += btnLuu_Click;
+
+            btnHuy.BackColor = Color.Gray;
+            btnHuy.Cursor = Cursors.Hand;
+            btnHuy.FlatStyle = FlatStyle.Flat;
+            btnHuy.FlatAppearance.BorderSize = 0;
+            btnHuy.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnHuy.ForeColor = Color.White;
+            btnHuy.Location = new Point(145, 497);
+            btnHuy.Size = new Size(125, 35);
+            btnHuy.Text = "Không lưu";
+            btnHuy.AutoSize = true;
+            btnHuy.Enabled = false;
+            btnHuy.Click += btnHuy_Click;
 
             btnCapNhatTT.BackColor = Color.FromArgb(243, 156, 18);
             btnCapNhatTT.Cursor = Cursors.Hand;
@@ -195,9 +225,9 @@ namespace HotelManagement
             btnCapNhatTT.FlatAppearance.BorderSize = 0;
             btnCapNhatTT.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCapNhatTT.ForeColor = Color.White;
-            btnCapNhatTT.Location = new Point(145, 457);
+            btnCapNhatTT.Location = new Point(145, 452);
             btnCapNhatTT.Size = new Size(125, 35);
-            btnCapNhatTT.Text = "🔄 C.Nhật TT";
+            btnCapNhatTT.Text = "C.Nhật TT";
             btnCapNhatTT.AutoSize = true;
             btnCapNhatTT.Click += btnCapNhatTT_Click;
 
@@ -207,9 +237,9 @@ namespace HotelManagement
             btnLamMoi.FlatAppearance.BorderSize = 0;
             btnLamMoi.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnLamMoi.ForeColor = Color.White;
-            btnLamMoi.Location = new Point(10, 507);
+            btnLamMoi.Location = new Point(10, 542);
             btnLamMoi.Size = new Size(125, 35);
-            btnLamMoi.Text = "🔃 Làm Mới";
+            btnLamMoi.Text = "Làm Mới";
             btnLamMoi.AutoSize = true;
             btnLamMoi.Click += btnLamMoi_Click;
 
@@ -228,6 +258,8 @@ namespace HotelManagement
             pnlLeft.Controls.Add(btnThem);
             pnlLeft.Controls.Add(btnCapNhat);
             pnlLeft.Controls.Add(btnXoa);
+            pnlLeft.Controls.Add(btnLuu);
+            pnlLeft.Controls.Add(btnHuy);
             pnlLeft.Controls.Add(btnCapNhatTT);
             pnlLeft.Controls.Add(btnLamMoi);
 
@@ -276,7 +308,7 @@ namespace HotelManagement
             dgvPhong.ReadOnly = true;
             dgvPhong.RowHeadersVisible = false;
             dgvPhong.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPhong.SelectionChanged += dgvPhong_SelectionChanged;
+            dgvPhong.CellEnter += dgvPhong_CellEnter;
 
             pnlRight.Controls.Add(dgvPhong);
             pnlRight.Controls.Add(pnlToolbar);

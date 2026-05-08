@@ -9,6 +9,7 @@ namespace HotelManagement
 {
     public partial class frmMain : Form
     {
+        DataContext db = new DataContext();
         private System.Windows.Forms.Timer timerTrangChu;
 
         public frmMain()
@@ -38,32 +39,29 @@ namespace HotelManagement
         {
             try
             {
-                using (var db = new DataContext())
-                {
-                    int phongTrong = db.Phongs.Count(p => p.TrangThai == "Trống");
-                    int phongDangDung = db.Phongs.Count(p => p.TrangThai == "Đang sử dụng");
-                    int phongBaoTri = db.Phongs.Count(p => p.TrangThai == "Bảo trì" || p.TrangThai == "Đang dọn");
+                int phongTrong = db.Phongs.Count(p => p.TrangThai == "Trống");
+                int phongDangDung = db.Phongs.Count(p => p.TrangThai == "Đang sử dụng");
+                int phongBaoTri = db.Phongs.Count(p => p.TrangThai == "Bảo trì" || p.TrangThai == "Đang dọn");
 
-                    var today = DateTime.Today;
-                    var tmr = today.AddDays(1);
+                var today = DateTime.Today;
+                var tmr = today.AddDays(1);
 
-                    int checkInHomNay = db.DatPhongs.Count(dp => dp.NgayNhanPhong >= today && dp.NgayNhanPhong < tmr && dp.TrangThai == "Đang ở");
-                    int checkOutHomNay = db.DatPhongs.Count(dp => dp.NgayTraPhong >= today && dp.NgayTraPhong < tmr && dp.TrangThai == "Đã trả");
+                int checkInHomNay = db.DatPhongs.Count(dp => dp.NgayNhanPhong >= today && dp.NgayNhanPhong < tmr && dp.TrangThai == "Đang ở");
+                int checkOutHomNay = db.DatPhongs.Count(dp => dp.NgayTraPhong >= today && dp.NgayTraPhong < tmr && dp.TrangThai == "Đã trả");
 
-                    decimal doanhThuHomNay = db.HoaDons
-                        .Where(hd => hd.TrangThai == "Đã thanh toán" && hd.NgayLap >= today && hd.NgayLap < tmr)
-                        .Select(hd => (decimal?)(hd.TienPhong + hd.TienDichVu - hd.GiamGia)).Sum() ?? 0;
+                decimal doanhThuHomNay = db.HoaDons
+                    .Where(hd => hd.TrangThai == "Đã thanh toán" && hd.NgayLap >= today && hd.NgayLap < tmr)
+                    .Select(hd => (decimal?)(hd.TienPhong + hd.TienDichVu - hd.GiamGia)).Sum() ?? 0;
 
-                    // Update các card thống kê
-                    SetCard(pnlPhongTrong, "🟢 Phòng Trống", phongTrong.ToString(), Color.FromArgb(39, 174, 96));
-                    SetCard(pnlPhongDung, "🔴 Đang Sử Dụng", phongDangDung.ToString(), Color.FromArgb(231, 76, 60));
-                    SetCard(pnlPhongBaoTri, "🟡 Bảo Trì / Dọn Dẹp", phongBaoTri.ToString(), Color.FromArgb(243, 156, 18));
-                    SetCard(pnlCheckIn, "📥 Check-In Hôm Nay", checkInHomNay.ToString(), Color.FromArgb(52, 152, 219));
-                    SetCard(pnlCheckOut, "📤 Check-Out Hôm Nay", checkOutHomNay.ToString(), Color.FromArgb(155, 89, 182));
-                    SetCard(pnlDoanhThu, "💰 Doanh Thu Hôm Nay", $"{doanhThuHomNay:N0} đ", Color.FromArgb(0, 120, 212));
+                // Update các card thống kê
+                SetCard(pnlPhongTrong, "🟢 Phòng Trống", phongTrong.ToString(), Color.FromArgb(39, 174, 96));
+                SetCard(pnlPhongDung, "🔴 Đang Sử Dụng", phongDangDung.ToString(), Color.FromArgb(231, 76, 60));
+                SetCard(pnlPhongBaoTri, "🟡 Bảo Trì / Dọn Dẹp", phongBaoTri.ToString(), Color.FromArgb(243, 156, 18));
+                SetCard(pnlCheckIn, "📥 Check-In Hôm Nay", checkInHomNay.ToString(), Color.FromArgb(52, 152, 219));
+                SetCard(pnlCheckOut, "📤 Check-Out Hôm Nay", checkOutHomNay.ToString(), Color.FromArgb(155, 89, 182));
+                SetCard(pnlDoanhThu, "💰 Doanh Thu Hôm Nay", $"{doanhThuHomNay:N0} đ", Color.FromArgb(0, 120, 212));
 
-                    lblCapNhat.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm:ss}";
-                }
+                lblCapNhat.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm:ss}";
             }
             catch (Exception ex)
             {

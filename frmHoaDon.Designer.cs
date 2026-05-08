@@ -137,7 +137,7 @@ namespace HotelManagement
             this.btnLoc.Text = "🔍 Lọc";
             this.btnLoc.AutoSize = true;
             this.btnLoc.UseVisualStyleBackColor = false;
-            //this.btnLoc.Click += new EventHandler(this.btnLoc_Click);
+            this.btnLoc.Click += new EventHandler(this.btnLoc_Click);
 
             // 
             // btnLamMoi
@@ -152,7 +152,7 @@ namespace HotelManagement
             this.btnLamMoi.Text = "🔃 Làm Mới";
             this.btnLamMoi.AutoSize = true;
             this.btnLamMoi.UseVisualStyleBackColor = false;
-            //this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
+            this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
 
             // 
             // pnlFill
@@ -221,7 +221,7 @@ namespace HotelManagement
             this.Controls.Add(this.pnlBottom);
             this.Name = "frmHoaDon";
             this.Text = "🧾 Quản Lý Hóa Đơn";
-            //this.Load += new EventHandler(this.frmHoaDon_Load);
+            this.Load += new EventHandler(this.frmHoaDon_Load);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.pnlFill.ResumeLayout(false);

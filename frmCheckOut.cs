@@ -9,6 +9,8 @@ namespace HotelManagement
 {
     public partial class frmCheckOut : Form
     {
+        DataContext db = new DataContext();
+
         public frmCheckOut()
         {
             InitializeComponent();
@@ -23,37 +25,34 @@ namespace HotelManagement
 
         private void LoadData()
         {
-            using (var db = new DataContext())
-            {
-                var danhSachDatPhong = (from dp in db.DatPhongs
-                                 join p in db.Phongs on dp.MaPhong equals p.MaPhong
-                                 join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
-                                 join kh in db.KhachHangs on dp.MaKhachHang equals kh.MaKhachHang
-                                 join nv in db.NhanViens on dp.MaNhanVienTao equals nv.MaNhanVien
-                                 where dp.TrangThai == "Đang ở"
-                                 orderby dp.NgayNhanPhong
-                                 select new
-                                 {
-                                     dp.MaDatPhong,
-                                     dp.MaPhong,
-                                     dp.MaKhachHang,
-                                     dp.MaNhanVienTao,
-                                     dp.NgayDat,
-                                     dp.NgayNhanPhong,
-                                     dp.NgayTraPhong,
-                                     dp.LoaiDat,
-                                     dp.GiaPhong,
-                                     dp.TrangThai,
-                                     dp.GhiChu,
-                                     SoPhong = p.SoPhong,
-                                     TenLoaiPhong = lp.TenLoai,
-                                     TenKhachHang = kh.HoTen,
-                                     SoDienThoai = kh.SoDienThoai,
-                                     TenNhanVien = nv.HoTen
-                                 }).ToList();
+            var danhSachDatPhong = (from dp in db.DatPhongs
+                                join p in db.Phongs on dp.MaPhong equals p.MaPhong
+                                join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
+                                join kh in db.KhachHangs on dp.MaKhachHang equals kh.MaKhachHang
+                                join nv in db.NhanViens on dp.MaNhanVienTao equals nv.MaNhanVien
+                                where dp.TrangThai == "Đang ở"
+                                orderby dp.NgayNhanPhong
+                                select new
+                                {
+                                    dp.MaDatPhong,
+                                    dp.MaPhong,
+                                    dp.MaKhachHang,
+                                    dp.MaNhanVienTao,
+                                    dp.NgayDat,
+                                    dp.NgayNhanPhong,
+                                    dp.NgayTraPhong,
+                                    dp.LoaiDat,
+                                    dp.GiaPhong,
+                                    dp.TrangThai,
+                                    dp.GhiChu,
+                                    SoPhong = p.SoPhong,
+                                    TenLoaiPhong = lp.TenLoai,
+                                    TenKhachHang = kh.HoTen,
+                                    SoDienThoai = kh.SoDienThoai,
+                                    TenNhanVien = nv.HoTen
+                                }).ToList();
 
-                dgvPhong.DataSource = danhSachDatPhong;
-            }
+            dgvPhong.DataSource = danhSachDatPhong;
         }
 
         private void LoadDichVuVaTinh()
@@ -61,36 +60,33 @@ namespace HotelManagement
             if (dgvPhong.CurrentRow == null) return;
             int maDatPhong = Convert.ToInt32(dgvPhong.CurrentRow.Cells["MaDatPhong"].Value);
 
-            using (var db = new DataContext())
+            var danhSachDichVu = (from sddv in db.SuDungDichVus
+                            join dv in db.DichVus on sddv.MaDichVu equals dv.MaDichVu
+                            where sddv.MaDatPhong == maDatPhong
+                            orderby sddv.ThoiGianSuDung descending
+                            select new
+                            {
+                                sddv.MaSuDung,
+                                sddv.MaDatPhong,
+                                sddv.MaDichVu,
+                                sddv.SoLuong,
+                                sddv.DonGia,
+                                sddv.ThoiGianSuDung,
+                                sddv.GhiChu,
+                                sddv.MaNhanVien,
+                                TenDichVu = dv.TenDichVu,
+                                DonViTinh = dv.DonViTinh
+                            }).ToList();
+
+            dgvDV.DataSource = danhSachDichVu;
+
+            var tien = db.Database.SqlQuery<TienResult>("EXEC SP_TinhTienPhong {0}", maDatPhong).FirstOrDefault();
+
+            if (tien != null)
             {
-                var danhSachDichVu = (from sddv in db.SuDungDichVus
-                               join dv in db.DichVus on sddv.MaDichVu equals dv.MaDichVu
-                               where sddv.MaDatPhong == maDatPhong
-                               orderby sddv.ThoiGianSuDung descending
-                               select new
-                               {
-                                   sddv.MaSuDung,
-                                   sddv.MaDatPhong,
-                                   sddv.MaDichVu,
-                                   sddv.SoLuong,
-                                   sddv.DonGia,
-                                   sddv.ThoiGianSuDung,
-                                   sddv.GhiChu,
-                                   sddv.MaNhanVien,
-                                   TenDichVu = dv.TenDichVu,
-                                   DonViTinh = dv.DonViTinh
-                               }).ToList();
-
-                dgvDV.DataSource = danhSachDichVu;
-
-                var tien = db.Database.SqlQuery<TienResult>("EXEC SP_TinhTienPhong {0}", maDatPhong).FirstOrDefault();
-
-                if (tien != null)
-                {
-                    lblTienPhong.Text = $"Tiền phòng:      {tien.TienPhong:N0} đ";
-                    lblTienDV.Text = $"Tiền dịch vụ:    {tien.TienDichVu:N0} đ";
-                    TinhTong();
-                }
+                lblTienPhong.Text = $"Tiền phòng:      {tien.TienPhong:N0} đ";
+                lblTienDV.Text = $"Tiền dịch vụ:    {tien.TienDichVu:N0} đ";
+                TinhTong();
             }
         }
 
@@ -148,32 +144,29 @@ namespace HotelManagement
         {
             try
             {
-                using (var db = new DataContext())
+                var tien = db.Database.SqlQuery<TienResult>("EXEC SP_TinhTienPhong {0}", maDatPhong).FirstOrDefault();
+
+                if (tien == null)
                 {
-                    var tien = db.Database.SqlQuery<TienResult>("EXEC SP_TinhTienPhong {0}", maDatPhong).FirstOrDefault();
-
-                    if (tien == null)
-                    {
-                        MessageBox.Show("Không tìm thấy đặt phòng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return 0;
-                    }
-
-                    var hd = new HoaDon
-                    {
-                        MaDatPhong = maDatPhong,
-                        MaNhanVienTao = SessionManager.MaNhanVien,
-                        TienPhong = tien.TienPhong,
-                        TienDichVu = tien.TienDichVu,
-                        GiamGia = giamGia,
-                        PhuongThucTT = "Tiền mặt",
-                        TrangThai = "Chưa thanh toán"
-                    };
-
-                    db.HoaDons.Add(hd);
-                    db.SaveChanges();
-
-                    return hd.MaHoaDon;
+                    MessageBox.Show("Không tìm thấy đặt phòng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 0;
                 }
+
+                var hd = new HoaDon
+                {
+                    MaDatPhong = maDatPhong,
+                    MaNhanVienTao = SessionManager.MaNhanVien,
+                    TienPhong = tien.TienPhong,
+                    TienDichVu = tien.TienDichVu,
+                    GiamGia = giamGia,
+                    PhuongThucTT = "Tiền mặt",
+                    TrangThai = "Chưa thanh toán"
+                };
+
+                db.HoaDons.Add(hd);
+                db.SaveChanges();
+
+                return hd.MaHoaDon;
             }
             catch (Exception ex)
             {
@@ -192,20 +185,17 @@ namespace HotelManagement
 
             try
             {
-                using (var db = new DataContext())
+                var hd = db.HoaDons.Find(maHoaDon);
+                if (hd == null)
                 {
-                    var hd = db.HoaDons.Find(maHoaDon);
-                    if (hd == null)
-                    {
-                        MessageBox.Show("Hóa đơn không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-
-                    hd.TrangThai = "Đã thanh toán";
-                    hd.PhuongThucTT = phuongThuc;
-                    db.SaveChanges();
-                    return true;
+                    MessageBox.Show("Hóa đơn không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
+
+                hd.TrangThai = "Đã thanh toán";
+                hd.PhuongThucTT = phuongThuc;
+                db.SaveChanges();
+                return true;
             }
             catch
             {
@@ -216,32 +206,29 @@ namespace HotelManagement
 
         private bool CheckOutDatPhong(int maDatPhong)
         {
-            using (var db = new DataContext())
+            using (var tran = db.Database.BeginTransaction())
             {
-                using (var tran = db.Database.BeginTransaction())
+                try
                 {
-                    try
+                    var dp = db.DatPhongs.Find(maDatPhong);
+                    if (dp != null)
                     {
-                        var dp = db.DatPhongs.Find(maDatPhong);
-                        if (dp != null)
-                        {
-                            dp.TrangThai = "Đã trả";
-                            dp.NgayTraPhong = DateTime.Now;
+                        dp.TrangThai = "Đã trả";
+                        dp.NgayTraPhong = DateTime.Now;
 
-                            var p = db.Phongs.Find(dp.MaPhong);
-                            if (p != null) p.TrangThai = "Đang dọn";
+                        var p = db.Phongs.Find(dp.MaPhong);
+                        if (p != null) p.TrangThai = "Đang dọn";
 
-                            db.SaveChanges();
-                            tran.Commit();
-                            return true;
-                        }
-                        return false;
+                        db.SaveChanges();
+                        tran.Commit();
+                        return true;
                     }
-                    catch
-                    {
-                        tran.Rollback();
-                        return false;
-                    }
+                    return false;
+                }
+                catch
+                {
+                    tran.Rollback();
+                    return false;
                 }
             }
         }

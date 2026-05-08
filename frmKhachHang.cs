@@ -1,7 +1,5 @@
 using System;
-using System.Drawing;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using HotelManagement.Database;
 using HotelManagement.Models;
@@ -10,261 +8,296 @@ namespace HotelManagement
 {
     public partial class frmKhachHang : Form
     {
-        private readonly bool isDialog;
 
-        public frmKhachHang() : this(false)
-        {
-        }
+        DataContext db = new DataContext();
+        bool AddNew = false;
 
-        public frmKhachHang(bool isDialog)
+        public frmKhachHang()
         {
-            this.isDialog = isDialog;
             InitializeComponent();
-            LoadData();
+            this.Load += frmKhachHang_Load;
         }
 
-        private void LoadData(string kw = "")
+        // Bật/tắt các control khi ở chế độ thêm/sửa
+        private void setControl(bool check)
         {
-            using (var db = new DataContext())
+            txtHoTen.Enabled = check;
+            txtCCCD.Enabled = check;
+            txtSDT.Enabled = check;
+            txtEmail.Enabled = check;
+            txtDiaChi.Enabled = check;
+            cboGioiTinh.Enabled = check;
+            dtpNgaySinh.Enabled = check;
+            btnLuu.Enabled = check;
+            btnHuy.Enabled = check;
+            btnThem.Enabled = !check;
+            btnCapNhat.Enabled = !check;
+            btnXoa.Enabled = !check;
+            dgv.Enabled = !check;
+        }
+
+        // Load dữ liệu khách hàng lên lưới
+        private void LoadGridData()
+        {
+            var data = from kh in db.KhachHangs
+                       where kh.TrangThai == true
+                       orderby kh.HoTen
+                       select new
+                       {
+                           kh.MaKhachHang,
+                           kh.HoTen,
+                           kh.CCCD,
+                           kh.SoDienThoai,
+                           kh.Email,
+                           kh.GioiTinh,
+                           kh.NgaySinh,
+                           kh.DiaChi,
+                           kh.TrangThai,
+                           kh.NgayTao
+                       };
+            dgv.DataSource = data.ToList();
+            FormatGrid();
+        }
+
+        private void frmKhachHang_Load(object sender, EventArgs e)
+        {
+            setControl(false);
+            cboGioiTinh.Items.Clear();
+            cboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ", "Khác" });
+            LoadGridData();
+        }
+
+        // Sự kiện khi click vào ô trong lưới → đọc dữ liệu lên form
+        private void dgv_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int i = e.RowIndex;
+            if (i < 0) return;
+
+            txtMaKH.Text = dgv.Rows[i].Cells["MaKhachHang"].Value.ToString();
+            txtHoTen.Text = dgv.Rows[i].Cells["HoTen"].Value.ToString();
+            txtCCCD.Text = dgv.Rows[i].Cells["CCCD"].Value.ToString();
+            txtSDT.Text = dgv.Rows[i].Cells["SoDienThoai"].Value.ToString();
+            txtEmail.Text = dgv.Rows[i].Cells["Email"].Value != null ? dgv.Rows[i].Cells["Email"].Value.ToString() : "";
+            txtDiaChi.Text = dgv.Rows[i].Cells["DiaChi"].Value != null ? dgv.Rows[i].Cells["DiaChi"].Value.ToString() : "";
+            cboGioiTinh.Text = dgv.Rows[i].Cells["GioiTinh"].Value != null ? dgv.Rows[i].Cells["GioiTinh"].Value.ToString() : "";
+
+            if (dgv.Rows[i].Cells["NgaySinh"].Value != null && dgv.Rows[i].Cells["NgaySinh"].Value != DBNull.Value)
             {
-                if (string.IsNullOrEmpty(kw))
-                {
-                    dgv.DataSource = db.KhachHangs.Where(x => x.TrangThai).OrderBy(x => x.HoTen).ToList();
-                }
-                else
-                {
-                    dgv.DataSource = db.KhachHangs
-                        .Where(x => x.TrangThai && (x.HoTen.Contains(kw) || x.CCCD.Contains(kw) || x.SoDienThoai.Contains(kw)))
-                        .OrderBy(x => x.HoTen).ToList();
-                }
+                dtpNgaySinh.Value = Convert.ToDateTime(dgv.Rows[i].Cells["NgaySinh"].Value);
             }
         }
 
-        private void ThemKH()
+        // Nút Thêm mới → bật chế độ thêm
+        private void btnThem_Click(object sender, EventArgs e)
         {
-            var kh = GetForm();
-            if (kh == null) return;
-            bool ok = ThemKhachHang(kh);
-            if (ok)
+            AddNew = true;
+            setControl(true);
+            txtMaKH.Clear();
+            txtHoTen.Clear();
+            txtCCCD.Clear();
+            txtSDT.Clear();
+            txtEmail.Clear();
+            txtDiaChi.Clear();
+            cboGioiTinh.SelectedIndex = 0;
+            dtpNgaySinh.Value = DateTime.Now;
+            txtHoTen.Focus();
+        }
+
+        // Nút Sửa → bật chế độ sửa
+        private void btnCapNhat_Click(object sender, EventArgs e)
+        {
+            if (txtMaKH.Text.Trim() == "")
             {
-                ClearForm();
-                LoadData();
-                if (isDialog)
-                {
-                    DialogResult = DialogResult.OK;
-                    Close();
-                }
+                MessageBox.Show("Vui lòng chọn khách hàng cần sửa!", "Thông báo");
+                return;
+            }
+            AddNew = false;
+            setControl(true);
+            txtCCCD.Enabled = false; // Không cho sửa CCCD
+            txtHoTen.Focus();
+        }
+
+        // Nút Không lưu → hủy chế độ thêm/sửa
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            setControl(false);
+            // Lấy lại thông tin từ lưới lên các TextBox
+            if (dgv.CurrentRow != null)
+            {
+                int rowIndex = dgv.CurrentRow.Index;
+                int colIndex = dgv.CurrentCell.ColumnIndex;
+                DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(colIndex, rowIndex);
+                dgv_CellEnter(dgv, args);
             }
         }
 
-        private void CapNhatKH()
+        // Nút Lưu → lưu thêm mới hoặc sửa
+        private void btnLuu_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaKH.Text))
+            if (txtHoTen.Text.Trim() == "")
             {
-                MessageBox.Show("Chọn khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Họ tên không được để trống!", "Thông báo");
+                txtHoTen.Focus();
+                return;
+            }
+            if (txtCCCD.Text.Trim() == "")
+            {
+                MessageBox.Show("CCCD không được để trống!", "Thông báo");
+                txtCCCD.Focus();
+                return;
+            }
+            if (txtSDT.Text.Trim() == "")
+            {
+                MessageBox.Show("Số điện thoại không được để trống!", "Thông báo");
+                txtSDT.Focus();
                 return;
             }
 
-            var kh = GetForm();
-            if (kh == null) return;
-            kh.MaKhachHang = int.Parse(txtMaKH.Text);
-            bool ok = CapNhatKhachHang(kh);
-            if (ok) LoadData();
-        }
-
-        private void XoaKH()
-        {
-            if (string.IsNullOrEmpty(txtMaKH.Text)) return;
-            if (MessageBox.Show("Xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            bool ok = XoaKhachHang(int.Parse(txtMaKH.Text));
-            if (ok)
+            if (AddNew) // Trường hợp thêm mới
             {
-                ClearForm();
-                LoadData();
-            }
-        }
-
-        private KhachHang GetForm()
-        {
-            return new KhachHang
-            {
-                HoTen = txtHoTen.Text.Trim(),
-                CCCD = txtCCCD.Text.Trim(),
-                SoDienThoai = txtSDT.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                DiaChi = txtDiaChi.Text.Trim(),
-                GioiTinh = cboGioiTinh.SelectedItem?.ToString(),
-                NgaySinh = dtpNgaySinh.Value
-            };
-        }
-
-        private bool ThemKhachHang(KhachHang kh)
-        {
-            if (!ValidateKhachHang(kh)) return false;
-
-            try
-            {
-                using (var db = new DataContext())
+                // Kiểm tra trùng CCCD
+                string cccd = txtCCCD.Text.Trim();
+                bool isExisted = db.KhachHangs.Any(kh => kh.CCCD == cccd);
+                if (isExisted)
                 {
-                    if (string.IsNullOrWhiteSpace(kh.QuocTich)) kh.QuocTich = "Việt Nam";
-                    db.KhachHangs.Add(kh);
-                    db.SaveChanges();
-                    MessageBox.Show("Thêm khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
+                    MessageBox.Show("CCCD này đã tồn tại trong hệ thống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCCCD.Focus();
+                    return;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
 
-        private bool CapNhatKhachHang(KhachHang kh)
-        {
-            if (!ValidateKhachHang(kh)) return false;
-
-            try
-            {
-                using (var db = new DataContext())
+                // Thêm mới
+                KhachHang newKH = new KhachHang
                 {
-                    var exist = db.KhachHangs.Find(kh.MaKhachHang);
-                    if (exist == null)
-                    {
-                        MessageBox.Show("Lỗi: Không tìm thấy khách hàng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
+                    HoTen = txtHoTen.Text.Trim(),
+                    CCCD = cccd,
+                    SoDienThoai = txtSDT.Text.Trim(),
+                    Email = txtEmail.Text.Trim(),
+                    DiaChi = txtDiaChi.Text.Trim(),
+                    GioiTinh = cboGioiTinh.SelectedItem != null ? cboGioiTinh.SelectedItem.ToString() : "",
+                    NgaySinh = dtpNgaySinh.Value,
+                    NgayTao = DateTime.Now,
+                    TrangThai = true
+                };
+                db.KhachHangs.Add(newKH);
+                db.SaveChanges();
+                MessageBox.Show("Thêm khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadGridData();
+            }
+            else // Trường hợp sửa
+            {
+                if (txtMaKH.Text == "") return;
+                int id = int.Parse(txtMaKH.Text);
 
-                    exist.HoTen = kh.HoTen;
-                    exist.GioiTinh = kh.GioiTinh;
-                    exist.NgaySinh = kh.NgaySinh;
-                    exist.DiaChi = kh.DiaChi;
-                    exist.SoDienThoai = kh.SoDienThoai;
-                    exist.Email = kh.Email;
-                    exist.QuocTich = string.IsNullOrWhiteSpace(kh.QuocTich) ? "Việt Nam" : kh.QuocTich;
-                    exist.GhiChu = kh.GhiChu;
+                // Tìm đối tượng cần sửa bằng LINQ
+                KhachHang khUpdate = db.KhachHangs.SingleOrDefault(kh => kh.MaKhachHang == id);
+                if (khUpdate != null)
+                {
+                    khUpdate.HoTen = txtHoTen.Text.Trim();
+                    khUpdate.SoDienThoai = txtSDT.Text.Trim();
+                    khUpdate.Email = txtEmail.Text.Trim();
+                    khUpdate.DiaChi = txtDiaChi.Text.Trim();
+                    khUpdate.GioiTinh = cboGioiTinh.SelectedItem != null ? cboGioiTinh.SelectedItem.ToString() : "";
+                    khUpdate.NgaySinh = dtpNgaySinh.Value;
 
                     db.SaveChanges();
-                    MessageBox.Show("Cập nhật khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
+                    MessageBox.Show("Cập nhật khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadGridData();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
+
+            setControl(false);
         }
 
-        private bool XoaKhachHang(int maKH)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    bool hasDatPhong = db.DatPhongs.Any(dp => dp.MaKhachHang == maKH && dp.TrangThai != "Đã trả" && dp.TrangThai != "Hủy");
-                    if (hasDatPhong)
-                    {
-                        MessageBox.Show("Không thể xóa! Khách hàng đang có đặt phòng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-
-                    var exist = db.KhachHangs.Find(maKH);
-                    if (exist != null)
-                    {
-                        exist.TrangThai = false;
-                        db.SaveChanges();
-                    }
-
-                    MessageBox.Show("Xóa khách hàng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
-
-        private bool ValidateKhachHang(KhachHang kh)
-        {
-            if (string.IsNullOrWhiteSpace(kh.HoTen))
-            {
-                MessageBox.Show("Họ tên khách hàng không được để trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(kh.CCCD))
-            {
-                MessageBox.Show("CCCD/Hộ chiếu không được để trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!Regex.IsMatch(kh.CCCD, @"^\d{9}$|^\d{12}$"))
-            {
-                MessageBox.Show("CCCD phải có 9 hoặc 12 chữ số!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(kh.SoDienThoai))
-            {
-                MessageBox.Show("Số điện thoại không được để trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!Regex.IsMatch(kh.SoDienThoai, @"^(0[3|5|7|8|9])+([0-9]{8})$"))
-            {
-                MessageBox.Show("Số điện thoại không đúng định dạng Việt Nam!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            if (!string.IsNullOrWhiteSpace(kh.Email) && !Regex.IsMatch(kh.Email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
-            {
-                MessageBox.Show("Email không đúng định dạng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void DgvSelectionChanged(object sender, EventArgs e)
+        // Nút Xóa (ẩn - đánh dấu TrangThai = false)
+        private void btnXoa_Click(object sender, EventArgs e)
         {
             if (dgv.CurrentRow == null) return;
-            var row = dgv.CurrentRow;
-            txtMaKH.Text = row.Cells["MaKhachHang"].Value?.ToString();
-            txtHoTen.Text = row.Cells["HoTen"].Value?.ToString();
-            txtCCCD.Text = row.Cells["CCCD"].Value?.ToString();
-            txtSDT.Text = row.Cells["SoDienThoai"].Value?.ToString();
-            txtEmail.Text = row.Cells["Email"].Value?.ToString();
-            txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
-            cboGioiTinh.Text = row.Cells["GioiTinh"].Value?.ToString();
+            if (txtMaKH.Text == "") return;
+            int id = int.Parse(txtMaKH.Text);
+
+            if (MessageBox.Show("Bạn muốn xóa bản ghi này không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+            {
+                KhachHang khDelete = db.KhachHangs.SingleOrDefault(kh => kh.MaKhachHang == id);
+                if (khDelete != null)
+                {
+                    khDelete.TrangThai = false;
+                    db.SaveChanges();
+                    LoadGridData();
+                    ClearForm();
+                }
+            }
+        }
+
+        // Nút Làm mới
+        private void btnLamMoi_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            txtTimKiem.Clear();
+            LoadGridData();
+        }
+
+        // Tìm kiếm
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim().ToLower();
+            if (keyword == "")
+            {
+                LoadGridData();
+                return;
+            }
+
+            var data = from kh in db.KhachHangs
+                       where kh.TrangThai == true &&
+                             (kh.HoTen.ToLower().Contains(keyword) ||
+                              kh.CCCD.Contains(keyword) ||
+                              kh.SoDienThoai.Contains(keyword))
+                       orderby kh.HoTen
+                       select new
+                       {
+                           kh.MaKhachHang,
+                           kh.HoTen,
+                           kh.CCCD,
+                           kh.SoDienThoai,
+                           kh.Email,
+                           kh.GioiTinh,
+                           kh.NgaySinh,
+                           kh.DiaChi,
+                           kh.TrangThai,
+                           kh.NgayTao
+                       };
+            dgv.DataSource = data.ToList();
+            FormatGrid();
+        }
+
+        // Định dạng lưới
+        private void FormatGrid()
+        {
+            if (dgv.Columns.Count == 0) return;
+            if (dgv.Columns.Contains("MaKhachHang")) { dgv.Columns["MaKhachHang"].HeaderText = "Mã KH"; dgv.Columns["MaKhachHang"].Width = 60; }
+            if (dgv.Columns.Contains("HoTen")) { dgv.Columns["HoTen"].HeaderText = "Họ Tên"; dgv.Columns["HoTen"].Width = 180; }
+            if (dgv.Columns.Contains("CCCD")) { dgv.Columns["CCCD"].HeaderText = "CCCD"; dgv.Columns["CCCD"].Width = 130; }
+            if (dgv.Columns.Contains("SoDienThoai")) { dgv.Columns["SoDienThoai"].HeaderText = "Số ĐT"; dgv.Columns["SoDienThoai"].Width = 110; }
+            if (dgv.Columns.Contains("Email")) { dgv.Columns["Email"].HeaderText = "Email"; dgv.Columns["Email"].Width = 150; }
+            if (dgv.Columns.Contains("GioiTinh")) { dgv.Columns["GioiTinh"].HeaderText = "Giới Tính"; dgv.Columns["GioiTinh"].Width = 80; }
+            if (dgv.Columns.Contains("NgaySinh")) { dgv.Columns["NgaySinh"].HeaderText = "Ngày Sinh"; dgv.Columns["NgaySinh"].Width = 100; }
+            if (dgv.Columns.Contains("DiaChi")) { dgv.Columns["DiaChi"].HeaderText = "Địa Chỉ"; dgv.Columns["DiaChi"].Width = 200; }
+            if (dgv.Columns.Contains("TrangThai")) dgv.Columns["TrangThai"].Visible = false;
+            if (dgv.Columns.Contains("NgayTao")) dgv.Columns["NgayTao"].Visible = false;
+            if (dgv.Columns.Contains("QuocTich")) dgv.Columns["QuocTich"].Visible = false;
+            if (dgv.Columns.Contains("GhiChu")) dgv.Columns["GhiChu"].Visible = false;
         }
 
         private void ClearForm()
         {
-            txtMaKH.Text = txtHoTen.Text = txtCCCD.Text = txtSDT.Text = txtEmail.Text = txtDiaChi.Text = "";
+            txtMaKH.Text = "";
+            txtHoTen.Text = "";
+            txtCCCD.Text = "";
+            txtSDT.Text = "";
+            txtEmail.Text = "";
+            txtDiaChi.Text = "";
+            cboGioiTinh.SelectedIndex = -1;
+            dtpNgaySinh.Value = DateTime.Now;
             dgv.ClearSelection();
-        }
-
-        private void btnThem_Click(object sender, EventArgs e)
-        {
-            ThemKH();
-        }
-
-        private void btnCapNhat_Click(object sender, EventArgs e)
-        {
-            CapNhatKH();
-        }
-
-        private void btnXoa_Click(object sender, EventArgs e)
-        {
-            XoaKH();
-        }
-
-        private void btnLamMoi_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            LoadData();
-        }
-        private void txtTimKiem_TextChanged(object sender, EventArgs e)
-        {
-            if (txtTimKiem.Text.Length != 1) LoadData(txtTimKiem.Text);
         }
     }
 }
