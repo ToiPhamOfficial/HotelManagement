@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using HotelManagement.Database;
@@ -8,375 +6,316 @@ using HotelManagement.Models;
 
 namespace HotelManagement
 {
-    // Form quản lý phòng và loại phòng
     public partial class frmQuanLyPhong : Form
     {
-        private string _locTrangThai = null;
-        private List<LoaiPhong> _lstLoaiPhong;
-        private bool _isBindingGrid;
+
+        DataContext db = new DataContext();
+        bool AddNew = false;
 
         public frmQuanLyPhong()
         {
             InitializeComponent();
+            this.Load += frmQuanLyPhong_Load;
+        }
+
+        // Bật/tắt các control khi ở chế độ thêm/sửa
+        private void setControl(bool check)
+        {
+            txtSoPhong.Enabled = check;
+            cboLoaiPhong.Enabled = check;
+            numTang.Enabled = check;
+            cboTrangThai.Enabled = check;
+            txtMoTa.Enabled = check;
+            btnLuu.Enabled = check;
+            btnHuy.Enabled = check;
+            btnThem.Enabled = !check;
+            btnCapNhat.Enabled = !check;
+            btnXoa.Enabled = !check;
+            btnCapNhatTT.Enabled = !check;
+            dgvPhong.Enabled = !check;
+        }
+
+        // Load dữ liệu danh sách phòng lên lưới
+        private void LoadGridData()
+        {
+            var data = from p in db.Phongs
+                       join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
+                       orderby p.Tang, p.SoPhong
+                       select new
+                       {
+                           p.MaPhong,
+                           p.SoPhong,
+                           p.Tang,
+                           p.MaLoaiPhong,
+                           p.TrangThai,
+                           p.MoTa,
+                           TenLoai = lp.TenLoai,
+                           lp.GiaMoiDem,
+                           lp.GiaMoiGio
+                       };
+            dgvPhong.DataSource = data.ToList();
+            FormatGrid();
+            lblTongPhong.Text = "Tổng: " + dgvPhong.RowCount + " phòng";
+        }
+
+        // Load danh sách loại phòng vào combobox
+        private void LoadLoaiPhong()
+        {
+            var dsLoai = from lp in db.LoaiPhongs
+                         where lp.TrangThai == true
+                         orderby lp.TenLoai
+                         select lp;
+            cboLoaiPhong.DataSource = dsLoai.ToList();
+            cboLoaiPhong.DisplayMember = "TenLoai";
+            cboLoaiPhong.ValueMember = "MaLoaiPhong";
+            cboLoaiPhong.SelectedIndex = -1;
         }
 
         private void frmQuanLyPhong_Load(object sender, EventArgs e)
         {
+            setControl(false);
             LoadLoaiPhong();
-            LoadDanhSachPhong();
-            SetupPermission();
+            LoadGridData();
         }
 
-        private void SetupPermission()
+        // Sự kiện khi click vào ô trong lưới → đọc dữ liệu lên form
+        private void dgvPhong_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            // Chỉ Admin/QuanLy mới được thêm/xóa
-            bool canEdit = SessionManager.IsQuanLy;
-            btnThem.Enabled = canEdit;
-            btnXoa.Enabled = canEdit;
-        }
+            int i = e.RowIndex;
+            if (i < 0) return;
 
-        // Load dữ liệu
-        private void LoadLoaiPhong()
-        {
-            using (var db = new DataContext())
+            txtMaPhong.Text = dgvPhong.Rows[i].Cells["MaPhong"].Value.ToString();
+            txtSoPhong.Text = dgvPhong.Rows[i].Cells["SoPhong"].Value.ToString();
+
+            int tang = 1;
+            int.TryParse(dgvPhong.Rows[i].Cells["Tang"].Value.ToString(), out tang);
+            numTang.Value = tang;
+
+            txtMoTa.Text = dgvPhong.Rows[i].Cells["MoTa"].Value != null
+                ? dgvPhong.Rows[i].Cells["MoTa"].Value.ToString()
+                : "";
+
+            // Chọn loại phòng
+            object maLoai = dgvPhong.Rows[i].Cells["MaLoaiPhong"].Value;
+            if (maLoai != null)
             {
-                cboLoaiPhong.DataSource = null;
-                _lstLoaiPhong = db.LoaiPhongs.Where(lp => lp.TrangThai).OrderBy(lp => lp.TenLoai).ToList();
-                cboLoaiPhong.DataSource = _lstLoaiPhong;
-                cboLoaiPhong.DisplayMember = "TenLoai";
-                cboLoaiPhong.ValueMember = "MaLoaiPhong";
-                cboLoaiPhong.SelectedIndex = -1;
+                cboLoaiPhong.SelectedValue = (int)maLoai;
+            }
+
+            // Chọn trạng thái
+            cboTrangThai.Text = dgvPhong.Rows[i].Cells["TrangThai"].Value.ToString();
+        }
+
+        // Nút Thêm mới → bật chế độ thêm
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            AddNew = true;
+            setControl(true);
+            txtMaPhong.Clear();
+            txtSoPhong.Clear();
+            numTang.Value = 1;
+            txtMoTa.Clear();
+            cboLoaiPhong.SelectedIndex = 0;
+            cboTrangThai.SelectedIndex = 0;
+            txtSoPhong.Focus();
+        }
+
+        // Nút Sửa → bật chế độ sửa
+        private void btnCapNhat_Click(object sender, EventArgs e)
+        {
+            if (txtMaPhong.Text.Trim() == "")
+            {
+                MessageBox.Show("Vui lòng chọn phòng cần sửa!", "Thông báo");
+                return;
+            }
+            AddNew = false;
+            setControl(true);
+            txtSoPhong.Enabled = false; // Không cho sửa số phòng
+            cboLoaiPhong.Focus();
+        }
+
+        // Nút Không lưu → hủy chế độ thêm/sửa
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            setControl(false);
+            // Lấy lại thông tin từ lưới lên các TextBox
+            if (dgvPhong.CurrentRow != null)
+            {
+                int rowIndex = dgvPhong.CurrentRow.Index;
+                int colIndex = dgvPhong.CurrentCell.ColumnIndex;
+                DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(colIndex, rowIndex);
+                dgvPhong_CellEnter(dgvPhong, args);
             }
         }
 
-        private void LoadDanhSachPhong()
+        // Nút Lưu → lưu thêm mới hoặc sửa
+        private void btnLuu_Click(object sender, EventArgs e)
         {
-            using (var db = new DataContext())
+            if (txtSoPhong.Text.Trim() == "")
             {
-                var query = from p in db.Phongs
-                            join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
-                            where string.IsNullOrEmpty(_locTrangThai) || p.TrangThai == _locTrangThai
-                            orderby p.Tang, p.SoPhong
-                            select new
-                            {
-                                p.MaPhong,
-                                p.SoPhong,
-                                p.Tang,
-                                p.MaLoaiPhong,
-                                p.TrangThai,
-                                p.MoTa,
-                                p.HinhAnh,
-                                TenLoai = lp.TenLoai,
-                                lp.GiaMoiDem,
-                                lp.GiaMoiGio,
-                                lp.SoNguoiToiDa
-                            };
-
-                var list = query.ToList();
-                _isBindingGrid = true;
-                dgvPhong.DataSource = list;
-                _isBindingGrid = false;
-                FormatGrid();
-                lblTongPhong.Text = $"Tổng: {list.Count} phòng";
+                MessageBox.Show("Số phòng không được để trống!", "Thông báo");
+                txtSoPhong.Focus();
+                return;
             }
-        }
-
-        private void FormatGrid()
-        {
-            if (dgvPhong.Columns.Count == 0) return;
-
-            if (dgvPhong.Columns.Contains("MaPhong")) dgvPhong.Columns["MaPhong"].Visible = false;
-            if (dgvPhong.Columns.Contains("MaLoaiPhong")) dgvPhong.Columns["MaLoaiPhong"].Visible = false;
-            if (dgvPhong.Columns.Contains("HinhAnh")) dgvPhong.Columns["HinhAnh"].Visible = false;
-
-            SetColHeader("SoPhong", "Số Phòng", 80);
-            SetColHeader("Tang", "Tầng", 60);
-            SetColHeader("TenLoai", "Loại Phòng", 150);
-            SetColHeader("GiaMoiDem", "Giá/Đêm", 110);
-            SetColHeader("GiaMoiGio", "Giá/Giờ", 100);
-            SetColHeader("SoNguoiToiDa", "Sức Chứa", 80);
-            SetColHeader("TrangThai", "Trạng Thái", 120);
-            SetColHeader("MoTa", "Mô Tả", 200);
-
-            // Format tiền
-            if (dgvPhong.Columns.Contains("GiaMoiDem")) dgvPhong.Columns["GiaMoiDem"].DefaultCellStyle.Format = "N0";
-            if (dgvPhong.Columns.Contains("GiaMoiGio")) dgvPhong.Columns["GiaMoiGio"].DefaultCellStyle.Format = "N0";
-
-            // Màu theo trạng thái
-            foreach (DataGridViewRow row in dgvPhong.Rows)
+            if (cboLoaiPhong.SelectedValue == null)
             {
-                string tt = dgvPhong.Columns.Contains("TrangThai")
-                    ? row.Cells["TrangThai"].Value?.ToString()
-                    : null;
-                switch (tt)
+                MessageBox.Show("Vui lòng chọn loại phòng!", "Thông báo");
+                cboLoaiPhong.Focus();
+                return;
+            }
+
+            if (AddNew) // Trường hợp thêm mới
+            {
+                // Kiểm tra trùng số phòng
+                string soPhong = txtSoPhong.Text.Trim().ToUpper();
+                bool isExisted = db.Phongs.Any(p => p.SoPhong == soPhong);
+                if (isExisted)
                 {
-                    case "Trống": row.DefaultCellStyle.BackColor = Color.FromArgb(220, 255, 220); break;
-                    case "Đang sử dụng": row.DefaultCellStyle.BackColor = Color.FromArgb(255, 220, 220); break;
-                    case "Đang dọn": row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 200); break;
-                    case "Bảo trì": row.DefaultCellStyle.BackColor = Color.FromArgb(255, 230, 200); break;
-                    default: row.DefaultCellStyle.BackColor = Color.White; break;
+                    MessageBox.Show("Số phòng này đã tồn tại! Vui lòng nhập số phòng khác.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSoPhong.Focus();
+                    return;
+                }
+
+                // Thêm mới
+                Phong newPhong = new Phong
+                {
+                    SoPhong = soPhong,
+                    MaLoaiPhong = (int)cboLoaiPhong.SelectedValue,
+                    Tang = Convert.ToInt32(numTang.Value),
+                    TrangThai = cboTrangThai.SelectedItem != null ? cboTrangThai.SelectedItem.ToString() : "Trống",
+                    MoTa = txtMoTa.Text.Trim(),
+                    NgayTao = DateTime.Now
+                };
+                db.Phongs.Add(newPhong);
+                db.SaveChanges();
+                MessageBox.Show("Thêm phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadGridData();
+            }
+            else // Trường hợp sửa
+            {
+                if (txtMaPhong.Text == "") return;
+                int id = int.Parse(txtMaPhong.Text);
+
+                // Tìm đối tượng cần sửa bằng LINQ
+                Phong phongUpdate = db.Phongs.SingleOrDefault(p => p.MaPhong == id);
+                if (phongUpdate != null)
+                {
+                    phongUpdate.MaLoaiPhong = (int)cboLoaiPhong.SelectedValue;
+                    phongUpdate.Tang = Convert.ToInt32(numTang.Value);
+                    phongUpdate.TrangThai = cboTrangThai.SelectedItem != null ? cboTrangThai.SelectedItem.ToString() : "Trống";
+                    phongUpdate.MoTa = txtMoTa.Text.Trim();
+
+                    db.SaveChanges();
+                    MessageBox.Show("Cập nhật phòng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadGridData();
+                }
+            }
+
+            setControl(false);
+        }
+
+        // Nút Xóa
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (dgvPhong.CurrentRow == null) return;
+            if (txtMaPhong.Text == "") return;
+            int id = int.Parse(txtMaPhong.Text);
+
+            if (MessageBox.Show("Bạn muốn xóa phòng này không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+            {
+                // Kiểm tra phòng có đang sử dụng không
+                bool inUse = db.DatPhongs.Any(dp => dp.MaPhong == id && dp.TrangThai != "Đã trả" && dp.TrangThai != "Hủy");
+                if (inUse)
+                {
+                    MessageBox.Show("Không thể xóa! Phòng đang có đặt phòng chưa hoàn thành.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Phong phongDelete = db.Phongs.SingleOrDefault(p => p.MaPhong == id);
+                if (phongDelete != null)
+                {
+                    db.Phongs.Remove(phongDelete);
+                    db.SaveChanges();
+                    LoadGridData();
+                    ClearForm();
                 }
             }
         }
 
-        private void SetColHeader(string name, string header, int width)
+        // Nút Cập nhật trạng thái nhanh
+        private void btnCapNhatTT_Click(object sender, EventArgs e)
         {
-            if (!dgvPhong.Columns.Contains(name)) return;
-            dgvPhong.Columns[name].HeaderText = header;
-            dgvPhong.Columns[name].Width = width;
-        }
+            if (txtMaPhong.Text == "") return;
+            int id = int.Parse(txtMaPhong.Text);
 
-        // Các sự kiện
-        private void btnThem_Click(object sender, EventArgs e)
-        {
-            if (!ValidateInput(out Phong p)) return;
-
-            bool ok = ThemPhong(p);
-            if (ok) 
-            { 
-                ClearForm(); 
-                LoadDanhSachPhong(); 
+            Phong p = db.Phongs.SingleOrDefault(x => x.MaPhong == id);
+            if (p != null)
+            {
+                p.TrangThai = cboTrangThai.SelectedItem != null ? cboTrangThai.SelectedItem.ToString() : p.TrangThai;
+                db.SaveChanges();
+                LoadGridData();
+                MessageBox.Show("Cập nhật trạng thái thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void btnCapNhat_Click(object sender, EventArgs e)
-        {
-            if (txtMaPhong.Text == "") { MessageBox.Show("Chọn phòng cần cập nhật!", "Thông báo"); return; }
-            if (!ValidateInput(out Phong p)) return;
-
-            p.MaPhong = int.Parse(txtMaPhong.Text);
-            bool ok = CapNhatPhong(p);
-            if (ok) LoadDanhSachPhong();
-        }
-
-        private void btnXoa_Click(object sender, EventArgs e)
-        {
-            if (txtMaPhong.Text == "") { MessageBox.Show("Chọn phòng cần xóa!", "Thông báo"); return; }
-            if (MessageBox.Show($"Xóa phòng {txtSoPhong.Text}?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-
-            bool ok = XoaPhong(int.Parse(txtMaPhong.Text));
-            if (ok) 
-            { 
-                ClearForm(); 
-                LoadDanhSachPhong(); 
-            }
-        }
-
+        // Nút Làm mới
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             ClearForm();
             cboLocTrangThai.SelectedIndex = 0;
-            _locTrangThai = null;
-            LoadDanhSachPhong();
+            LoadGridData();
         }
 
+        // Lọc theo trạng thái
         private void cboLocTrangThai_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _locTrangThai = cboLocTrangThai.SelectedIndex == 0 ? null : cboLocTrangThai.SelectedItem?.ToString();
-            LoadDanhSachPhong();
+            string loc = cboLocTrangThai.SelectedIndex == 0 ? null : cboLocTrangThai.SelectedItem.ToString();
+            var data = from p in db.Phongs
+                       join lp in db.LoaiPhongs on p.MaLoaiPhong equals lp.MaLoaiPhong
+                       where (loc == null || p.TrangThai == loc)
+                       orderby p.Tang, p.SoPhong
+                       select new
+                       {
+                           p.MaPhong,
+                           p.SoPhong,
+                           p.Tang,
+                           p.MaLoaiPhong,
+                           p.TrangThai,
+                           p.MoTa,
+                           TenLoai = lp.TenLoai,
+                           lp.GiaMoiDem,
+                           lp.GiaMoiGio
+                       };
+            dgvPhong.DataSource = data.ToList();
+            FormatGrid();
+            lblTongPhong.Text = "Tổng: " + dgvPhong.RowCount + " phòng";
         }
 
+        // Tìm kiếm
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             string keyword = txtTimKiem.Text.Trim().ToLower();
-            if (!dgvPhong.Columns.Contains("SoPhong") && !dgvPhong.Columns.Contains("TenLoai")) return;
-
             foreach (DataGridViewRow row in dgvPhong.Rows)
             {
-                string soPhong = dgvPhong.Columns.Contains("SoPhong")
-                    ? row.Cells["SoPhong"].Value?.ToString().ToLower() ?? ""
-                    : "";
-                string tenLoai = dgvPhong.Columns.Contains("TenLoai")
-                    ? row.Cells["TenLoai"].Value?.ToString().ToLower() ?? ""
-                    : "";
+                string soPhong = row.Cells["SoPhong"].Value != null ? row.Cells["SoPhong"].Value.ToString().ToLower() : "";
+                string tenLoai = row.Cells["TenLoai"].Value != null ? row.Cells["TenLoai"].Value.ToString().ToLower() : "";
                 row.Visible = soPhong.Contains(keyword) || tenLoai.Contains(keyword);
             }
         }
 
-        private void dgvPhong_SelectionChanged(object sender, EventArgs e)
+        // Định dạng lưới
+        private void FormatGrid()
         {
-            if (_isBindingGrid || dgvPhong.CurrentRow == null || dgvPhong.CurrentRow.IsNewRow) return;
-            var row = dgvPhong.CurrentRow;
-
-            txtMaPhong.Text = dgvPhong.Columns.Contains("MaPhong") ? row.Cells["MaPhong"].Value?.ToString() : "";
-            txtSoPhong.Text = dgvPhong.Columns.Contains("SoPhong") ? row.Cells["SoPhong"].Value?.ToString() : "";
-
-            int tang = 1;
-            if (dgvPhong.Columns.Contains("Tang"))
-                int.TryParse(row.Cells["Tang"].Value?.ToString(), out tang);
-            tang = Math.Max((int)numTang.Minimum, Math.Min((int)numTang.Maximum, tang));
-            numTang.Value = tang;
-
-            txtMoTa.Text = dgvPhong.Columns.Contains("MoTa") ? row.Cells["MoTa"].Value?.ToString() : "";
-
-            // Chọn loại phòng
-            if (cboLoaiPhong.DataSource is System.Collections.IList list)
-            {
-                if (dgvPhong.Columns.Contains("MaLoaiPhong"))
-                {
-                    string maLoai = row.Cells["MaLoaiPhong"].Value?.ToString();
-                    cboLoaiPhong.SelectedValue = int.TryParse(maLoai, out int id) ? id : 0;
-                }
-            }
-
-            // Chọn trạng thái
-            if (dgvPhong.Columns.Contains("TrangThai"))
-                cboTrangThai.Text = row.Cells["TrangThai"].Value?.ToString();
-        }
-
-        private void btnCapNhatTT_Click(object sender, EventArgs e)
-        {
-            if (txtMaPhong.Text == "") return;
-            bool ok = CapNhatTrangThaiPhong(
-                int.Parse(txtMaPhong.Text),
-                cboTrangThai.SelectedItem?.ToString());
-            if (ok) 
-            { 
-                LoadDanhSachPhong(); 
-                MessageBox.Show("Cập nhật trạng thái thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information); 
-            }
-        }
-
-        private bool ThemPhong(Phong p)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    db.Phongs.Add(p);
-                    db.SaveChanges();
-                    MessageBox.Show($"Thêm phòng {p.SoPhong} thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
-
-        private bool CapNhatPhong(Phong p)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    var exist = db.Phongs.Find(p.MaPhong);
-                    if (exist != null)
-                    {
-                        exist.SoPhong = p.SoPhong;
-                        exist.MaLoaiPhong = p.MaLoaiPhong;
-                        exist.Tang = p.Tang;
-                        exist.TrangThai = p.TrangThai;
-                        exist.MoTa = p.MoTa;
-
-                        db.SaveChanges();
-                        MessageBox.Show("Cập nhật phòng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
-                    }
-                    MessageBox.Show("Không tìm thấy phòng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
-
-        private bool XoaPhong(int maPhong)
-        {
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    bool inUse = db.DatPhongs.Any(dp => dp.MaPhong == maPhong && dp.TrangThai != "Đã trả" && dp.TrangThai != "Hủy");
-                    if (inUse)
-                    {
-                        MessageBox.Show("Không thể xóa! Phòng đang có đặt phòng chưa hoàn thành.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-
-                    var p = db.Phongs.Find(maPhong);
-                    if (p != null)
-                    {
-                        db.Phongs.Remove(p); // Actually remove
-                        db.SaveChanges();
-                        MessageBox.Show("Xóa phòng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
-                    }
-                    MessageBox.Show("Không tìm thấy phòng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-        }
-
-        private bool CapNhatTrangThaiPhong(int maPhong, string trangThai)
-        {
-            if (trangThai == null) return false;
-            try
-            {
-                using (var db = new DataContext())
-                {
-                    var p = db.Phongs.Find(maPhong);
-                    if (p != null)
-                    {
-                        p.TrangThai = trangThai;
-                        db.SaveChanges();
-                        return true;
-                    }
-                    return false;
-                }
-            }
-            catch { return false; }
-        }
-
-        // Các hàm hỗ trợ
-        private bool ValidateInput(out Phong p)
-        {
-            p = null;
-            if (string.IsNullOrWhiteSpace(txtSoPhong.Text))
-            { MessageBox.Show("Số phòng không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
-            if (!TryGetSelectedMaLoaiPhong(out int maLoaiPhong))
-            { MessageBox.Show("Vui lòng chọn loại phòng!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning); return false; }
-
-            p = new Phong
-            {
-                SoPhong = txtSoPhong.Text.Trim().ToUpper(),
-                MaLoaiPhong = maLoaiPhong,
-                Tang = Convert.ToInt32(numTang.Value),
-                TrangThai = cboTrangThai.SelectedItem?.ToString() ?? "Trống",
-                MoTa = txtMoTa.Text.Trim()
-            };
-            return true;
-        }
-
-        private bool TryGetSelectedMaLoaiPhong(out int maLoaiPhong)
-        {
-            maLoaiPhong = 0;
-
-            if (cboLoaiPhong.SelectedValue != null && int.TryParse(cboLoaiPhong.SelectedValue.ToString(), out maLoaiPhong))
-                return maLoaiPhong > 0;
-
-            var tenLoai = cboLoaiPhong.Text?.Trim();
-            if (string.IsNullOrWhiteSpace(tenLoai) || _lstLoaiPhong == null) return false;
-
-            var match = _lstLoaiPhong.FirstOrDefault(lp => string.Equals(lp.TenLoai?.Trim(), tenLoai, StringComparison.OrdinalIgnoreCase));
-            if (match != null)
-            {
-                maLoaiPhong = match.MaLoaiPhong;
-                return true;
-            }
-
-            return false;
+            if (dgvPhong.Columns.Count == 0) return;
+            if (dgvPhong.Columns.Contains("MaPhong")) dgvPhong.Columns["MaPhong"].Visible = false;
+            if (dgvPhong.Columns.Contains("MaLoaiPhong")) dgvPhong.Columns["MaLoaiPhong"].Visible = false;
+            if (dgvPhong.Columns.Contains("SoPhong")) { dgvPhong.Columns["SoPhong"].HeaderText = "Số Phòng"; dgvPhong.Columns["SoPhong"].Width = 80; }
+            if (dgvPhong.Columns.Contains("Tang")) { dgvPhong.Columns["Tang"].HeaderText = "Tầng"; dgvPhong.Columns["Tang"].Width = 60; }
+            if (dgvPhong.Columns.Contains("TenLoai")) { dgvPhong.Columns["TenLoai"].HeaderText = "Loại Phòng"; dgvPhong.Columns["TenLoai"].Width = 150; }
+            if (dgvPhong.Columns.Contains("GiaMoiDem")) { dgvPhong.Columns["GiaMoiDem"].HeaderText = "Giá/Đêm"; dgvPhong.Columns["GiaMoiDem"].Width = 110; dgvPhong.Columns["GiaMoiDem"].DefaultCellStyle.Format = "N0"; }
+            if (dgvPhong.Columns.Contains("GiaMoiGio")) { dgvPhong.Columns["GiaMoiGio"].HeaderText = "Giá/Giờ"; dgvPhong.Columns["GiaMoiGio"].Width = 100; dgvPhong.Columns["GiaMoiGio"].DefaultCellStyle.Format = "N0"; }
+            if (dgvPhong.Columns.Contains("TrangThai")) { dgvPhong.Columns["TrangThai"].HeaderText = "Trạng Thái"; dgvPhong.Columns["TrangThai"].Width = 120; }
+            if (dgvPhong.Columns.Contains("MoTa")) { dgvPhong.Columns["MoTa"].HeaderText = "Mô Tả"; dgvPhong.Columns["MoTa"].Width = 200; }
         }
 
         private void ClearForm()

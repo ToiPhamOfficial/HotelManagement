@@ -20,6 +20,8 @@ namespace HotelManagement
         private Button btnThem;
         private Button btnCapNhat;
         private Button btnXoa;
+        private Button btnLuu;
+        private Button btnHuy;
         private Button btnLamMoi;
 
         protected override void Dispose(bool disposing)
@@ -52,6 +54,8 @@ namespace HotelManagement
             btnThem = new Button();
             btnCapNhat = new Button();
             btnXoa = new Button();
+            btnLuu = new Button();
+            btnHuy = new Button();
             btnLamMoi = new Button();
             pnlRight = new Panel();
             dgv = new DataGridView();
@@ -84,6 +88,8 @@ namespace HotelManagement
             pnlLeft.Controls.Add(btnThem);
             pnlLeft.Controls.Add(btnCapNhat);
             pnlLeft.Controls.Add(btnXoa);
+            pnlLeft.Controls.Add(btnLuu);
+            pnlLeft.Controls.Add(btnHuy);
             pnlLeft.Controls.Add(btnLamMoi);
             pnlLeft.Dock = DockStyle.Left;
             pnlLeft.Location = new Point(0, 0);
@@ -231,7 +237,7 @@ namespace HotelManagement
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(120, 33);
             btnThem.TabIndex = 15;
-            btnThem.Text = "➕ Thêm";
+            btnThem.Text = "Thêm";
             btnThem.AutoSize = true;
             btnThem.UseVisualStyleBackColor = false;
             btnThem.Click += btnThem_Click;
@@ -247,7 +253,7 @@ namespace HotelManagement
             btnCapNhat.Name = "btnCapNhat";
             btnCapNhat.Size = new Size(120, 33);
             btnCapNhat.TabIndex = 16;
-            btnCapNhat.Text = "✏️ Cập Nhật";
+            btnCapNhat.Text = "Sửa";
             btnCapNhat.AutoSize = true;
             btnCapNhat.UseVisualStyleBackColor = false;
             btnCapNhat.Click += btnCapNhat_Click;
@@ -263,10 +269,44 @@ namespace HotelManagement
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(120, 33);
             btnXoa.TabIndex = 17;
-            btnXoa.Text = "🗑️ Xóa";
+            btnXoa.Text = "Xóa";
             btnXoa.AutoSize = true;
             btnXoa.UseVisualStyleBackColor = false;
             btnXoa.Click += btnXoa_Click;
+            // 
+            // btnLuu
+            //
+            btnLuu.BackColor = Color.FromArgb(39, 174, 96);
+            btnLuu.Cursor = Cursors.Hand;
+            btnLuu.FlatStyle = FlatStyle.Flat;
+            btnLuu.Font = new Font("Segoe UI", 9F);
+            btnLuu.ForeColor = Color.White;
+            btnLuu.Location = new Point(5, 508);
+            btnLuu.Name = "btnLuu";
+            btnLuu.Size = new Size(120, 33);
+            btnLuu.TabIndex = 19;
+            btnLuu.Text = "Lưu";
+            btnLuu.AutoSize = true;
+            btnLuu.Enabled = false;
+            btnLuu.UseVisualStyleBackColor = false;
+            btnLuu.Click += btnLuu_Click;
+            // 
+            // btnHuy
+            //
+            btnHuy.BackColor = Color.Gray;
+            btnHuy.Cursor = Cursors.Hand;
+            btnHuy.FlatStyle = FlatStyle.Flat;
+            btnHuy.Font = new Font("Segoe UI", 9F);
+            btnHuy.ForeColor = Color.White;
+            btnHuy.Location = new Point(133, 508);
+            btnHuy.Name = "btnHuy";
+            btnHuy.Size = new Size(120, 33);
+            btnHuy.TabIndex = 20;
+            btnHuy.Text = "Không lưu";
+            btnHuy.AutoSize = true;
+            btnHuy.Enabled = false;
+            btnHuy.UseVisualStyleBackColor = false;
+            btnHuy.Click += btnHuy_Click;
             // 
             // btnLamMoi
             // 
@@ -279,7 +319,7 @@ namespace HotelManagement
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(120, 33);
             btnLamMoi.TabIndex = 18;
-            btnLamMoi.Text = "🔃 Làm Mới";
+            btnLamMoi.Text = "Làm Mới";
             btnLamMoi.AutoSize = true;
             btnLamMoi.UseVisualStyleBackColor = false;
             btnLamMoi.Click += btnLamMoi_Click;
@@ -314,9 +354,9 @@ namespace HotelManagement
             dgv.ReadOnly = true;
             dgv.RowHeadersVisible = false;
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.CellEnter += dgv_CellEnter;
             dgv.Size = new Size(710, 565);
             dgv.TabIndex = 0;
-            dgv.SelectionChanged += DgvSelectionChanged;
             // 
             // txtTimKiem
             // 
@@ -346,6 +386,7 @@ namespace HotelManagement
             Controls.Add(pnlRight);
             Controls.Add(pnlLeft);
             Name = "frmKhachHang";
+            this.Load += new System.EventHandler(this.frmKhachHang_Load);
             pnlLeft.ResumeLayout(false);
             pnlLeft.PerformLayout();
             pnlRight.ResumeLayout(false);

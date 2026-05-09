@@ -10,6 +10,8 @@ namespace HotelManagement
 {
     public partial class frmDoiMatKhau : Form
     {
+        DataContext db = new DataContext();
+
         public frmDoiMatKhau()
         {
             InitializeComponent();
@@ -37,20 +39,17 @@ namespace HotelManagement
 
             try
             {
-                using (var db = new DataContext())
+                var taiKhoan = db.TaiKhoans.FirstOrDefault(t => t.MaTaiKhoan == maTK);
+                if (taiKhoan == null)
                 {
-                    var taiKhoan = db.TaiKhoans.FirstOrDefault(t => t.MaTaiKhoan == maTK);
-                    if (taiKhoan == null)
-                    {
-                        MessageBox.Show("Tài khoản không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-
-                    taiKhoan.MatKhau = HashSHA256(matKhauMoi);
-                    db.SaveChanges();
-                    MessageBox.Show("Đổi mật khẩu thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
+                    MessageBox.Show("Tài khoản không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
+
+                taiKhoan.MatKhau = GetMD5(matKhauMoi);
+                db.SaveChanges();
+                MessageBox.Show("Đổi mật khẩu thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
             catch (Exception ex)
             {
@@ -59,14 +58,14 @@ namespace HotelManagement
             }
         }
 
-        private static string HashSHA256(string input)
+        private static string GetMD5(string input)
         {
-            using (var sha = SHA256.Create())
+            using (var md5 = MD5.Create())
             {
-                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+                byte[] bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
                 var sb = new StringBuilder();
-                foreach (byte b in bytes) sb.Append(b.ToString("X2"));
-                return sb.ToString();
+                foreach (byte b in bytes) sb.Append(b.ToString("X2")); // or "x2" based on previous convention
+                return sb.ToString().ToLower(); // Teacher's MD5 usually lowercase, let's keep lowercase x2
             }
         }
     }

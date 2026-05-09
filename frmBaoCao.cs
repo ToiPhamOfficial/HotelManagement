@@ -9,6 +9,8 @@ namespace HotelManagement
 {
     public partial class frmBaoCao : Form
     {
+        DataContext db = new DataContext();
+
         public frmBaoCao()
         {
             InitializeComponent();
@@ -29,30 +31,27 @@ namespace HotelManagement
             int nam = (int)numNam.Value;
             int thang = cboThang.SelectedIndex;
 
-            using (var db = new DataContext())
+            var dt = db.Database.SqlQuery<ThongKeResult>("EXEC SP_ThongKeDoanhThu {0}, {1}", nam, thang).ToList();
+            dgv.DataSource = dt;
+
+            if (dgv.Columns.Contains("Thang")) dgv.Columns["Thang"].HeaderText = "Tháng";
+            if (dgv.Columns.Contains("SoHoaDon")) dgv.Columns["SoHoaDon"].HeaderText = "Số Hóa Đơn";
+            if (dgv.Columns.Contains("TongTienPhong")) dgv.Columns["TongTienPhong"].HeaderText = "Tiền Phòng (đ)";
+            if (dgv.Columns.Contains("TongTienDichVu")) dgv.Columns["TongTienDichVu"].HeaderText = "Tiền DV (đ)";
+            if (dgv.Columns.Contains("TongDoanhThu")) dgv.Columns["TongDoanhThu"].HeaderText = "Tổng Doanh Thu (đ)";
+
+            foreach (DataGridViewColumn col in dgv.Columns)
             {
-                var dt = db.Database.SqlQuery<ThongKeResult>("EXEC SP_ThongKeDoanhThu {0}, {1}", nam, thang).ToList();
-                dgv.DataSource = dt;
-
-                if (dgv.Columns.Contains("Thang")) dgv.Columns["Thang"].HeaderText = "Tháng";
-                if (dgv.Columns.Contains("SoHoaDon")) dgv.Columns["SoHoaDon"].HeaderText = "Số Hóa Đơn";
-                if (dgv.Columns.Contains("TongTienPhong")) dgv.Columns["TongTienPhong"].HeaderText = "Tiền Phòng (đ)";
-                if (dgv.Columns.Contains("TongTienDichVu")) dgv.Columns["TongTienDichVu"].HeaderText = "Tiền DV (đ)";
-                if (dgv.Columns.Contains("TongDoanhThu")) dgv.Columns["TongDoanhThu"].HeaderText = "Tổng Doanh Thu (đ)";
-
-                foreach (DataGridViewColumn col in dgv.Columns)
-                {
-                    if (col.Name.StartsWith("Tong") || col.Name.StartsWith("Tien"))
-                        col.DefaultCellStyle.Format = "N0";
-                }
-
-                decimal tong = 0;
-                foreach (var r in dt)
-                {
-                    tong += r.TongDoanhThu;
-                }
-                lblTongDoanhThu.Text = $"Tổng: {tong:N0} đ";
+                if (col.Name.StartsWith("Tong") || col.Name.StartsWith("Tien"))
+                    col.DefaultCellStyle.Format = "N0";
             }
+
+            decimal tong = 0;
+            foreach (var r in dt)
+            {
+                tong += r.TongDoanhThu;
+            }
+            lblTongDoanhThu.Text = $"Tổng: {tong:N0} đ";
         }
 
         private void InBaoCao()

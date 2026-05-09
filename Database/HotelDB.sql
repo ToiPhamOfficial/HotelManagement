@@ -94,7 +94,7 @@ GO
 CREATE TABLE TaiKhoan (
     MaTaiKhoan      INT IDENTITY(1,1) PRIMARY KEY,
     TenDangNhap     NVARCHAR(50)    NOT NULL UNIQUE,
-    MatKhau         NVARCHAR(256)   NOT NULL,  -- Lưu hash SHA256
+    MatKhau         NVARCHAR(256)   NOT NULL,  -- Lưu hash MD5
     MaNhanVien      INT             NOT NULL,
     VaiTro          NVARCHAR(20)    NOT NULL DEFAULT 'NhanVien',
                                     -- Admin / QuanLy / NhanVien
@@ -331,13 +331,13 @@ INSERT INTO NhanVien (HoTen, CCCD, GioiTinh, NgaySinh, DiaChi, SoDienThoai, Emai
 (N'Phạm Thị Dung',   '004567890123', N'Nữ',   '1993-11-25', N'Huế',      '0934567890', 'dung.pt@hotel.com',  N'Kế toán',    10000000),
 (N'Hoàng Văn Em',    '005678901234', N'Nam',  '2000-07-05', N'Vinh',     '0945678901', 'em.hv@hotel.com',    N'Nhân viên',   6000000);
 
--- Tài khoản (mật khẩu: Admin@123 → hash SHA256)
+-- Tài khoản (mật khẩu: Admin@123 → hash MD5)
 INSERT INTO TaiKhoan (TenDangNhap, MatKhau, MaNhanVien, VaiTro) VALUES
-('admin',    '0A041B9462CCA1A2FF18D0836F0B8ECEED2E9135B14A37E24E57E1E37E0B5D89', 1, 'Admin'),
-('quanly',   '0A041B9462CCA1A2FF18D0836F0B8ECEED2E9135B14A37E24E57E1E37E0B5D89', 1, 'QuanLy'),
-('letan1',   '0A041B9462CCA1A2FF18D0836F0B8ECEED2E9135B14A37E24E57E1E37E0B5D89', 2, 'NhanVien'),
-('letan2',   '0A041B9462CCA1A2FF18D0836F0B8ECEED2E9135B14A37E24E57E1E37E0B5D89', 3, 'NhanVien'),
-('ketoan',   '0A041B9462CCA1A2FF18D0836F0B8ECEED2E9135B14A37E24E57E1E37E0B5D89', 4, 'NhanVien');
+('admin',    '8a35a57e0481b02e9e71dd48c1f40e0e', 1, 'Admin'),
+('quanly',   '8a35a57e0481b02e9e71dd48c1f40e0e', 1, 'QuanLy'),
+('letan1',   '8a35a57e0481b02e9e71dd48c1f40e0e', 2, 'NhanVien'),
+('letan2',   '8a35a57e0481b02e9e71dd48c1f40e0e', 3, 'NhanVien'),
+('ketoan',   '8a35a57e0481b02e9e71dd48c1f40e0e', 4, 'NhanVien');
 
 -- Khách hàng
 INSERT INTO KhachHang (HoTen, CCCD, GioiTinh, NgaySinh, DiaChi, SoDienThoai, Email, QuocTich) VALUES
