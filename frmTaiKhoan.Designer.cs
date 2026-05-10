@@ -9,6 +9,7 @@ namespace HotelManagement
         private System.ComponentModel.IContainer components = null;
 
         private Panel pnlLeft;
+        private Label lblMaTaiKhoan;
         private Label lblTenDangNhap;
         private TextBox txtTenDangNhap;
         private Label lblMatKhau;
@@ -44,6 +45,7 @@ namespace HotelManagement
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             this.pnlLeft = new Panel();
+            this.lblMaTaiKhoan = new Label();
             this.txtMaTaiKhoan = new TextBox();
             this.lblTenDangNhap = new Label();
             this.txtTenDangNhap = new TextBox();
@@ -73,6 +75,7 @@ namespace HotelManagement
             // 
             this.pnlLeft.BackColor = Color.White;
             this.pnlLeft.BorderStyle = BorderStyle.FixedSingle;
+            this.pnlLeft.Controls.Add(this.lblMaTaiKhoan);
             this.pnlLeft.Controls.Add(this.txtMaTaiKhoan);
             this.pnlLeft.Controls.Add(this.lblTenDangNhap);
             this.pnlLeft.Controls.Add(this.txtTenDangNhap);
@@ -97,79 +100,98 @@ namespace HotelManagement
             this.pnlLeft.TabIndex = 0;
 
             // 
+            // lblMaTaiKhoan
+            // 
+            this.lblMaTaiKhoan.AutoSize = true;
+            this.lblMaTaiKhoan.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.lblMaTaiKhoan.Location = new Point(13, 10);
+            this.lblMaTaiKhoan.Name = "lblMaTaiKhoan";
+            this.lblMaTaiKhoan.Size = new Size(100, 15);
+            this.lblMaTaiKhoan.TabIndex = 0;
+            this.lblMaTaiKhoan.Text = "Mã Tài Khoản";
+
+            // 
             // txtMaTaiKhoan
             // 
-            this.txtMaTaiKhoan.Location = new Point(13, 13);
+            this.txtMaTaiKhoan.Font = new Font("Segoe UI", 10F);
+            this.txtMaTaiKhoan.Location = new Point(13, 28);
             this.txtMaTaiKhoan.Name = "txtMaTaiKhoan";
-            this.txtMaTaiKhoan.Size = new Size(100, 23);
-            this.txtMaTaiKhoan.TabIndex = 0;
-            this.txtMaTaiKhoan.Visible = false;
+            this.txtMaTaiKhoan.Enabled = false;
+            this.txtMaTaiKhoan.Size = new Size(250, 25);
+            this.txtMaTaiKhoan.TabIndex = 1;
 
             // 
             // lblNhanVien
             // 
             this.lblNhanVien.AutoSize = true;
             this.lblNhanVien.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblNhanVien.Location = new Point(13, 20);
+            this.lblNhanVien.Location = new Point(13, 66);
             this.lblNhanVien.Name = "lblNhanVien";
             this.lblNhanVien.Size = new Size(74, 15);
             this.lblNhanVien.Text = "Nhân Viên *";
+            this.lblNhanVien.TabIndex = 2;
 
             // 
             // cboNhanVien
             // 
             this.cboNhanVien.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cboNhanVien.Font = new Font("Segoe UI", 10F);
-            this.cboNhanVien.Location = new Point(13, 38);
+            this.cboNhanVien.Location = new Point(13, 84);
             this.cboNhanVien.Name = "cboNhanVien";
             this.cboNhanVien.Size = new Size(250, 25);
+            this.cboNhanVien.TabIndex = 3;
 
             // 
             // lblTenDangNhap
             // 
             this.lblTenDangNhap.AutoSize = true;
             this.lblTenDangNhap.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblTenDangNhap.Location = new Point(13, 76);
+            this.lblTenDangNhap.Location = new Point(13, 122);
             this.lblTenDangNhap.Name = "lblTenDangNhap";
             this.lblTenDangNhap.Size = new Size(100, 15);
             this.lblTenDangNhap.Text = "Tên Đăng Nhập *";
+            this.lblTenDangNhap.TabIndex = 4;
 
             // 
             // txtTenDangNhap
             // 
             this.txtTenDangNhap.Font = new Font("Segoe UI", 10F);
-            this.txtTenDangNhap.Location = new Point(13, 94);
+            this.txtTenDangNhap.Location = new Point(13, 140);
             this.txtTenDangNhap.Name = "txtTenDangNhap";
             this.txtTenDangNhap.Size = new Size(250, 25);
+            this.txtTenDangNhap.TabIndex = 5;
 
             // 
             // lblMatKhau
             // 
             this.lblMatKhau.AutoSize = true;
             this.lblMatKhau.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblMatKhau.Location = new Point(13, 132);
+            this.lblMatKhau.Location = new Point(13, 178);
             this.lblMatKhau.Name = "lblMatKhau";
             this.lblMatKhau.Size = new Size(183, 15);
             this.lblMatKhau.Text = "Mật Khẩu (Chỉ khi thêm/reset) *";
+            this.lblMatKhau.TabIndex = 6;
 
             // 
             // txtMatKhau
             // 
             this.txtMatKhau.Font = new Font("Segoe UI", 10F);
-            this.txtMatKhau.Location = new Point(13, 150);
+            this.txtMatKhau.Location = new Point(13, 196);
             this.txtMatKhau.Name = "txtMatKhau";
             this.txtMatKhau.PasswordChar = '*';
             this.txtMatKhau.Size = new Size(250, 25);
+            this.txtMatKhau.TabIndex = 7;
 
             // 
             // lblVaiTro
             // 
             this.lblVaiTro.AutoSize = true;
             this.lblVaiTro.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblVaiTro.Location = new Point(13, 188);
+            this.lblVaiTro.Location = new Point(13, 234);
             this.lblVaiTro.Name = "lblVaiTro";
             this.lblVaiTro.Size = new Size(54, 15);
             this.lblVaiTro.Text = "Vai Trò *";
+            this.lblVaiTro.TabIndex = 8;
 
             // 
             // cboVaiTro
@@ -177,9 +199,10 @@ namespace HotelManagement
             this.cboVaiTro.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cboVaiTro.Font = new Font("Segoe UI", 10F);
             this.cboVaiTro.Items.AddRange(new object[] { "Admin", "Quản Lý", "Nhân Viên" });
-            this.cboVaiTro.Location = new Point(13, 206);
+            this.cboVaiTro.Location = new Point(13, 252);
             this.cboVaiTro.Name = "cboVaiTro";
             this.cboVaiTro.Size = new Size(250, 25);
+            this.cboVaiTro.TabIndex = 9;
 
             // 
             // chkTrangThai
@@ -188,10 +211,11 @@ namespace HotelManagement
             this.chkTrangThai.Checked = true;
             this.chkTrangThai.CheckState = CheckState.Checked;
             this.chkTrangThai.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.chkTrangThai.Location = new Point(13, 250);
+            this.chkTrangThai.Location = new Point(13, 296);
             this.chkTrangThai.Name = "chkTrangThai";
             this.chkTrangThai.Size = new Size(153, 19);
             this.chkTrangThai.Text = "Đang hoạt động (Khóa)";
+            this.chkTrangThai.TabIndex = 10;
 
             // 
             // btnThem
@@ -200,11 +224,12 @@ namespace HotelManagement
             this.btnThem.Cursor = Cursors.Hand;
             this.btnThem.FlatStyle = FlatStyle.Flat;
             this.btnThem.ForeColor = Color.White;
-            this.btnThem.Location = new Point(13, 300);
+            this.btnThem.Location = new Point(13, 336);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new Size(120, 33);
             this.btnThem.Text = "Thêm";
             this.btnThem.AutoSize = true;
+            this.btnThem.TabIndex = 11;
             this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new EventHandler(this.btnThem_Click);
 
@@ -212,11 +237,12 @@ namespace HotelManagement
             this.btnCapNhat.Cursor = Cursors.Hand;
             this.btnCapNhat.FlatStyle = FlatStyle.Flat;
             this.btnCapNhat.ForeColor = Color.White;
-            this.btnCapNhat.Location = new Point(143, 300);
+            this.btnCapNhat.Location = new Point(143, 336);
             this.btnCapNhat.Name = "btnCapNhat";
             this.btnCapNhat.Size = new Size(120, 33);
             this.btnCapNhat.Text = "Sửa";
             this.btnCapNhat.AutoSize = true;
+            this.btnCapNhat.TabIndex = 12;
             this.btnCapNhat.UseVisualStyleBackColor = false;
             this.btnCapNhat.Click += new EventHandler(this.btnCapNhat_Click);
 
@@ -224,11 +250,12 @@ namespace HotelManagement
             this.btnXoa.Cursor = Cursors.Hand;
             this.btnXoa.FlatStyle = FlatStyle.Flat;
             this.btnXoa.ForeColor = Color.White;
-            this.btnXoa.Location = new Point(13, 345);
+            this.btnXoa.Location = new Point(13, 381);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new Size(120, 33);
             this.btnXoa.Text = "Xóa/Khóa";
             this.btnXoa.AutoSize = true;
+            this.btnXoa.TabIndex = 13;
             this.btnXoa.UseVisualStyleBackColor = false;
             this.btnXoa.Click += new EventHandler(this.btnXoa_Click);
 
@@ -236,12 +263,13 @@ namespace HotelManagement
             this.btnLuu.Cursor = Cursors.Hand;
             this.btnLuu.FlatStyle = FlatStyle.Flat;
             this.btnLuu.ForeColor = Color.White;
-            this.btnLuu.Location = new Point(13, 390);
+            this.btnLuu.Location = new Point(13, 426);
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new Size(120, 33);
             this.btnLuu.Text = "Lưu";
             this.btnLuu.AutoSize = true;
             this.btnLuu.Enabled = false;
+            this.btnLuu.TabIndex = 14;
             this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new EventHandler(this.btnLuu_Click);
 
@@ -249,12 +277,13 @@ namespace HotelManagement
             this.btnHuy.Cursor = Cursors.Hand;
             this.btnHuy.FlatStyle = FlatStyle.Flat;
             this.btnHuy.ForeColor = Color.White;
-            this.btnHuy.Location = new Point(143, 390);
+            this.btnHuy.Location = new Point(143, 426);
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new Size(120, 33);
             this.btnHuy.Text = "Không lưu";
             this.btnHuy.AutoSize = true;
             this.btnHuy.Enabled = false;
+            this.btnHuy.TabIndex = 15;
             this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new EventHandler(this.btnHuy_Click);
 
@@ -262,11 +291,12 @@ namespace HotelManagement
             this.btnLamMoi.Cursor = Cursors.Hand;
             this.btnLamMoi.FlatStyle = FlatStyle.Flat;
             this.btnLamMoi.ForeColor = Color.White;
-            this.btnLamMoi.Location = new Point(143, 345);
+            this.btnLamMoi.Location = new Point(143, 381);
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new Size(120, 33);
             this.btnLamMoi.Text = "Làm Mới";
             this.btnLamMoi.AutoSize = true;
+            this.btnLamMoi.TabIndex = 16;
             this.btnLamMoi.UseVisualStyleBackColor = false;
             this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
 

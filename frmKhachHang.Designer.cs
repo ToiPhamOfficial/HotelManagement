@@ -23,6 +23,7 @@ namespace HotelManagement
         private Button btnLuu;
         private Button btnHuy;
         private Button btnLamMoi;
+        private Label lblMaKH;
 
         protected override void Dispose(bool disposing)
         {
@@ -37,6 +38,8 @@ namespace HotelManagement
         {
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pnlLeft = new Panel();
+            lblMaKH = new Label();
+            txtMaKH = new TextBox();
             lblHoTen = new Label();
             txtHoTen = new TextBox();
             lblCCCD = new Label();
@@ -60,7 +63,6 @@ namespace HotelManagement
             pnlRight = new Panel();
             dgv = new DataGridView();
             txtTimKiem = new TextBox();
-            txtMaKH = new TextBox();
             pnlLeft.SuspendLayout();
             pnlRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv).BeginInit();
@@ -70,6 +72,7 @@ namespace HotelManagement
             // 
             pnlLeft.BackColor = Color.White;
             pnlLeft.BorderStyle = BorderStyle.FixedSingle;
+            pnlLeft.Controls.Add(lblMaKH);
             pnlLeft.Controls.Add(txtMaKH);
             pnlLeft.Controls.Add(lblHoTen);
             pnlLeft.Controls.Add(txtHoTen);
@@ -98,104 +101,123 @@ namespace HotelManagement
             pnlLeft.Size = new Size(280, 600);
             pnlLeft.TabIndex = 1;
             // 
+            // lblMaKH
+            // 
+            lblMaKH.AutoSize = true;
+            lblMaKH.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblMaKH.Location = new Point(5, 10);
+            lblMaKH.Name = "lblMaKH";
+            lblMaKH.Size = new Size(100, 15);
+            lblMaKH.TabIndex = 0;
+            lblMaKH.Text = "Mã Khách Hàng";
+            // 
+            // txtMaKH
+            // 
+            txtMaKH.Font = new Font("Segoe UI", 10F);
+            txtMaKH.Location = new Point(5, 28);
+            txtMaKH.Name = "txtMaKH";
+            txtMaKH.Enabled = false;
+            txtMaKH.Size = new Size(255, 25);
+            txtMaKH.TabIndex = 1;
+            // 
             // lblHoTen
             // 
             lblHoTen.AutoSize = true;
             lblHoTen.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblHoTen.Location = new Point(5, 10);
+            lblHoTen.Location = new Point(5, 68);
             lblHoTen.Name = "lblHoTen";
             lblHoTen.Size = new Size(54, 15);
-            lblHoTen.TabIndex = 1;
+            lblHoTen.TabIndex = 2;
             lblHoTen.Text = "Họ Tên *";
             // 
             // txtHoTen
             // 
             txtHoTen.Font = new Font("Segoe UI", 10F);
-            txtHoTen.Location = new Point(5, 28);
+            txtHoTen.Location = new Point(5, 86);
             txtHoTen.Name = "txtHoTen";
             txtHoTen.Size = new Size(255, 25);
-            txtHoTen.TabIndex = 2;
+            txtHoTen.TabIndex = 3;
             // 
             // lblCCCD
             // 
             lblCCCD.AutoSize = true;
             lblCCCD.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblCCCD.Location = new Point(5, 68);
+            lblCCCD.Location = new Point(5, 126);
             lblCCCD.Name = "lblCCCD";
             lblCCCD.Size = new Size(100, 15);
-            lblCCCD.TabIndex = 3;
+            lblCCCD.TabIndex = 4;
             lblCCCD.Text = "CCCD/Hộ Chiếu *";
             // 
             // txtCCCD
             // 
             txtCCCD.Font = new Font("Segoe UI", 10F);
-            txtCCCD.Location = new Point(5, 86);
+            txtCCCD.Location = new Point(5, 144);
             txtCCCD.Name = "txtCCCD";
             txtCCCD.Size = new Size(255, 25);
-            txtCCCD.TabIndex = 4;
+            txtCCCD.TabIndex = 5;
             // 
             // lblSDT
             // 
             lblSDT.AutoSize = true;
             lblSDT.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSDT.Location = new Point(5, 126);
+            lblSDT.Location = new Point(5, 184);
             lblSDT.Name = "lblSDT";
             lblSDT.Size = new Size(91, 15);
-            lblSDT.TabIndex = 5;
+            lblSDT.TabIndex = 6;
             lblSDT.Text = "Số Điện Thoại *";
             // 
             // txtSDT
             // 
             txtSDT.Font = new Font("Segoe UI", 10F);
-            txtSDT.Location = new Point(5, 144);
+            txtSDT.Location = new Point(5, 202);
             txtSDT.Name = "txtSDT";
             txtSDT.Size = new Size(255, 25);
-            txtSDT.TabIndex = 6;
+            txtSDT.TabIndex = 7;
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblEmail.Location = new Point(5, 184);
+            lblEmail.Location = new Point(5, 242);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(36, 15);
-            lblEmail.TabIndex = 7;
+            lblEmail.TabIndex = 8;
             lblEmail.Text = "Email";
             // 
             // txtEmail
             // 
             txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(5, 202);
+            txtEmail.Location = new Point(5, 260);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(255, 25);
-            txtEmail.TabIndex = 8;
+            txtEmail.TabIndex = 9;
             // 
             // lblDiaChi
             // 
             lblDiaChi.AutoSize = true;
             lblDiaChi.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDiaChi.Location = new Point(5, 242);
+            lblDiaChi.Location = new Point(5, 300);
             lblDiaChi.Name = "lblDiaChi";
             lblDiaChi.Size = new Size(45, 15);
-            lblDiaChi.TabIndex = 9;
+            lblDiaChi.TabIndex = 10;
             lblDiaChi.Text = "Địa Chỉ";
             // 
             // txtDiaChi
             // 
             txtDiaChi.Font = new Font("Segoe UI", 10F);
-            txtDiaChi.Location = new Point(5, 260);
+            txtDiaChi.Location = new Point(5, 318);
             txtDiaChi.Name = "txtDiaChi";
             txtDiaChi.Size = new Size(255, 25);
-            txtDiaChi.TabIndex = 10;
+            txtDiaChi.TabIndex = 11;
             // 
             // lblGioiTinh
             // 
             lblGioiTinh.AutoSize = true;
             lblGioiTinh.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblGioiTinh.Location = new Point(5, 300);
+            lblGioiTinh.Location = new Point(5, 358);
             lblGioiTinh.Name = "lblGioiTinh";
             lblGioiTinh.Size = new Size(57, 15);
-            lblGioiTinh.TabIndex = 11;
+            lblGioiTinh.TabIndex = 12;
             lblGioiTinh.Text = "Giới Tính";
             // 
             // cboGioiTinh
@@ -203,28 +225,28 @@ namespace HotelManagement
             cboGioiTinh.DropDownStyle = ComboBoxStyle.DropDownList;
             cboGioiTinh.Font = new Font("Segoe UI", 10F);
             cboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ", "Khác" });
-            cboGioiTinh.Location = new Point(5, 318);
+            cboGioiTinh.Location = new Point(5, 376);
             cboGioiTinh.Name = "cboGioiTinh";
             cboGioiTinh.Size = new Size(255, 25);
-            cboGioiTinh.TabIndex = 12;
+            cboGioiTinh.TabIndex = 13;
             // 
             // lblNgaySinh
             // 
             lblNgaySinh.AutoSize = true;
             lblNgaySinh.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblNgaySinh.Location = new Point(5, 358);
+            lblNgaySinh.Location = new Point(5, 416);
             lblNgaySinh.Name = "lblNgaySinh";
             lblNgaySinh.Size = new Size(62, 15);
-            lblNgaySinh.TabIndex = 13;
+            lblNgaySinh.TabIndex = 14;
             lblNgaySinh.Text = "Ngày Sinh";
             // 
             // dtpNgaySinh
             // 
             dtpNgaySinh.Format = DateTimePickerFormat.Short;
-            dtpNgaySinh.Location = new Point(5, 376);
+            dtpNgaySinh.Location = new Point(5, 434);
             dtpNgaySinh.Name = "dtpNgaySinh";
             dtpNgaySinh.Size = new Size(255, 23);
-            dtpNgaySinh.TabIndex = 14;
+            dtpNgaySinh.TabIndex = 15;
             // 
             // btnThem
             // 
@@ -233,10 +255,10 @@ namespace HotelManagement
             btnThem.FlatStyle = FlatStyle.Flat;
             btnThem.Font = new Font("Segoe UI", 9F);
             btnThem.ForeColor = Color.White;
-            btnThem.Location = new Point(5, 424);
+            btnThem.Location = new Point(5, 473);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(120, 33);
-            btnThem.TabIndex = 15;
+            btnThem.TabIndex = 16;
             btnThem.Text = "Thêm";
             btnThem.AutoSize = true;
             btnThem.UseVisualStyleBackColor = false;
@@ -249,10 +271,10 @@ namespace HotelManagement
             btnCapNhat.FlatStyle = FlatStyle.Flat;
             btnCapNhat.Font = new Font("Segoe UI", 9F);
             btnCapNhat.ForeColor = Color.White;
-            btnCapNhat.Location = new Point(133, 424);
+            btnCapNhat.Location = new Point(133, 473);
             btnCapNhat.Name = "btnCapNhat";
             btnCapNhat.Size = new Size(120, 33);
-            btnCapNhat.TabIndex = 16;
+            btnCapNhat.TabIndex = 17;
             btnCapNhat.Text = "Sửa";
             btnCapNhat.AutoSize = true;
             btnCapNhat.UseVisualStyleBackColor = false;
@@ -265,10 +287,10 @@ namespace HotelManagement
             btnXoa.FlatStyle = FlatStyle.Flat;
             btnXoa.Font = new Font("Segoe UI", 9F);
             btnXoa.ForeColor = Color.White;
-            btnXoa.Location = new Point(5, 466);
+            btnXoa.Location = new Point(5, 515);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(120, 33);
-            btnXoa.TabIndex = 17;
+            btnXoa.TabIndex = 18;
             btnXoa.Text = "Xóa";
             btnXoa.AutoSize = true;
             btnXoa.UseVisualStyleBackColor = false;
@@ -281,10 +303,10 @@ namespace HotelManagement
             btnLuu.FlatStyle = FlatStyle.Flat;
             btnLuu.Font = new Font("Segoe UI", 9F);
             btnLuu.ForeColor = Color.White;
-            btnLuu.Location = new Point(5, 508);
+            btnLuu.Location = new Point(5, 557);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(120, 33);
-            btnLuu.TabIndex = 19;
+            btnLuu.TabIndex = 20;
             btnLuu.Text = "Lưu";
             btnLuu.AutoSize = true;
             btnLuu.Enabled = false;
@@ -298,10 +320,10 @@ namespace HotelManagement
             btnHuy.FlatStyle = FlatStyle.Flat;
             btnHuy.Font = new Font("Segoe UI", 9F);
             btnHuy.ForeColor = Color.White;
-            btnHuy.Location = new Point(133, 508);
+            btnHuy.Location = new Point(133, 557);
             btnHuy.Name = "btnHuy";
             btnHuy.Size = new Size(120, 33);
-            btnHuy.TabIndex = 20;
+            btnHuy.TabIndex = 21;
             btnHuy.Text = "Không lưu";
             btnHuy.AutoSize = true;
             btnHuy.Enabled = false;
@@ -315,10 +337,10 @@ namespace HotelManagement
             btnLamMoi.FlatStyle = FlatStyle.Flat;
             btnLamMoi.Font = new Font("Segoe UI", 9F);
             btnLamMoi.ForeColor = Color.White;
-            btnLamMoi.Location = new Point(133, 466);
+            btnLamMoi.Location = new Point(133, 515);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(120, 33);
-            btnLamMoi.TabIndex = 18;
+            btnLamMoi.TabIndex = 19;
             btnLamMoi.Text = "Làm Mới";
             btnLamMoi.AutoSize = true;
             btnLamMoi.UseVisualStyleBackColor = false;
@@ -364,18 +386,9 @@ namespace HotelManagement
             txtTimKiem.Font = new Font("Segoe UI", 10F);
             txtTimKiem.Location = new Point(5, 5);
             txtTimKiem.Name = "txtTimKiem";
-
             txtTimKiem.Size = new Size(710, 25);
             txtTimKiem.TabIndex = 1;
             txtTimKiem.TextChanged += txtTimKiem_TextChanged;
-            // 
-            // txtMaKH
-            // 
-            txtMaKH.Location = new Point(47, 13);
-            txtMaKH.Name = "txtMaKH";
-            txtMaKH.Size = new Size(100, 23);
-            txtMaKH.TabIndex = 0;
-            txtMaKH.Visible = false;
             // 
             // frmKhachHang
             // 
