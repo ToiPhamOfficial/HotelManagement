@@ -393,7 +393,7 @@ namespace HotelManagement
             // frmKhachHang
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "👤 Quản Lý Khách Hàng";
+            this.Text = "Quản Lý Khách Hàng";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 600);
             Controls.Add(pnlRight);

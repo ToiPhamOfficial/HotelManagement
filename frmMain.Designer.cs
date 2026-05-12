@@ -84,54 +84,54 @@ namespace HotelManagement
             // mnuQuanLyPhong
             // 
             mnuQuanLyPhong.ForeColor = Color.White;
-            mnuQuanLyPhong.Text = "🏠 Quản Lý Phòng";
-            mnuQuanLyPhong.DropDownItems.Add("📋 Danh Sách Phòng", null, mnuQuanLyPhong_Click);
-            mnuDatPhong.Text = "📥 Đặt Phòng Mới";
+            mnuQuanLyPhong.Text = "Quản Lý Phòng";
+            mnuQuanLyPhong.DropDownItems.Add("Danh Sách Phòng", null, mnuQuanLyPhong_Click);
+            mnuDatPhong.Text = "Đặt Phòng Mới";
             mnuDatPhong.Click += mnuDatPhong_Click;
-            mnuCheckIn.Text = "✅ Check-In";
+            mnuCheckIn.Text = "Check-In";
             mnuCheckIn.Click += mnuCheckIn_Click;
-            mnuCheckOut.Text = "🚪 Check-Out";
+            mnuCheckOut.Text = "Check-Out";
             mnuCheckOut.Click += mnuCheckOut_Click;
             mnuQuanLyPhong.DropDownItems.AddRange(new ToolStripItem[] { mnuDatPhong, mnuCheckIn, mnuCheckOut });
             // 
             // mnuKhachHang
             // 
             mnuKhachHang.ForeColor = Color.White;
-            mnuKhachHang.Text = "👤 Khách Hàng";
-            mnuKhachHang.DropDownItems.Add("📋 Danh Sách Khách Hàng", null, mnuKhachHang_Click);
+            mnuKhachHang.Text = "Khách Hàng";
+            mnuKhachHang.DropDownItems.Add("Danh Sách Khách Hàng", null, mnuKhachHang_Click);
             // 
             // mnuDichVu
             // 
             mnuDichVu.ForeColor = Color.White;
-            mnuDichVu.Text = "🛎 Dịch Vụ";
-            mnuDichVu.DropDownItems.Add("📋 Quản Lý Dịch Vụ", null, mnuDichVu_Click);
+            mnuDichVu.Text = "Dịch Vụ";
+            mnuDichVu.DropDownItems.Add("Quản Lý Dịch Vụ", null, mnuDichVu_Click);
             // 
             // mnuHoaDon
             // 
             mnuHoaDon.ForeColor = Color.White;
-            mnuHoaDon.Text = "🧾 Hóa Đơn";
-            mnuHoaDon.DropDownItems.Add("📋 Quản Lý Hóa Đơn", null, mnuHoaDon_Click);
+            mnuHoaDon.Text = "Hóa Đơn";
+            mnuHoaDon.DropDownItems.Add("Quản Lý Hóa Đơn", null, mnuHoaDon_Click);
             // 
             // mnuNhanVien
             // 
             mnuNhanVien.ForeColor = Color.White;
-            mnuNhanVien.Text = "👥 Nhân Viên";
-            mnuNhanVien.DropDownItems.Add("📋 Danh Sách Nhân Viên", null, mnuNhanVien_Click);
+            mnuNhanVien.Text = "Nhân Viên";
+            mnuNhanVien.DropDownItems.Add("Danh Sách Nhân Viên", null, mnuNhanVien_Click);
             // 
             // mnuTaiKhoan
             // 
             mnuTaiKhoan.ForeColor = Color.White;
-            mnuTaiKhoan.Text = "🔑 Tài Khoản";
-            mnuTaiKhoan.DropDownItems.Add("📋 Quản Lý Tài Khoản", null, mnuTaiKhoan_Click);
+            mnuTaiKhoan.Text = "Tài Khoản";
+            mnuTaiKhoan.DropDownItems.Add("Quản Lý Tài Khoản", null, mnuTaiKhoan_Click);
             mnuTaiKhoan.DropDownItems.Add(new ToolStripSeparator());
-            mnuTaiKhoan.DropDownItems.Add("🔒 Đổi Mật Khẩu", null, mnuDoiMatKhau_Click);
-            mnuTaiKhoan.DropDownItems.Add("🚪 Đăng Xuất", null, mnuDangXuat_Click);
+            mnuTaiKhoan.DropDownItems.Add("Đổi Mật Khẩu", null, mnuDoiMatKhau_Click);
+            mnuTaiKhoan.DropDownItems.Add("Đăng Xuất", null, mnuDangXuat_Click);
             // 
             // mnuBaoCao
             // 
             mnuBaoCao.ForeColor = Color.White;
-            mnuBaoCao.Text = "📊 Báo Cáo";
-            mnuBaoCao.DropDownItems.Add("📈 Thống Kê Doanh Thu", null, mnuBaoCao_Click);
+            mnuBaoCao.Text = "Báo Cáo";
+            mnuBaoCao.DropDownItems.Add("Thống Kê Doanh Thu", null, mnuBaoCao_Click);
             // 
             // pnlHeader
             // 
@@ -154,7 +154,7 @@ namespace HotelManagement
             lblChaoMung.Name = "lblChaoMung";
             lblChaoMung.Size = new Size(324, 20);
             lblChaoMung.TabIndex = 0;
-            lblChaoMung.Text = "Xin chào, Nhân viên! 👋  |  Thứ Bảy, 18/04/2026";
+            lblChaoMung.Text = "Xin chào, Nhân viên!  |  Thứ Bảy, 18/04/2026";
             // 
             // lblCapNhat
             // 
@@ -178,7 +178,7 @@ namespace HotelManagement
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(35, 30);
             btnRefresh.TabIndex = 2;
-            btnRefresh.Text = "🔄";
+            btnRefresh.Text = "Làm mới";
             btnRefresh.AutoSize = true;
             btnRefresh.UseVisualStyleBackColor = false;
             btnRefresh.Click += btnRefresh_Click;
@@ -214,7 +214,7 @@ namespace HotelManagement
             lblTitlePhongTrong.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitlePhongTrong.Font = new Font("Segoe UI", 9F);
             lblTitlePhongTrong.Location = new Point(10, 12);
-            lblTitlePhongTrong.Text = "🟢 Phòng Trống";
+            lblTitlePhongTrong.Text = "Phòng Trống";
             // 
             // lblValuePhongTrong
             // 
@@ -239,7 +239,7 @@ namespace HotelManagement
             lblTitlePhongDung.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitlePhongDung.Font = new Font("Segoe UI", 9F);
             lblTitlePhongDung.Location = new Point(10, 12);
-            lblTitlePhongDung.Text = "🔴 Đang Sử Dụng";
+            lblTitlePhongDung.Text = "Đang Sử Dụng";
             // 
             // lblValuePhongDung
             // 
@@ -264,7 +264,7 @@ namespace HotelManagement
             lblTitlePhongBaoTri.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitlePhongBaoTri.Font = new Font("Segoe UI", 9F);
             lblTitlePhongBaoTri.Location = new Point(10, 12);
-            lblTitlePhongBaoTri.Text = "🟡 Bảo Trì / Dọn Dẹp";
+            lblTitlePhongBaoTri.Text = "Bảo Trì / Dọn Dẹp";
             // 
             // lblValuePhongBaoTri
             // 
@@ -289,7 +289,7 @@ namespace HotelManagement
             lblTitleCheckIn.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitleCheckIn.Font = new Font("Segoe UI", 9F);
             lblTitleCheckIn.Location = new Point(10, 12);
-            lblTitleCheckIn.Text = "📥 Check-In Hôm Nay";
+            lblTitleCheckIn.Text = "Check-In Hôm Nay";
             // 
             // lblValueCheckIn
             // 
@@ -314,7 +314,7 @@ namespace HotelManagement
             lblTitleCheckOut.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitleCheckOut.Font = new Font("Segoe UI", 9F);
             lblTitleCheckOut.Location = new Point(10, 12);
-            lblTitleCheckOut.Text = "📤 Check-Out Hôm Nay";
+            lblTitleCheckOut.Text = "Check-Out Hôm Nay";
             // 
             // lblValueCheckOut
             // 
@@ -339,7 +339,7 @@ namespace HotelManagement
             lblTitleDoanhThu.ForeColor = Color.FromArgb(220, 240, 255);
             lblTitleDoanhThu.Font = new Font("Segoe UI", 9F);
             lblTitleDoanhThu.Location = new Point(10, 12);
-            lblTitleDoanhThu.Text = "💰 Doanh Thu Hôm Nay";
+            lblTitleDoanhThu.Text = "Doanh Thu Hôm Nay";
             // 
             // lblValueDoanhThu
             // 
@@ -360,7 +360,7 @@ namespace HotelManagement
             Controls.Add(pnlDashboard);
             MainMenuStrip = menuStripMain;
             Name = "frmMain";
-            Text = "🏨 Hotel Manager - Admin";
+            Text = "Hotel Manager - Admin";
             IsMdiContainer = true;
             Load += frmMain_Load;
             menuStripMain.ResumeLayout(false);

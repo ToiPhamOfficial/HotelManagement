@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using HotelManagement.Database;
@@ -26,6 +27,10 @@ namespace HotelManagement
             numTang.Enabled = check;
             cboTrangThai.Enabled = check;
             txtMoTa.Enabled = check;
+            txtGiaMoiGio.Enabled = check;
+            txtGiaMoiDem.Enabled = check;
+            txtGiaMoiGio.ReadOnly = !check;
+            txtGiaMoiDem.ReadOnly = !check;
             btnLuu.Enabled = check;
             btnHuy.Enabled = check;
             btnThem.Enabled = !check;
@@ -95,6 +100,26 @@ namespace HotelManagement
                 ? dgvPhong.Rows[i].Cells["MoTa"].Value.ToString()
                 : "";
 
+            object giaMoiGio = dgvPhong.Rows[i].Cells["GiaMoiGio"].Value;
+            if (giaMoiGio != null && decimal.TryParse(giaMoiGio.ToString(), out decimal giaGio))
+            {
+                txtGiaMoiGio.Text = giaGio.ToString("N0");
+            }
+            else
+            {
+                txtGiaMoiGio.Text = "";
+            }
+
+            object giaMoiDem = dgvPhong.Rows[i].Cells["GiaMoiDem"].Value;
+            if (giaMoiDem != null && decimal.TryParse(giaMoiDem.ToString(), out decimal giaDem))
+            {
+                txtGiaMoiDem.Text = giaDem.ToString("N0");
+            }
+            else
+            {
+                txtGiaMoiDem.Text = "";
+            }
+
             // Chọn loại phòng
             object maLoai = dgvPhong.Rows[i].Cells["MaLoaiPhong"].Value;
             if (maLoai != null)
@@ -104,6 +129,19 @@ namespace HotelManagement
 
             // Chọn trạng thái
             cboTrangThai.Text = dgvPhong.Rows[i].Cells["TrangThai"].Value.ToString();
+        }
+
+        private void cboLoaiPhong_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboLoaiPhong.SelectedItem is LoaiPhong loaiPhong)
+            {
+                txtGiaMoiGio.Text = loaiPhong.GiaMoiGio.ToString("N0");
+                txtGiaMoiDem.Text = loaiPhong.GiaMoiDem.ToString("N0");
+                return;
+            }
+
+            txtGiaMoiGio.Text = "";
+            txtGiaMoiDem.Text = "";
         }
 
         // Nút Thêm mới → bật chế độ thêm
@@ -164,6 +202,28 @@ namespace HotelManagement
                 return;
             }
 
+            if (!decimal.TryParse(txtGiaMoiGio.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal giaMoiGio))
+            {
+                MessageBox.Show("Giá mỗi giờ không hợp lệ!", "Thông báo");
+                txtGiaMoiGio.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(txtGiaMoiDem.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal giaMoiDem))
+            {
+                MessageBox.Show("Giá mỗi đêm không hợp lệ!", "Thông báo");
+                txtGiaMoiDem.Focus();
+                return;
+            }
+
+            int maLoaiPhong = (int)cboLoaiPhong.SelectedValue;
+            LoaiPhong loaiPhongUpdate = db.LoaiPhongs.SingleOrDefault(lp => lp.MaLoaiPhong == maLoaiPhong);
+            if (loaiPhongUpdate != null)
+            {
+                loaiPhongUpdate.GiaMoiGio = giaMoiGio;
+                loaiPhongUpdate.GiaMoiDem = giaMoiDem;
+            }
+
             if (AddNew) // Trường hợp thêm mới
             {
                 // Kiểm tra trùng số phòng
@@ -180,7 +240,7 @@ namespace HotelManagement
                 Phong newPhong = new Phong
                 {
                     SoPhong = soPhong,
-                    MaLoaiPhong = (int)cboLoaiPhong.SelectedValue,
+                    MaLoaiPhong = maLoaiPhong,
                     Tang = Convert.ToInt32(numTang.Value),
                     TrangThai = cboTrangThai.SelectedItem != null ? cboTrangThai.SelectedItem.ToString() : "Trống",
                     MoTa = txtMoTa.Text.Trim(),
@@ -324,6 +384,8 @@ namespace HotelManagement
             txtSoPhong.Text = "";
             numTang.Value = 1;
             txtMoTa.Text = "";
+            txtGiaMoiGio.Text = "";
+            txtGiaMoiDem.Text = "";
             cboLoaiPhong.SelectedIndex = -1;
             cboTrangThai.SelectedIndex = 0;
             dgvPhong.ClearSelection();

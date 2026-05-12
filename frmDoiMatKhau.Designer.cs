@@ -30,7 +30,7 @@ namespace HotelManagement
             SuspendLayout();
 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "🔒 Đổi Mật Khẩu";
+            this.Text = "Đổi Mật Khẩu";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(360, 280);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -52,7 +52,7 @@ namespace HotelManagement
             lblMoi.AutoSize = true;
             lblMoi.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblMoi.Location = new Point(20, 80);
-            lblMoi.Text = "Mật khẩu mới (≥6 ký tự):";
+            lblMoi.Text = "Mật khẩu mới (6 ký tự trở lên):";
 
             txtMoi = new TextBox();
             txtMoi.Font = new Font("Segoe UI", 10F);
@@ -79,7 +79,7 @@ namespace HotelManagement
             btnDoiMatKhau.ForeColor = Color.White;
             btnDoiMatKhau.Location = new Point(60, 210);
             btnDoiMatKhau.Size = new Size(220, 40);
-            btnDoiMatKhau.Text = "✅ Đổi Mật Khẩu";
+            btnDoiMatKhau.Text = "Đổi Mật Khẩu";
             btnDoiMatKhau.AutoSize = true;
             btnDoiMatKhau.Click += btnDoiMatKhau_Click;
 

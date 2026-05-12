@@ -36,250 +36,405 @@ namespace HotelManagement
 
         private void InitializeComponent()
         {
-            var pnlTop = new Panel();
-            var lblTitle = new Label();
-            var lblNgayNhan = new Label();
-            var lblNgayTra = new Label();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.pnlTop = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblNgayNhan = new System.Windows.Forms.Label();
+            this.dtpNgayNhan = new System.Windows.Forms.DateTimePicker();
+            this.lblNgayTra = new System.Windows.Forms.Label();
+            this.dtpNgayTra = new System.Windows.Forms.DateTimePicker();
+            this.rdoTheoNgay = new System.Windows.Forms.RadioButton();
+            this.rdoTheoGio = new System.Windows.Forms.RadioButton();
+            this.btnTimPhong = new System.Windows.Forms.Button();
+            this.lblSoNgay = new System.Windows.Forms.Label();
+            this.pnlMid = new System.Windows.Forms.Panel();
+            this.dgvPhongTrong = new System.Windows.Forms.DataGridView();
+            this.lblPhong = new System.Windows.Forms.Label();
+            this.pnlBot = new System.Windows.Forms.Panel();
+            this.lblTimKH = new System.Windows.Forms.Label();
+            this.txtTimKH = new System.Windows.Forms.TextBox();
+            this.btnTimKH = new System.Windows.Forms.Button();
+            this.btnThemKH = new System.Windows.Forms.Button();
+            this.txtMaKH = new System.Windows.Forms.TextBox();
+            this.lblTenKH = new System.Windows.Forms.Label();
+            this.txtTenKH = new System.Windows.Forms.TextBox();
+            this.lblCCCD = new System.Windows.Forms.Label();
+            this.txtCCCD = new System.Windows.Forms.TextBox();
+            this.lblSDT = new System.Windows.Forms.Label();
+            this.txtSDT = new System.Windows.Forms.TextBox();
+            this.lblTongTien = new System.Windows.Forms.Label();
+            this.btnDatPhong = new System.Windows.Forms.Button();
+            this.pnlTop.SuspendLayout();
+            this.pnlMid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhongTrong)).BeginInit();
+            this.pnlBot.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // pnlTop
+            // 
+            this.pnlTop.BackColor = System.Drawing.Color.White;
+            this.pnlTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTop.Controls.Add(this.lblTitle);
+            this.pnlTop.Controls.Add(this.lblNgayNhan);
+            this.pnlTop.Controls.Add(this.dtpNgayNhan);
+            this.pnlTop.Controls.Add(this.lblNgayTra);
+            this.pnlTop.Controls.Add(this.dtpNgayTra);
+            this.pnlTop.Controls.Add(this.rdoTheoNgay);
+            this.pnlTop.Controls.Add(this.rdoTheoGio);
+            this.pnlTop.Controls.Add(this.btnTimPhong);
+            this.pnlTop.Controls.Add(this.lblSoNgay);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.pnlTop.Size = new System.Drawing.Size(857, 96);
+            this.pnlTop.TabIndex = 2;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.lblTitle.Location = new System.Drawing.Point(9, 4);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(196, 21);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "THÔNG TIN ĐẶT PHÒNG";
+            // 
+            // lblNgayNhan
+            // 
+            this.lblNgayNhan.AutoSize = true;
+            this.lblNgayNhan.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNgayNhan.Location = new System.Drawing.Point(9, 30);
+            this.lblNgayNhan.Name = "lblNgayNhan";
+            this.lblNgayNhan.Size = new System.Drawing.Size(68, 15);
+            this.lblNgayNhan.TabIndex = 1;
+            this.lblNgayNhan.Text = "Ngày nhận:";
+            // 
+            // dtpNgayNhan
+            // 
+            this.dtpNgayNhan.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dtpNgayNhan.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpNgayNhan.Location = new System.Drawing.Point(77, 28);
+            this.dtpNgayNhan.MinDate = new System.DateTime(2026, 5, 11, 0, 0, 0, 0);
+            this.dtpNgayNhan.Name = "dtpNgayNhan";
+            this.dtpNgayNhan.Size = new System.Drawing.Size(155, 20);
+            this.dtpNgayNhan.TabIndex = 2;
+            this.dtpNgayNhan.Value = new System.DateTime(2026, 5, 11, 22, 47, 53, 176);
+            this.dtpNgayNhan.ValueChanged += new System.EventHandler(this.dtpNgayNhan_ValueChanged);
+            // 
+            // lblNgayTra
+            // 
+            this.lblNgayTra.AutoSize = true;
+            this.lblNgayTra.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNgayTra.Location = new System.Drawing.Point(249, 30);
+            this.lblNgayTra.Name = "lblNgayTra";
+            this.lblNgayTra.Size = new System.Drawing.Size(57, 15);
+            this.lblNgayTra.TabIndex = 3;
+            this.lblNgayTra.Text = "Ngày trả:";
+            // 
+            // dtpNgayTra
+            // 
+            this.dtpNgayTra.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dtpNgayTra.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpNgayTra.Location = new System.Drawing.Point(313, 28);
+            this.dtpNgayTra.Name = "dtpNgayTra";
+            this.dtpNgayTra.Size = new System.Drawing.Size(155, 20);
+            this.dtpNgayTra.TabIndex = 4;
+            this.dtpNgayTra.Value = new System.DateTime(2026, 5, 12, 22, 47, 53, 179);
+            this.dtpNgayTra.ValueChanged += new System.EventHandler(this.dtpNgayTra_ValueChanged);
+            // 
+            // rdoTheoNgay
+            // 
+            this.rdoTheoNgay.AutoSize = true;
+            this.rdoTheoNgay.Checked = true;
+            this.rdoTheoNgay.Location = new System.Drawing.Point(480, 30);
+            this.rdoTheoNgay.Name = "rdoTheoNgay";
+            this.rdoTheoNgay.Size = new System.Drawing.Size(78, 17);
+            this.rdoTheoNgay.TabIndex = 5;
+            this.rdoTheoNgay.TabStop = true;
+            this.rdoTheoNgay.Text = "Theo Ngày";
+            this.rdoTheoNgay.CheckedChanged += new System.EventHandler(this.rdoTheoNgay_CheckedChanged);
+            // 
+            // rdoTheoGio
+            // 
+            this.rdoTheoGio.AutoSize = true;
+            this.rdoTheoGio.Location = new System.Drawing.Point(557, 30);
+            this.rdoTheoGio.Name = "rdoTheoGio";
+            this.rdoTheoGio.Size = new System.Drawing.Size(69, 17);
+            this.rdoTheoGio.TabIndex = 6;
+            this.rdoTheoGio.Text = "Theo Giờ";
+            this.rdoTheoGio.CheckedChanged += new System.EventHandler(this.rdoTheoGio_CheckedChanged);
+            // 
+            // btnTimPhong
+            // 
+            this.btnTimPhong.AutoSize = true;
+            this.btnTimPhong.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnTimPhong.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTimPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTimPhong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnTimPhong.ForeColor = System.Drawing.Color.White;
+            this.btnTimPhong.Location = new System.Drawing.Point(643, 24);
+            this.btnTimPhong.Name = "btnTimPhong";
+            this.btnTimPhong.Size = new System.Drawing.Size(160, 31);
+            this.btnTimPhong.TabIndex = 7;
+            this.btnTimPhong.Text = "Tìm Phòng Trống";
+            this.btnTimPhong.UseVisualStyleBackColor = false;
+            this.btnTimPhong.Click += new System.EventHandler(this.btnTimPhong_Click);
+            // 
+            // lblSoNgay
+            // 
+            this.lblSoNgay.AutoSize = true;
+            this.lblSoNgay.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblSoNgay.ForeColor = System.Drawing.Color.Gray;
+            this.lblSoNgay.Location = new System.Drawing.Point(9, 68);
+            this.lblSoNgay.Name = "lblSoNgay";
+            this.lblSoNgay.Size = new System.Drawing.Size(0, 15);
+            this.lblSoNgay.TabIndex = 8;
+            // 
+            // pnlMid
+            // 
+            this.pnlMid.Controls.Add(this.dgvPhongTrong);
+            this.pnlMid.Controls.Add(this.lblPhong);
+            this.pnlMid.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlMid.Location = new System.Drawing.Point(0, 96);
+            this.pnlMid.Name = "pnlMid";
+            this.pnlMid.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlMid.Size = new System.Drawing.Size(857, 191);
+            this.pnlMid.TabIndex = 1;
+            // 
+            // dgvPhongTrong
+            // 
+            this.dgvPhongTrong.AllowUserToAddRows = false;
+            this.dgvPhongTrong.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPhongTrong.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvPhongTrong.ColumnHeadersHeight = 30;
+            this.dgvPhongTrong.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPhongTrong.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dgvPhongTrong.Location = new System.Drawing.Point(4, 28);
+            this.dgvPhongTrong.Name = "dgvPhongTrong";
+            this.dgvPhongTrong.ReadOnly = true;
+            this.dgvPhongTrong.RowHeadersVisible = false;
+            this.dgvPhongTrong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPhongTrong.Size = new System.Drawing.Size(849, 159);
+            this.dgvPhongTrong.TabIndex = 0;
+            this.dgvPhongTrong.SelectionChanged += new System.EventHandler(this.dgvPhongTrong_SelectionChanged);
+            // 
+            // lblPhong
+            // 
+            this.lblPhong.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblPhong.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblPhong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            this.lblPhong.Location = new System.Drawing.Point(4, 4);
+            this.lblPhong.Name = "lblPhong";
+            this.lblPhong.Size = new System.Drawing.Size(849, 24);
+            this.lblPhong.TabIndex = 1;
+            this.lblPhong.Text = "DANH SÁCH PHÒNG TRỐNG";
+            // 
+            // pnlBot
+            // 
+            this.pnlBot.Controls.Add(this.lblTimKH);
+            this.pnlBot.Controls.Add(this.txtTimKH);
+            this.pnlBot.Controls.Add(this.btnTimKH);
+            this.pnlBot.Controls.Add(this.btnThemKH);
+            this.pnlBot.Controls.Add(this.txtMaKH);
+            this.pnlBot.Controls.Add(this.lblTenKH);
+            this.pnlBot.Controls.Add(this.txtTenKH);
+            this.pnlBot.Controls.Add(this.lblCCCD);
+            this.pnlBot.Controls.Add(this.txtCCCD);
+            this.pnlBot.Controls.Add(this.lblSDT);
+            this.pnlBot.Controls.Add(this.txtSDT);
+            this.pnlBot.Controls.Add(this.lblTongTien);
+            this.pnlBot.Controls.Add(this.btnDatPhong);
+            this.pnlBot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBot.Location = new System.Drawing.Point(0, 287);
+            this.pnlBot.Name = "pnlBot";
+            this.pnlBot.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.pnlBot.Size = new System.Drawing.Size(857, 276);
+            this.pnlBot.TabIndex = 0;
+            // 
+            // lblTimKH
+            // 
+            this.lblTimKH.AutoSize = true;
+            this.lblTimKH.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblTimKH.Location = new System.Drawing.Point(4, 4);
+            this.lblTimKH.Name = "lblTimKH";
+            this.lblTimKH.Size = new System.Drawing.Size(137, 15);
+            this.lblTimKH.TabIndex = 0;
+            this.lblTimKH.Text = "CCCD/SĐT Khách Hàng:";
+            // 
+            // txtTimKH
+            // 
+            this.txtTimKH.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtTimKH.Location = new System.Drawing.Point(4, 22);
+            this.txtTimKH.Name = "txtTimKH";
+            this.txtTimKH.Size = new System.Drawing.Size(189, 25);
+            this.txtTimKH.TabIndex = 1;
+            // 
+            // btnTimKH
+            // 
+            this.btnTimKH.AutoSize = true;
+            this.btnTimKH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+            this.btnTimKH.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTimKH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTimKH.ForeColor = System.Drawing.Color.White;
+            this.btnTimKH.Location = new System.Drawing.Point(201, 20);
+            this.btnTimKH.Name = "btnTimKH";
+            this.btnTimKH.Size = new System.Drawing.Size(69, 26);
+            this.btnTimKH.TabIndex = 2;
+            this.btnTimKH.Text = "Tìm";
+            this.btnTimKH.UseVisualStyleBackColor = false;
+            this.btnTimKH.Click += new System.EventHandler(this.btnTimKH_Click);
+            // 
+            // btnThemKH
+            // 
+            this.btnThemKH.AutoSize = true;
+            this.btnThemKH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            this.btnThemKH.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnThemKH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThemKH.ForeColor = System.Drawing.Color.White;
+            this.btnThemKH.Location = new System.Drawing.Point(279, 20);
+            this.btnThemKH.Name = "btnThemKH";
+            this.btnThemKH.Size = new System.Drawing.Size(77, 26);
+            this.btnThemKH.TabIndex = 3;
+            this.btnThemKH.Text = "KH Mới";
+            this.btnThemKH.UseVisualStyleBackColor = false;
+            this.btnThemKH.Click += new System.EventHandler(this.btnThemKH_Click);
+            // 
+            // txtMaKH
+            // 
+            this.txtMaKH.Location = new System.Drawing.Point(4, 56);
+            this.txtMaKH.Name = "txtMaKH";
+            this.txtMaKH.Size = new System.Drawing.Size(86, 20);
+            this.txtMaKH.TabIndex = 4;
+            this.txtMaKH.Visible = false;
+            // 
+            // lblTenKH
+            // 
+            this.lblTenKH.AutoSize = true;
+            this.lblTenKH.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblTenKH.Location = new System.Drawing.Point(4, 59);
+            this.lblTenKH.Name = "lblTenKH";
+            this.lblTenKH.Size = new System.Drawing.Size(49, 15);
+            this.lblTenKH.TabIndex = 5;
+            this.lblTenKH.Text = "Họ Tên:";
+            // 
+            // txtTenKH
+            // 
+            this.txtTenKH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.txtTenKH.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtTenKH.Location = new System.Drawing.Point(51, 56);
+            this.txtTenKH.Name = "txtTenKH";
+            this.txtTenKH.ReadOnly = true;
+            this.txtTenKH.Size = new System.Drawing.Size(172, 25);
+            this.txtTenKH.TabIndex = 6;
+            // 
+            // lblCCCD
+            // 
+            this.lblCCCD.AutoSize = true;
+            this.lblCCCD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblCCCD.Location = new System.Drawing.Point(236, 59);
+            this.lblCCCD.Name = "lblCCCD";
+            this.lblCCCD.Size = new System.Drawing.Size(40, 15);
+            this.lblCCCD.TabIndex = 7;
+            this.lblCCCD.Text = "CCCD:";
+            // 
+            // txtCCCD
+            // 
+            this.txtCCCD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.txtCCCD.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtCCCD.Location = new System.Drawing.Point(270, 56);
+            this.txtCCCD.Name = "txtCCCD";
+            this.txtCCCD.ReadOnly = true;
+            this.txtCCCD.Size = new System.Drawing.Size(138, 25);
+            this.txtCCCD.TabIndex = 8;
+            // 
+            // lblSDT
+            // 
+            this.lblSDT.AutoSize = true;
+            this.lblSDT.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblSDT.Location = new System.Drawing.Point(420, 59);
+            this.lblSDT.Name = "lblSDT";
+            this.lblSDT.Size = new System.Drawing.Size(33, 15);
+            this.lblSDT.TabIndex = 9;
+            this.lblSDT.Text = "SĐT:";
+            // 
+            // txtSDT
+            // 
+            this.txtSDT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.txtSDT.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtSDT.Location = new System.Drawing.Point(446, 56);
+            this.txtSDT.Name = "txtSDT";
+            this.txtSDT.ReadOnly = true;
+            this.txtSDT.Size = new System.Drawing.Size(112, 25);
+            this.txtSDT.TabIndex = 10;
+            // 
+            // lblTongTien
+            // 
+            this.lblTongTien.AutoSize = true;
+            this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.lblTongTien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
+            this.lblTongTien.Location = new System.Drawing.Point(4, 95);
+            this.lblTongTien.Name = "lblTongTien";
+            this.lblTongTien.Size = new System.Drawing.Size(194, 25);
+            this.lblTongTien.TabIndex = 11;
+            this.lblTongTien.Text = "Tổng tiền dự kiến: ---";
+            // 
+            // btnDatPhong
+            // 
+            this.btnDatPhong.AutoSize = true;
+            this.btnDatPhong.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            this.btnDatPhong.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDatPhong.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDatPhong.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnDatPhong.ForeColor = System.Drawing.Color.White;
+            this.btnDatPhong.Location = new System.Drawing.Point(4, 128);
+            this.btnDatPhong.Name = "btnDatPhong";
+            this.btnDatPhong.Size = new System.Drawing.Size(235, 39);
+            this.btnDatPhong.TabIndex = 12;
+            this.btnDatPhong.Text = "XÁC NHẬN ĐẶT PHÒNG";
+            this.btnDatPhong.UseVisualStyleBackColor = false;
+            this.btnDatPhong.Click += new System.EventHandler(this.btnDatPhong_Click);
+            // 
+            // frmDatPhong
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.ClientSize = new System.Drawing.Size(857, 563);
+            this.Controls.Add(this.pnlBot);
+            this.Controls.Add(this.pnlMid);
+            this.Controls.Add(this.pnlTop);
+            this.Name = "frmDatPhong";
+            this.Text = "Đặt Phòng Mới";
+            this.Load += new System.EventHandler(this.frmDatPhong_Load);
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
+            this.pnlMid.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPhongTrong)).EndInit();
+            this.pnlBot.ResumeLayout(false);
+            this.pnlBot.PerformLayout();
+            this.ResumeLayout(false);
 
-            var pnlMid = new Panel();
-            var lblPhong = new Label();
-
-            var pnlBot = new Panel();
-            var lblTimKH = new Label();
-            var lblTenKH = new Label();
-            var lblCCCD = new Label();
-            var lblSDT = new Label();
-
-            SuspendLayout();
-
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "📥 Đặt Phòng Mới";
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(245, 247, 250);
-            ClientSize = new Size(1000, 650);
-            Name = "frmDatPhong";
-            Load += frmDatPhong_Load;
-
-            pnlTop.BackColor = Color.White;
-            pnlTop.BorderStyle = BorderStyle.FixedSingle;
-            pnlTop.Dock = DockStyle.Top;
-            pnlTop.Height = 110;
-            pnlTop.Padding = new Padding(10);
-
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(0, 120, 212);
-            lblTitle.Location = new Point(10, 5);
-            lblTitle.Text = "THÔNG TIN ĐẶT PHÒNG";
-
-            lblNgayNhan.AutoSize = true;
-            lblNgayNhan.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblNgayNhan.Location = new Point(10, 35);
-            lblNgayNhan.Text = "Ngày nhận:";
-
-            dtpNgayNhan = new DateTimePicker();
-            dtpNgayNhan.CustomFormat = "dd/MM/yyyy HH:mm";
-            dtpNgayNhan.Format = DateTimePickerFormat.Custom;
-            dtpNgayNhan.Location = new Point(90, 32);
-            dtpNgayNhan.MinDate = DateTime.Today;
-            dtpNgayNhan.ShowUpDown = false;
-            dtpNgayNhan.Size = new Size(180, 23);
-            dtpNgayNhan.Value = DateTime.Now;
-            dtpNgayNhan.ValueChanged += dtpNgayNhan_ValueChanged;
-
-            lblNgayTra.AutoSize = true;
-            lblNgayTra.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblNgayTra.Location = new Point(290, 35);
-            lblNgayTra.Text = "Ngày trả:";
-
-            dtpNgayTra = new DateTimePicker();
-            dtpNgayTra.CustomFormat = "dd/MM/yyyy HH:mm";
-            dtpNgayTra.Format = DateTimePickerFormat.Custom;
-            dtpNgayTra.Location = new Point(365, 32);
-            dtpNgayTra.Size = new Size(180, 23);
-            dtpNgayTra.Value = DateTime.Now.AddDays(1);
-            dtpNgayTra.ValueChanged += dtpNgayTra_ValueChanged;
-
-            rdoTheoNgay = new RadioButton();
-            rdoTheoNgay.AutoSize = true;
-            rdoTheoNgay.Checked = true;
-            rdoTheoNgay.Location = new Point(560, 35);
-            rdoTheoNgay.Text = "Theo Ngày";
-            rdoTheoNgay.CheckedChanged += rdoTheoNgay_CheckedChanged;
-
-            rdoTheoGio = new RadioButton();
-            rdoTheoGio.AutoSize = true;
-            rdoTheoGio.Location = new Point(650, 35);
-            rdoTheoGio.Text = "Theo Giờ";
-            rdoTheoGio.CheckedChanged += rdoTheoGio_CheckedChanged;
-
-            btnTimPhong = new Button();
-            btnTimPhong.BackColor = Color.FromArgb(52, 152, 219);
-            btnTimPhong.Cursor = Cursors.Hand;
-            btnTimPhong.FlatStyle = FlatStyle.Flat;
-            btnTimPhong.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnTimPhong.ForeColor = Color.White;
-            btnTimPhong.Location = new Point(750, 28);
-            btnTimPhong.Size = new Size(160, 35);
-            btnTimPhong.Text = "🔍 Tìm Phòng Trống";
-            btnTimPhong.AutoSize = true;
-            btnTimPhong.Click += btnTimPhong_Click;
-
-            lblSoNgay = new Label();
-            lblSoNgay.AutoSize = true;
-            lblSoNgay.Font = new Font("Segoe UI", 9F);
-            lblSoNgay.ForeColor = Color.Gray;
-            lblSoNgay.Location = new Point(10, 78);
-
-            pnlTop.Controls.Add(lblTitle);
-            pnlTop.Controls.Add(lblNgayNhan);
-            pnlTop.Controls.Add(dtpNgayNhan);
-            pnlTop.Controls.Add(lblNgayTra);
-            pnlTop.Controls.Add(dtpNgayTra);
-            pnlTop.Controls.Add(rdoTheoNgay);
-            pnlTop.Controls.Add(rdoTheoGio);
-            pnlTop.Controls.Add(btnTimPhong);
-            pnlTop.Controls.Add(lblSoNgay);
-
-            pnlMid.Dock = DockStyle.Top;
-            pnlMid.Height = 220;
-            pnlMid.Padding = new Padding(5);
-
-            lblPhong.Dock = DockStyle.Top;
-            lblPhong.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPhong.ForeColor = Color.FromArgb(0, 120, 212);
-            lblPhong.Height = 28;
-            lblPhong.Text = "DANH SÁCH PHÒNG TRỐNG";
-
-            dgvPhongTrong = new DataGridView();
-            dgvPhongTrong.AllowUserToAddRows = false;
-            dgvPhongTrong.BackgroundColor = Color.White;
-            dgvPhongTrong.ColumnHeadersHeight = 30;
-            dgvPhongTrong.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 120, 212);
-            dgvPhongTrong.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvPhongTrong.Dock = DockStyle.Fill;
-            dgvPhongTrong.Font = new Font("Segoe UI", 10F);
-            dgvPhongTrong.ReadOnly = true;
-            dgvPhongTrong.RowHeadersVisible = false;
-            dgvPhongTrong.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPhongTrong.SelectionChanged += dgvPhongTrong_SelectionChanged;
-
-            pnlMid.Controls.Add(dgvPhongTrong);
-            pnlMid.Controls.Add(lblPhong);
-
-            pnlBot.Dock = DockStyle.Fill;
-            pnlBot.Padding = new Padding(10);
-
-            lblTimKH.AutoSize = true;
-            lblTimKH.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblTimKH.Location = new Point(5, 5);
-            lblTimKH.Text = "CCCD/SĐT Khách Hàng:";
-
-            txtTimKH = new TextBox();
-            txtTimKH.Font = new Font("Segoe UI", 10F);
-            txtTimKH.Location = new Point(5, 25);
-            txtTimKH.Size = new Size(220, 25);
-
-            btnTimKH = new Button();
-            btnTimKH.BackColor = Color.FromArgb(52, 152, 219);
-            btnTimKH.Cursor = Cursors.Hand;
-            btnTimKH.FlatStyle = FlatStyle.Flat;
-            btnTimKH.ForeColor = Color.White;
-            btnTimKH.Location = new Point(235, 23);
-            btnTimKH.Size = new Size(80, 30);
-            btnTimKH.Text = "🔍 Tìm";
-            btnTimKH.AutoSize = true;
-            btnTimKH.Click += btnTimKH_Click;
-
-            btnThemKH = new Button();
-            btnThemKH.BackColor = Color.FromArgb(39, 174, 96);
-            btnThemKH.Cursor = Cursors.Hand;
-            btnThemKH.FlatStyle = FlatStyle.Flat;
-            btnThemKH.ForeColor = Color.White;
-            btnThemKH.Location = new Point(325, 23);
-            btnThemKH.Size = new Size(90, 30);
-            btnThemKH.Text = "➕ KH Mới";
-            btnThemKH.AutoSize = true;
-            btnThemKH.Click += btnThemKH_Click;
-
-            txtMaKH = new TextBox();
-            txtMaKH.Location = new Point(5, 65);
-            txtMaKH.Visible = false;
-
-            lblTenKH.AutoSize = true;
-            lblTenKH.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblTenKH.Location = new Point(5, 68);
-            lblTenKH.Text = "Họ Tên:";
-
-            txtTenKH = new TextBox();
-            txtTenKH.BackColor = Color.FromArgb(240, 240, 240);
-            txtTenKH.Font = new Font("Segoe UI", 10F);
-            txtTenKH.Location = new Point(60, 65);
-            txtTenKH.ReadOnly = true;
-            txtTenKH.Size = new Size(200, 25);
-
-            lblCCCD.AutoSize = true;
-            lblCCCD.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblCCCD.Location = new Point(275, 68);
-            lblCCCD.Text = "CCCD:";
-
-            txtCCCD = new TextBox();
-            txtCCCD.BackColor = Color.FromArgb(240, 240, 240);
-            txtCCCD.Font = new Font("Segoe UI", 10F);
-            txtCCCD.Location = new Point(315, 65);
-            txtCCCD.ReadOnly = true;
-            txtCCCD.Size = new Size(160, 25);
-
-            lblSDT.AutoSize = true;
-            lblSDT.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSDT.Location = new Point(490, 68);
-            lblSDT.Text = "SĐT:";
-
-            txtSDT = new TextBox();
-            txtSDT.BackColor = Color.FromArgb(240, 240, 240);
-            txtSDT.Font = new Font("Segoe UI", 10F);
-            txtSDT.Location = new Point(520, 65);
-            txtSDT.ReadOnly = true;
-            txtSDT.Size = new Size(130, 25);
-
-            lblTongTien = new Label();
-            lblTongTien.AutoSize = true;
-            lblTongTien.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTongTien.ForeColor = Color.FromArgb(231, 76, 60);
-            lblTongTien.Location = new Point(5, 110);
-            lblTongTien.Text = "Tổng tiền dự kiến: ---";
-
-            btnDatPhong = new Button();
-            btnDatPhong.BackColor = Color.FromArgb(39, 174, 96);
-            btnDatPhong.Cursor = Cursors.Hand;
-            btnDatPhong.FlatStyle = FlatStyle.Flat;
-            btnDatPhong.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnDatPhong.ForeColor = Color.White;
-            btnDatPhong.Location = new Point(5, 148);
-            btnDatPhong.Size = new Size(250, 45);
-            btnDatPhong.Text = "✅  XÁC NHẬN ĐẶT PHÒNG";
-            btnDatPhong.AutoSize = true;
-            btnDatPhong.Click += btnDatPhong_Click;
-
-            pnlBot.Controls.Add(lblTimKH);
-            pnlBot.Controls.Add(txtTimKH);
-            pnlBot.Controls.Add(btnTimKH);
-            pnlBot.Controls.Add(btnThemKH);
-            pnlBot.Controls.Add(txtMaKH);
-            pnlBot.Controls.Add(lblTenKH);
-            pnlBot.Controls.Add(txtTenKH);
-            pnlBot.Controls.Add(lblCCCD);
-            pnlBot.Controls.Add(txtCCCD);
-            pnlBot.Controls.Add(lblSDT);
-            pnlBot.Controls.Add(txtSDT);
-            pnlBot.Controls.Add(lblTongTien);
-            pnlBot.Controls.Add(btnDatPhong);
-
-            Controls.Add(pnlBot);
-            Controls.Add(pnlMid);
-            Controls.Add(pnlTop);
-
-            ResumeLayout(false);
         }
+
+        private Panel pnlTop;
+        private Label lblTitle;
+        private Label lblNgayNhan;
+        private Label lblNgayTra;
+        private Panel pnlMid;
+        private Label lblPhong;
+        private Panel pnlBot;
+        private Label lblTimKH;
+        private Label lblTenKH;
+        private Label lblCCCD;
+        private Label lblSDT;
     }
 }

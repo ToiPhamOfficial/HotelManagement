@@ -17,7 +17,7 @@ namespace HotelManagement
             InitializeComponent();
             menuStripMain.RenderMode = ToolStripRenderMode.Professional;
             menuStripMain.Renderer = new ToolStripProfessionalRenderer(new MainMenuColorTable());
-            this.Text = $"🏨 Hotel Manager - {SessionManager.TenNhanVien} ({SessionManager.VaiTro})";
+            this.Text = $"Hotel Manager - {SessionManager.TenNhanVien} ({SessionManager.VaiTro})";
             this.WindowState = FormWindowState.Maximized;
         }
 
@@ -54,12 +54,12 @@ namespace HotelManagement
                     .Select(hd => (decimal?)(hd.TienPhong + hd.TienDichVu - hd.GiamGia)).Sum() ?? 0;
 
                 // Update các card thống kê
-                SetCard(pnlPhongTrong, "🟢 Phòng Trống", phongTrong.ToString(), Color.FromArgb(39, 174, 96));
-                SetCard(pnlPhongDung, "🔴 Đang Sử Dụng", phongDangDung.ToString(), Color.FromArgb(231, 76, 60));
-                SetCard(pnlPhongBaoTri, "🟡 Bảo Trì / Dọn Dẹp", phongBaoTri.ToString(), Color.FromArgb(243, 156, 18));
-                SetCard(pnlCheckIn, "📥 Check-In Hôm Nay", checkInHomNay.ToString(), Color.FromArgb(52, 152, 219));
-                SetCard(pnlCheckOut, "📤 Check-Out Hôm Nay", checkOutHomNay.ToString(), Color.FromArgb(155, 89, 182));
-                SetCard(pnlDoanhThu, "💰 Doanh Thu Hôm Nay", $"{doanhThuHomNay:N0} đ", Color.FromArgb(0, 120, 212));
+                SetCard(pnlPhongTrong, "Phòng Trống", phongTrong.ToString(), Color.FromArgb(39, 174, 96));
+                SetCard(pnlPhongDung, "Đang Sử Dụng", phongDangDung.ToString(), Color.FromArgb(231, 76, 60));
+                SetCard(pnlPhongBaoTri, "Bảo Trì / Dọn Dẹp", phongBaoTri.ToString(), Color.FromArgb(243, 156, 18));
+                SetCard(pnlCheckIn, "Check-In Hôm Nay", checkInHomNay.ToString(), Color.FromArgb(52, 152, 219));
+                SetCard(pnlCheckOut, "Check-Out Hôm Nay", checkOutHomNay.ToString(), Color.FromArgb(155, 89, 182));
+                SetCard(pnlDoanhThu, "Doanh Thu Hôm Nay", $"{doanhThuHomNay:N0} đ", Color.FromArgb(0, 120, 212));
 
                 lblCapNhat.Text = $"Cập nhật lúc: {DateTime.Now:HH:mm:ss}";
             }

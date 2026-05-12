@@ -356,7 +356,7 @@ namespace HotelManagement
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
             this.Name = "frmTaiKhoan";
-            this.Text = "Quan Ly Tai Khoan";
+            this.Text = "Quản Lý Tài Khoản";
             this.Load += new EventHandler(this.frmTaiKhoan_Load);
             this.pnlLeft.ResumeLayout(false);
             this.pnlLeft.PerformLayout();
