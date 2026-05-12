@@ -18,6 +18,7 @@ namespace HotelManagement
 
         private void frmDatPhong_Load(object sender, EventArgs e)
         {
+            TimPhongTrong();
             TinhTien();
         }
 

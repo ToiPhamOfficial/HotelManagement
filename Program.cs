@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Forms;
 using HotelManagement.Models;
-// using HotelManagement.UI;
 
 namespace HotelManagement
 {
