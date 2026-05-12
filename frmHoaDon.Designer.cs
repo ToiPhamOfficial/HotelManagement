@@ -134,7 +134,7 @@ namespace HotelManagement
             this.btnLoc.Location = new Point(690, 21);
             this.btnLoc.Name = "btnLoc";
             this.btnLoc.Size = new Size(80, 30);
-            this.btnLoc.Text = "🔍 Lọc";
+            this.btnLoc.Text = "Lọc";
             this.btnLoc.AutoSize = true;
             this.btnLoc.UseVisualStyleBackColor = false;
             this.btnLoc.Click += new EventHandler(this.btnLoc_Click);
@@ -149,7 +149,7 @@ namespace HotelManagement
             this.btnLamMoi.Location = new Point(780, 21);
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new Size(90, 30);
-            this.btnLamMoi.Text = "🔃 Làm Mới";
+            this.btnLamMoi.Text = "Làm Mới";
             this.btnLamMoi.AutoSize = true;
             this.btnLamMoi.UseVisualStyleBackColor = false;
             this.btnLamMoi.Click += new EventHandler(this.btnLamMoi_Click);
@@ -220,7 +220,7 @@ namespace HotelManagement
             this.Controls.Add(this.pnlTop);
             this.Controls.Add(this.pnlBottom);
             this.Name = "frmHoaDon";
-            this.Text = "🧾 Quản Lý Hóa Đơn";
+            this.Text = "Quản Lý Hóa Đơn";
             this.Load += new EventHandler(this.frmHoaDon_Load);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();

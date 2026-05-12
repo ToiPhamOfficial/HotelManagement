@@ -38,7 +38,7 @@ namespace HotelManagement
             SuspendLayout();
 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "🚪 Check-Out & Thanh Toán";
+            this.Text = "Check-Out & Thanh Toán";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1100, 680);
             Name = "frmCheckOut";
@@ -147,7 +147,7 @@ namespace HotelManagement
             btnCheckOut.ForeColor = Color.White;
             btnCheckOut.Location = new Point(10, 178);
             btnCheckOut.Size = new Size(280, 50);
-            btnCheckOut.Text = "🚪  CHECK-OUT & THANH TOÁN";
+            btnCheckOut.Text = "CHECK-OUT & THANH TOÁN";
             btnCheckOut.AutoSize = true;
             btnCheckOut.Click += btnCheckOut_Click;
 

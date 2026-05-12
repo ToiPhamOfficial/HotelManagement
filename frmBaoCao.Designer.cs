@@ -33,7 +33,7 @@ namespace HotelManagement
             SuspendLayout();
 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "📊 Báo Cáo Thống Kê Doanh Thu";
+            this.Text = "Báo Cáo Thống Kê Doanh Thu";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 600);
             Name = "frmBaoCao";
@@ -91,7 +91,7 @@ namespace HotelManagement
             btnXemBaoCao.ForeColor = Color.White;
             btnXemBaoCao.Location = new Point(315, 12);
             btnXemBaoCao.Size = new Size(150, 35);
-            btnXemBaoCao.Text = "📊 Xem Báo Cáo";
+            btnXemBaoCao.Text = "Xem Báo Cáo";
             btnXemBaoCao.AutoSize = true;
             btnXemBaoCao.Click += btnXemBaoCao_Click;
 
@@ -102,7 +102,7 @@ namespace HotelManagement
             btnInBaoCao.ForeColor = Color.White;
             btnInBaoCao.Location = new Point(475, 12);
             btnInBaoCao.Size = new Size(140, 35);
-            btnInBaoCao.Text = "🖨️ In Báo Cáo";
+            btnInBaoCao.Text = "In Báo Cáo";
             btnInBaoCao.AutoSize = true;
             btnInBaoCao.Click += btnInBaoCao_Click;
 

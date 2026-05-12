@@ -132,7 +132,7 @@ namespace HotelManagement
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(237, 30);
             this.lblHeader.TabIndex = 0;
-            this.lblHeader.Text = "THÔNG TIN PHÒNG";
+            this.lblHeader.Text = "THONG TIN PHONG";
             this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtMaPhong
@@ -151,7 +151,7 @@ namespace HotelManagement
             this.lblSoPhong.Name = "lblSoPhong";
             this.lblSoPhong.Size = new System.Drawing.Size(67, 15);
             this.lblSoPhong.TabIndex = 2;
-            this.lblSoPhong.Text = "Số Phòng *";
+            this.lblSoPhong.Text = "So Phong *";
             // 
             // txtSoPhong
             // 
@@ -169,7 +169,7 @@ namespace HotelManagement
             this.lblLoaiPhong.Name = "lblLoaiPhong";
             this.lblLoaiPhong.Size = new System.Drawing.Size(75, 15);
             this.lblLoaiPhong.TabIndex = 4;
-            this.lblLoaiPhong.Text = "Loại Phòng *";
+            this.lblLoaiPhong.Text = "Loai Phong *";
             // 
             // cboLoaiPhong
             // 
@@ -189,7 +189,7 @@ namespace HotelManagement
             this.lblTang.Name = "lblTang";
             this.lblTang.Size = new System.Drawing.Size(34, 15);
             this.lblTang.TabIndex = 6;
-            this.lblTang.Text = "Tầng";
+            this.lblTang.Text = "Tang";
             // 
             // numTang
             // 
@@ -222,17 +222,17 @@ namespace HotelManagement
             this.lblTrangThai.Name = "lblTrangThai";
             this.lblTrangThai.Size = new System.Drawing.Size(64, 15);
             this.lblTrangThai.TabIndex = 12;
-            this.lblTrangThai.Text = "Trạng Thái";
+            this.lblTrangThai.Text = "Trang Thai";
             // 
             // cboTrangThai
             // 
             this.cboTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboTrangThai.Items.AddRange(new object[] {
-            "Trống",
-            "Đang sử dụng",
-            "Đang dọn",
-            "Bảo trì"});
+            "Trong",
+            "Dang su dung",
+            "Dang don",
+            "Bao tri"});
             this.cboTrangThai.Location = new System.Drawing.Point(9, 318);
             this.cboTrangThai.Name = "cboTrangThai";
             this.cboTrangThai.Size = new System.Drawing.Size(232, 25);
@@ -246,7 +246,7 @@ namespace HotelManagement
             this.lblGiaMoiGio.Name = "lblGiaMoiGio";
             this.lblGiaMoiGio.Size = new System.Drawing.Size(70, 15);
             this.lblGiaMoiGio.TabIndex = 8;
-            this.lblGiaMoiGio.Text = "Giá mỗi giờ";
+            this.lblGiaMoiGio.Text = "Gia moi gio";
             // 
             // txtGiaMoiGio
             // 
@@ -265,7 +265,7 @@ namespace HotelManagement
             this.lblGiaMoiDem.Name = "lblGiaMoiDem";
             this.lblGiaMoiDem.Size = new System.Drawing.Size(78, 15);
             this.lblGiaMoiDem.TabIndex = 10;
-            this.lblGiaMoiDem.Text = "Giá mỗi đêm";
+            this.lblGiaMoiDem.Text = "Gia moi dem";
             // 
             // txtGiaMoiDem
             // 
@@ -284,7 +284,7 @@ namespace HotelManagement
             this.lblMoTa.Name = "lblMoTa";
             this.lblMoTa.Size = new System.Drawing.Size(41, 15);
             this.lblMoTa.TabIndex = 14;
-            this.lblMoTa.Text = "Mô Tả";
+            this.lblMoTa.Text = "Mo Ta";
             // 
             // txtMoTa
             // 
@@ -309,7 +309,7 @@ namespace HotelManagement
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(107, 30);
             this.btnThem.TabIndex = 16;
-            this.btnThem.Text = "Thêm";
+            this.btnThem.Text = "Them";
             this.btnThem.UseVisualStyleBackColor = false;
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
@@ -326,7 +326,7 @@ namespace HotelManagement
             this.btnCapNhat.Name = "btnCapNhat";
             this.btnCapNhat.Size = new System.Drawing.Size(107, 30);
             this.btnCapNhat.TabIndex = 17;
-            this.btnCapNhat.Text = "Sửa";
+            this.btnCapNhat.Text = "Sua";
             this.btnCapNhat.UseVisualStyleBackColor = false;
             this.btnCapNhat.Click += new System.EventHandler(this.btnCapNhat_Click);
             // 
@@ -343,7 +343,7 @@ namespace HotelManagement
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(107, 30);
             this.btnXoa.TabIndex = 18;
-            this.btnXoa.Text = "Xóa";
+            this.btnXoa.Text = "Xoa";
             this.btnXoa.UseVisualStyleBackColor = false;
             this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
@@ -361,7 +361,7 @@ namespace HotelManagement
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(107, 30);
             this.btnLuu.TabIndex = 20;
-            this.btnLuu.Text = "Lưu";
+            this.btnLuu.Text = "Luu";
             this.btnLuu.UseVisualStyleBackColor = false;
             this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
@@ -379,7 +379,7 @@ namespace HotelManagement
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(107, 30);
             this.btnHuy.TabIndex = 21;
-            this.btnHuy.Text = "Không lưu";
+            this.btnHuy.Text = "Khong luu";
             this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
@@ -396,7 +396,7 @@ namespace HotelManagement
             this.btnCapNhatTT.Name = "btnCapNhatTT";
             this.btnCapNhatTT.Size = new System.Drawing.Size(107, 30);
             this.btnCapNhatTT.TabIndex = 19;
-            this.btnCapNhatTT.Text = "C.Nhật TT";
+            this.btnCapNhatTT.Text = "Cap Nhat TT";
             this.btnCapNhatTT.UseVisualStyleBackColor = false;
             this.btnCapNhatTT.Click += new System.EventHandler(this.btnCapNhatTT_Click);
             // 
@@ -413,7 +413,7 @@ namespace HotelManagement
             this.btnLamMoi.Name = "btnLamMoi";
             this.btnLamMoi.Size = new System.Drawing.Size(107, 30);
             this.btnLamMoi.TabIndex = 22;
-            this.btnLamMoi.Text = "Làm Mới";
+            this.btnLamMoi.Text = "Lam Moi";
             this.btnLamMoi.UseVisualStyleBackColor = false;
             this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
@@ -481,11 +481,11 @@ namespace HotelManagement
             this.cboLocTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboLocTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cboLocTrangThai.Items.AddRange(new object[] {
-            "Tất cả",
-            "Trống",
-            "Đang sử dụng",
-            "Đang dọn",
-            "Bảo trì"});
+            "Tat ca",
+            "Trong",
+            "Dang su dung",
+            "Dang don",
+            "Bao tri"});
             this.cboLocTrangThai.Location = new System.Drawing.Point(184, 9);
             this.cboLocTrangThai.Name = "cboLocTrangThai";
             this.cboLocTrangThai.Size = new System.Drawing.Size(129, 25);
@@ -511,7 +511,7 @@ namespace HotelManagement
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
             this.Name = "frmQuanLyPhong";
-            this.Text = "🏠 Quản Lý Phòng";
+            this.Text = "Quản Lý Phòng";
             this.Load += new System.EventHandler(this.frmQuanLyPhong_Load);
             this.pnlLeft.ResumeLayout(false);
             this.pnlLeft.PerformLayout();

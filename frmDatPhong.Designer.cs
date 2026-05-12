@@ -178,7 +178,7 @@ namespace HotelManagement
             this.btnTimPhong.Name = "btnTimPhong";
             this.btnTimPhong.Size = new System.Drawing.Size(160, 31);
             this.btnTimPhong.TabIndex = 7;
-            this.btnTimPhong.Text = "🔍 Tìm Phòng Trống";
+            this.btnTimPhong.Text = "Tìm Phòng Trống";
             this.btnTimPhong.UseVisualStyleBackColor = false;
             this.btnTimPhong.Click += new System.EventHandler(this.btnTimPhong_Click);
             // 
@@ -289,7 +289,7 @@ namespace HotelManagement
             this.btnTimKH.Name = "btnTimKH";
             this.btnTimKH.Size = new System.Drawing.Size(69, 26);
             this.btnTimKH.TabIndex = 2;
-            this.btnTimKH.Text = "🔍 Tìm";
+            this.btnTimKH.Text = "Tìm";
             this.btnTimKH.UseVisualStyleBackColor = false;
             this.btnTimKH.Click += new System.EventHandler(this.btnTimKH_Click);
             // 
@@ -304,7 +304,7 @@ namespace HotelManagement
             this.btnThemKH.Name = "btnThemKH";
             this.btnThemKH.Size = new System.Drawing.Size(77, 26);
             this.btnThemKH.TabIndex = 3;
-            this.btnThemKH.Text = "➕ KH Mới";
+            this.btnThemKH.Text = "KH Mới";
             this.btnThemKH.UseVisualStyleBackColor = false;
             this.btnThemKH.Click += new System.EventHandler(this.btnThemKH_Click);
             // 
@@ -399,7 +399,7 @@ namespace HotelManagement
             this.btnDatPhong.Name = "btnDatPhong";
             this.btnDatPhong.Size = new System.Drawing.Size(235, 39);
             this.btnDatPhong.TabIndex = 12;
-            this.btnDatPhong.Text = "✅  XÁC NHẬN ĐẶT PHÒNG";
+            this.btnDatPhong.Text = "XÁC NHẬN ĐẶT PHÒNG";
             this.btnDatPhong.UseVisualStyleBackColor = false;
             this.btnDatPhong.Click += new System.EventHandler(this.btnDatPhong_Click);
             // 
@@ -413,7 +413,7 @@ namespace HotelManagement
             this.Controls.Add(this.pnlMid);
             this.Controls.Add(this.pnlTop);
             this.Name = "frmDatPhong";
-            this.Text = "📥 Đặt Phòng Mới";
+            this.Text = "Đặt Phòng Mới";
             this.Load += new System.EventHandler(this.frmDatPhong_Load);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();

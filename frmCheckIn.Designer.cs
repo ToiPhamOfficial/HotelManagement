@@ -27,7 +27,7 @@ namespace HotelManagement
             SuspendLayout();
 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "✅ Check-In";
+            this.Text = "Check-In";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 550);
             Name = "frmCheckIn";
@@ -66,7 +66,7 @@ namespace HotelManagement
             btnCheckIn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCheckIn.ForeColor = Color.White;
             btnCheckIn.Width = 220;
-            btnCheckIn.Text = "✅  XÁC NHẬN CHECK-IN";
+            btnCheckIn.Text = "XÁC NHẬN CHECK-IN";
             btnCheckIn.AutoSize = true;
             btnCheckIn.Click += btnCheckIn_Click;
             pnlBot.Controls.Add(btnCheckIn);

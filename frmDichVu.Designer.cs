@@ -19,7 +19,7 @@ namespace HotelManagement
         private void InitializeComponent()
         {
             AutoScaleDimensions = new SizeF(7F, 15F);
-            this.Text = "🛎 Quản Lý Dịch Vụ";
+            this.Text = "Quản Lý Dịch Vụ";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 600);
             Name = "frmDichVu";
