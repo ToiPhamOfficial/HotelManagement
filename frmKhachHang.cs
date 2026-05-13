@@ -15,6 +15,8 @@ namespace HotelManagement
         public frmKhachHang()
         {
             InitializeComponent();
+            dgv.AutoGenerateColumns = false;
+            dgv.AllowUserToAddRows = false;
             this.Load += frmKhachHang_Load;
         }
 
@@ -56,7 +58,6 @@ namespace HotelManagement
                            kh.NgayTao
                        };
             dgv.DataSource = data.ToList();
-            FormatGrid();
         }
 
         private void frmKhachHang_Load(object sender, EventArgs e)
@@ -266,26 +267,9 @@ namespace HotelManagement
                            kh.NgayTao
                        };
             dgv.DataSource = data.ToList();
-            FormatGrid();
         }
 
-        // Định dạng lưới
-        private void FormatGrid()
-        {
-            if (dgv.Columns.Count == 0) return;
-            if (dgv.Columns.Contains("MaKhachHang")) { dgv.Columns["MaKhachHang"].HeaderText = "Mã KH"; dgv.Columns["MaKhachHang"].Width = 60; }
-            if (dgv.Columns.Contains("HoTen")) { dgv.Columns["HoTen"].HeaderText = "Họ Tên"; dgv.Columns["HoTen"].Width = 180; }
-            if (dgv.Columns.Contains("CCCD")) { dgv.Columns["CCCD"].HeaderText = "CCCD"; dgv.Columns["CCCD"].Width = 130; }
-            if (dgv.Columns.Contains("SoDienThoai")) { dgv.Columns["SoDienThoai"].HeaderText = "Số ĐT"; dgv.Columns["SoDienThoai"].Width = 110; }
-            if (dgv.Columns.Contains("Email")) { dgv.Columns["Email"].HeaderText = "Email"; dgv.Columns["Email"].Width = 150; }
-            if (dgv.Columns.Contains("GioiTinh")) { dgv.Columns["GioiTinh"].HeaderText = "Giới Tính"; dgv.Columns["GioiTinh"].Width = 80; }
-            if (dgv.Columns.Contains("NgaySinh")) { dgv.Columns["NgaySinh"].HeaderText = "Ngày Sinh"; dgv.Columns["NgaySinh"].Width = 100; }
-            if (dgv.Columns.Contains("DiaChi")) { dgv.Columns["DiaChi"].HeaderText = "Địa Chỉ"; dgv.Columns["DiaChi"].Width = 200; }
-            if (dgv.Columns.Contains("TrangThai")) dgv.Columns["TrangThai"].Visible = false;
-            if (dgv.Columns.Contains("NgayTao")) dgv.Columns["NgayTao"].Visible = false;
-            if (dgv.Columns.Contains("QuocTich")) dgv.Columns["QuocTich"].Visible = false;
-            if (dgv.Columns.Contains("GhiChu")) dgv.Columns["GhiChu"].Visible = false;
-        }
+
 
         private void ClearForm()
         {

@@ -36,7 +36,6 @@ namespace HotelManagement
             btnThem.Enabled = !check;
             btnCapNhat.Enabled = !check;
             btnXoa.Enabled = !check;
-            btnCapNhatTT.Enabled = !check;
             dgvPhong.Enabled = !check;
         }
 
@@ -58,8 +57,8 @@ namespace HotelManagement
                            lp.GiaMoiDem,
                            lp.GiaMoiGio
                        };
+
             dgvPhong.DataSource = data.ToList();
-            FormatGrid();
             lblTongPhong.Text = "Tổng: " + dgvPhong.RowCount + " phòng";
         }
 
@@ -79,7 +78,10 @@ namespace HotelManagement
         private void frmQuanLyPhong_Load(object sender, EventArgs e)
         {
             setControl(false);
+            dgvPhong.AutoGenerateColumns = false;
+            dgvPhong.AllowUserToAddRows = false;
             LoadLoaiPhong();
+            cboLocTrangThai.SelectedIndex = 0;
             LoadGridData();
         }
 
@@ -302,30 +304,6 @@ namespace HotelManagement
             }
         }
 
-        // Nút Cập nhật trạng thái nhanh
-        private void btnCapNhatTT_Click(object sender, EventArgs e)
-        {
-            if (txtMaPhong.Text == "") return;
-            int id = int.Parse(txtMaPhong.Text);
-
-            Phong p = db.Phongs.SingleOrDefault(x => x.MaPhong == id);
-            if (p != null)
-            {
-                p.TrangThai = cboTrangThai.SelectedItem != null ? cboTrangThai.SelectedItem.ToString() : p.TrangThai;
-                db.SaveChanges();
-                LoadGridData();
-                MessageBox.Show("Cập nhật trạng thái thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        // Nút Làm mới
-        private void btnLamMoi_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            cboLocTrangThai.SelectedIndex = 0;
-            LoadGridData();
-        }
-
         // Lọc theo trạng thái
         private void cboLocTrangThai_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -347,7 +325,6 @@ namespace HotelManagement
                            lp.GiaMoiGio
                        };
             dgvPhong.DataSource = data.ToList();
-            FormatGrid();
             lblTongPhong.Text = "Tổng: " + dgvPhong.RowCount + " phòng";
         }
 
@@ -355,27 +332,17 @@ namespace HotelManagement
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             string keyword = txtTimKiem.Text.Trim().ToLower();
-            foreach (DataGridViewRow row in dgvPhong.Rows)
+            try
             {
-                string soPhong = row.Cells["SoPhong"].Value != null ? row.Cells["SoPhong"].Value.ToString().ToLower() : "";
-                string tenLoai = row.Cells["TenLoai"].Value != null ? row.Cells["TenLoai"].Value.ToString().ToLower() : "";
-                row.Visible = soPhong.Contains(keyword) || tenLoai.Contains(keyword);
+                dgvPhong.CurrentCell = null;
+                foreach (DataGridViewRow row in dgvPhong.Rows)
+                {
+                    string soPhong = row.Cells["SoPhong"].Value != null ? row.Cells["SoPhong"].Value.ToString().ToLower() : "";
+                    string tenLoai = row.Cells["TenLoai"].Value != null ? row.Cells["TenLoai"].Value.ToString().ToLower() : "";
+                    row.Visible = soPhong.Contains(keyword) || tenLoai.Contains(keyword);
+                }
             }
-        }
-
-        // Định dạng lưới
-        private void FormatGrid()
-        {
-            if (dgvPhong.Columns.Count == 0) return;
-            if (dgvPhong.Columns.Contains("MaPhong")) dgvPhong.Columns["MaPhong"].Visible = false;
-            if (dgvPhong.Columns.Contains("MaLoaiPhong")) dgvPhong.Columns["MaLoaiPhong"].Visible = false;
-            if (dgvPhong.Columns.Contains("SoPhong")) { dgvPhong.Columns["SoPhong"].HeaderText = "Số Phòng"; dgvPhong.Columns["SoPhong"].Width = 80; }
-            if (dgvPhong.Columns.Contains("Tang")) { dgvPhong.Columns["Tang"].HeaderText = "Tầng"; dgvPhong.Columns["Tang"].Width = 60; }
-            if (dgvPhong.Columns.Contains("TenLoai")) { dgvPhong.Columns["TenLoai"].HeaderText = "Loại Phòng"; dgvPhong.Columns["TenLoai"].Width = 150; }
-            if (dgvPhong.Columns.Contains("GiaMoiDem")) { dgvPhong.Columns["GiaMoiDem"].HeaderText = "Giá/Đêm"; dgvPhong.Columns["GiaMoiDem"].Width = 110; dgvPhong.Columns["GiaMoiDem"].DefaultCellStyle.Format = "N0"; }
-            if (dgvPhong.Columns.Contains("GiaMoiGio")) { dgvPhong.Columns["GiaMoiGio"].HeaderText = "Giá/Giờ"; dgvPhong.Columns["GiaMoiGio"].Width = 100; dgvPhong.Columns["GiaMoiGio"].DefaultCellStyle.Format = "N0"; }
-            if (dgvPhong.Columns.Contains("TrangThai")) { dgvPhong.Columns["TrangThai"].HeaderText = "Trạng Thái"; dgvPhong.Columns["TrangThai"].Width = 120; }
-            if (dgvPhong.Columns.Contains("MoTa")) { dgvPhong.Columns["MoTa"].HeaderText = "Mô Tả"; dgvPhong.Columns["MoTa"].Width = 200; }
+            catch { }
         }
 
         private void ClearForm()

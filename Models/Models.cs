@@ -293,8 +293,8 @@ namespace HotelManagement.Models
         public int SoLuong { get; set; } = 1;
         public decimal DonGia { get; set; }
 
-        [NotMapped]
-        public decimal ThanhTien => SoLuong * DonGia;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal ThanhTien { get; set; }
 
         public DateTime ThoiGianSuDung { get; set; } = DateTime.Now;
 
@@ -328,11 +328,8 @@ namespace HotelManagement.Models
         public decimal TienDichVu { get; set; }
         public decimal GiamGia { get; set; }
 
-        [NotMapped]
-        public decimal TongTien
-        {
-            get { return TienPhong + TienDichVu - GiamGia; }
-        }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal TongTien { get; set; }
 
         [Required]
         [StringLength(50)]

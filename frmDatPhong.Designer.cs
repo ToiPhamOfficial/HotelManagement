@@ -9,6 +9,19 @@ namespace HotelManagement
         private System.ComponentModel.IContainer components = null;
 
         private DataGridView dgvPhongTrong;
+        private Panel pnlTop;
+        private Panel pnlMid;
+        private Panel pnlBot;
+        private Label lblTitle;
+        private Label lblPhong;
+        private Label lblTimKH;
+        private Label lblTenKH;
+        private Label lblCCCD;
+        private Label lblSDT;
+        private Label lblTongTien;
+        private Label lblSoNgay;
+        private Label lblNgayNhan;
+        private Label lblNgayTra;
         private DateTimePicker dtpNgayNhan;
         private DateTimePicker dtpNgayTra;
         private RadioButton rdoTheoNgay;
@@ -22,8 +35,6 @@ namespace HotelManagement
         private Button btnTimKH;
         private Button btnDatPhong;
         private Button btnThemKH;
-        private Label lblTongTien;
-        private Label lblSoNgay;
 
         protected override void Dispose(bool disposing)
         {
@@ -36,7 +47,7 @@ namespace HotelManagement
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblNgayNhan = new System.Windows.Forms.Label();
@@ -64,6 +75,13 @@ namespace HotelManagement
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.lblTongTien = new System.Windows.Forms.Label();
             this.btnDatPhong = new System.Windows.Forms.Button();
+            this.MaPhong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoPhong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TenLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiaMoiDem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiaMoiGio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlTop.SuspendLayout();
             this.pnlMid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPhongTrong)).BeginInit();
@@ -86,7 +104,7 @@ namespace HotelManagement
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.pnlTop.Padding = new System.Windows.Forms.Padding(9);
             this.pnlTop.Size = new System.Drawing.Size(857, 96);
             this.pnlTop.TabIndex = 2;
             // 
@@ -159,7 +177,7 @@ namespace HotelManagement
             // rdoTheoGio
             // 
             this.rdoTheoGio.AutoSize = true;
-            this.rdoTheoGio.Location = new System.Drawing.Point(557, 30);
+            this.rdoTheoGio.Location = new System.Drawing.Point(560, 30);
             this.rdoTheoGio.Name = "rdoTheoGio";
             this.rdoTheoGio.Size = new System.Drawing.Size(69, 17);
             this.rdoTheoGio.TabIndex = 6;
@@ -185,12 +203,13 @@ namespace HotelManagement
             // lblSoNgay
             // 
             this.lblSoNgay.AutoSize = true;
-            this.lblSoNgay.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblSoNgay.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblSoNgay.ForeColor = System.Drawing.Color.Gray;
             this.lblSoNgay.Location = new System.Drawing.Point(9, 68);
             this.lblSoNgay.Name = "lblSoNgay";
-            this.lblSoNgay.Size = new System.Drawing.Size(0, 15);
+            this.lblSoNgay.Size = new System.Drawing.Size(118, 15);
             this.lblSoNgay.TabIndex = 8;
+            this.lblSoNgay.Text = "Số đêm: 0 | Trống: 0";
             // 
             // pnlMid
             // 
@@ -199,31 +218,45 @@ namespace HotelManagement
             this.pnlMid.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlMid.Location = new System.Drawing.Point(0, 96);
             this.pnlMid.Name = "pnlMid";
-            this.pnlMid.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pnlMid.Size = new System.Drawing.Size(857, 191);
+            this.pnlMid.Padding = new System.Windows.Forms.Padding(4);
+            this.pnlMid.Size = new System.Drawing.Size(857, 332);
             this.pnlMid.TabIndex = 1;
             // 
             // dgvPhongTrong
             // 
             this.dgvPhongTrong.AllowUserToAddRows = false;
             this.dgvPhongTrong.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPhongTrong.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvPhongTrong.ColumnHeadersHeight = 30;
+            this.dgvPhongTrong.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPhongTrong.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvPhongTrong.ColumnHeadersHeight = 40;
+            this.dgvPhongTrong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPhongTrong.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MaPhong,
+            this.SoPhong,
+            this.Tang,
+            this.TenLoai,
+            this.GiaMoiDem,
+            this.GiaMoiGio,
+            this.MoTa});
             this.dgvPhongTrong.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPhongTrong.EnableHeadersVisualStyles = false;
             this.dgvPhongTrong.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dgvPhongTrong.Location = new System.Drawing.Point(4, 28);
             this.dgvPhongTrong.Name = "dgvPhongTrong";
             this.dgvPhongTrong.ReadOnly = true;
+            this.dgvPhongTrong.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvPhongTrong.RowHeadersVisible = false;
+            this.dgvPhongTrong.RowTemplate.Height = 30;
+            this.dgvPhongTrong.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPhongTrong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPhongTrong.Size = new System.Drawing.Size(849, 159);
+            this.dgvPhongTrong.Size = new System.Drawing.Size(849, 300);
             this.dgvPhongTrong.TabIndex = 0;
             this.dgvPhongTrong.SelectionChanged += new System.EventHandler(this.dgvPhongTrong_SelectionChanged);
             // 
@@ -254,9 +287,9 @@ namespace HotelManagement
             this.pnlBot.Controls.Add(this.lblTongTien);
             this.pnlBot.Controls.Add(this.btnDatPhong);
             this.pnlBot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBot.Location = new System.Drawing.Point(0, 287);
+            this.pnlBot.Location = new System.Drawing.Point(0, 428);
             this.pnlBot.Name = "pnlBot";
-            this.pnlBot.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.pnlBot.Padding = new System.Windows.Forms.Padding(9);
             this.pnlBot.Size = new System.Drawing.Size(857, 276);
             this.pnlBot.TabIndex = 0;
             // 
@@ -285,7 +318,7 @@ namespace HotelManagement
             this.btnTimKH.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTimKH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTimKH.ForeColor = System.Drawing.Color.White;
-            this.btnTimKH.Location = new System.Drawing.Point(201, 20);
+            this.btnTimKH.Location = new System.Drawing.Point(201, 22);
             this.btnTimKH.Name = "btnTimKH";
             this.btnTimKH.Size = new System.Drawing.Size(69, 26);
             this.btnTimKH.TabIndex = 2;
@@ -300,7 +333,7 @@ namespace HotelManagement
             this.btnThemKH.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnThemKH.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnThemKH.ForeColor = System.Drawing.Color.White;
-            this.btnThemKH.Location = new System.Drawing.Point(279, 20);
+            this.btnThemKH.Location = new System.Drawing.Point(279, 22);
             this.btnThemKH.Name = "btnThemKH";
             this.btnThemKH.Size = new System.Drawing.Size(77, 26);
             this.btnThemKH.TabIndex = 3;
@@ -310,7 +343,7 @@ namespace HotelManagement
             // 
             // txtMaKH
             // 
-            this.txtMaKH.Location = new System.Drawing.Point(4, 56);
+            this.txtMaKH.Location = new System.Drawing.Point(635, 61);
             this.txtMaKH.Name = "txtMaKH";
             this.txtMaKH.Size = new System.Drawing.Size(86, 20);
             this.txtMaKH.TabIndex = 4;
@@ -320,7 +353,7 @@ namespace HotelManagement
             // 
             this.lblTenKH.AutoSize = true;
             this.lblTenKH.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTenKH.Location = new System.Drawing.Point(4, 59);
+            this.lblTenKH.Location = new System.Drawing.Point(4, 61);
             this.lblTenKH.Name = "lblTenKH";
             this.lblTenKH.Size = new System.Drawing.Size(49, 15);
             this.lblTenKH.TabIndex = 5;
@@ -330,7 +363,7 @@ namespace HotelManagement
             // 
             this.txtTenKH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.txtTenKH.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTenKH.Location = new System.Drawing.Point(51, 56);
+            this.txtTenKH.Location = new System.Drawing.Point(58, 56);
             this.txtTenKH.Name = "txtTenKH";
             this.txtTenKH.ReadOnly = true;
             this.txtTenKH.Size = new System.Drawing.Size(172, 25);
@@ -340,7 +373,7 @@ namespace HotelManagement
             // 
             this.lblCCCD.AutoSize = true;
             this.lblCCCD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCCCD.Location = new System.Drawing.Point(236, 59);
+            this.lblCCCD.Location = new System.Drawing.Point(236, 61);
             this.lblCCCD.Name = "lblCCCD";
             this.lblCCCD.Size = new System.Drawing.Size(40, 15);
             this.lblCCCD.TabIndex = 7;
@@ -350,7 +383,7 @@ namespace HotelManagement
             // 
             this.txtCCCD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.txtCCCD.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtCCCD.Location = new System.Drawing.Point(270, 56);
+            this.txtCCCD.Location = new System.Drawing.Point(281, 56);
             this.txtCCCD.Name = "txtCCCD";
             this.txtCCCD.ReadOnly = true;
             this.txtCCCD.Size = new System.Drawing.Size(138, 25);
@@ -360,7 +393,7 @@ namespace HotelManagement
             // 
             this.lblSDT.AutoSize = true;
             this.lblSDT.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblSDT.Location = new System.Drawing.Point(420, 59);
+            this.lblSDT.Location = new System.Drawing.Point(428, 61);
             this.lblSDT.Name = "lblSDT";
             this.lblSDT.Size = new System.Drawing.Size(33, 15);
             this.lblSDT.TabIndex = 9;
@@ -370,7 +403,7 @@ namespace HotelManagement
             // 
             this.txtSDT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.txtSDT.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtSDT.Location = new System.Drawing.Point(446, 56);
+            this.txtSDT.Location = new System.Drawing.Point(468, 56);
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.ReadOnly = true;
             this.txtSDT.Size = new System.Drawing.Size(112, 25);
@@ -403,12 +436,67 @@ namespace HotelManagement
             this.btnDatPhong.UseVisualStyleBackColor = false;
             this.btnDatPhong.Click += new System.EventHandler(this.btnDatPhong_Click);
             // 
+            // MaPhong
+            // 
+            this.MaPhong.DataPropertyName = "MaPhong";
+            this.MaPhong.HeaderText = "Mã Phòng";
+            this.MaPhong.Name = "MaPhong";
+            this.MaPhong.ReadOnly = true;
+            this.MaPhong.Visible = false;
+            this.MaPhong.Width = 95;
+            // 
+            // SoPhong
+            // 
+            this.SoPhong.DataPropertyName = "SoPhong";
+            this.SoPhong.HeaderText = "Số Phòng";
+            this.SoPhong.Name = "SoPhong";
+            this.SoPhong.ReadOnly = true;
+            this.SoPhong.Width = 95;
+            // 
+            // Tang
+            // 
+            this.Tang.DataPropertyName = "Tang";
+            this.Tang.HeaderText = "Tầng";
+            this.Tang.Name = "Tang";
+            this.Tang.ReadOnly = true;
+            this.Tang.Width = 65;
+            // 
+            // TenLoai
+            // 
+            this.TenLoai.DataPropertyName = "TenLoai";
+            this.TenLoai.HeaderText = "Loại Phòng";
+            this.TenLoai.Name = "TenLoai";
+            this.TenLoai.ReadOnly = true;
+            this.TenLoai.Width = 150;
+            // 
+            // GiaMoiDem
+            // 
+            this.GiaMoiDem.DataPropertyName = "GiaMoiDem";
+            this.GiaMoiDem.HeaderText = "Giá/Đêm";
+            this.GiaMoiDem.Name = "GiaMoiDem";
+            this.GiaMoiDem.ReadOnly = true;
+            // 
+            // GiaMoiGio
+            // 
+            this.GiaMoiGio.DataPropertyName = "GiaMoiGio";
+            this.GiaMoiGio.HeaderText = "Giá/Giờ";
+            this.GiaMoiGio.Name = "GiaMoiGio";
+            this.GiaMoiGio.ReadOnly = true;
+            // 
+            // MoTa
+            // 
+            this.MoTa.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.MoTa.DataPropertyName = "MoTa";
+            this.MoTa.HeaderText = "Mô Tả";
+            this.MoTa.Name = "MoTa";
+            this.MoTa.ReadOnly = true;
+            // 
             // frmDatPhong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(857, 563);
+            this.ClientSize = new System.Drawing.Size(857, 704);
             this.Controls.Add(this.pnlBot);
             this.Controls.Add(this.pnlMid);
             this.Controls.Add(this.pnlTop);
@@ -425,16 +513,12 @@ namespace HotelManagement
 
         }
 
-        private Panel pnlTop;
-        private Label lblTitle;
-        private Label lblNgayNhan;
-        private Label lblNgayTra;
-        private Panel pnlMid;
-        private Label lblPhong;
-        private Panel pnlBot;
-        private Label lblTimKH;
-        private Label lblTenKH;
-        private Label lblCCCD;
-        private Label lblSDT;
+        private DataGridViewTextBoxColumn MaPhong;
+        private DataGridViewTextBoxColumn SoPhong;
+        private DataGridViewTextBoxColumn Tang;
+        private DataGridViewTextBoxColumn TenLoai;
+        private DataGridViewTextBoxColumn GiaMoiDem;
+        private DataGridViewTextBoxColumn GiaMoiGio;
+        private DataGridViewTextBoxColumn MoTa;
     }
 }

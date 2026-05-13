@@ -33,6 +33,7 @@ namespace HotelManagement
             mnuNhanVien = new ToolStripMenuItem();
             mnuTaiKhoan = new ToolStripMenuItem();
             mnuBaoCao = new ToolStripMenuItem();
+            mnuGoiDichVu = new ToolStripMenuItem();
             pnlHeader = new Panel();
             lblChaoMung = new Label();
             lblCapNhat = new Label();
@@ -105,6 +106,7 @@ namespace HotelManagement
             mnuDichVu.ForeColor = Color.White;
             mnuDichVu.Text = "🛎 Dịch Vụ";
             mnuDichVu.DropDownItems.Add("📋 Quản Lý Dịch Vụ", null, mnuDichVu_Click);
+            mnuDichVu.DropDownItems.Add("☕ Gọi Dịch Vụ Cho Phòng", null, mnuGoiDichVu_Click);
             // 
             // mnuHoaDon
             // 
@@ -422,5 +424,6 @@ namespace HotelManagement
         private ToolStripMenuItem mnuCheckOut;
         private ToolStripMenuItem mnuDichVu;
         private ToolStripMenuItem mnuHoaDon;
+        private ToolStripMenuItem mnuGoiDichVu;
     }
 }

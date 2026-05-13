@@ -13,6 +13,7 @@ namespace HotelManagement
         public frmCheckIn()
         {
             InitializeComponent();
+            dgv.AutoGenerateColumns = false;
             Shown += frmCheckIn_Shown;
             Activated += frmCheckIn_Activated;
         }

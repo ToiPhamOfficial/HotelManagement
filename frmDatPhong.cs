@@ -50,9 +50,11 @@ namespace HotelManagement
                                 p.Tang,
                                 lp.TenLoai,
                                 lp.GiaMoiDem,
-                                lp.GiaMoiGio
+                                lp.GiaMoiGio,
+                                p.MoTa
                             }).ToList();
 
+            dgvPhongTrong.AutoGenerateColumns = false;
             dgvPhongTrong.DataSource = danhSachPhong;
             int soNgay = (int)(ngayTra - ngayNhan).TotalDays;
             lblSoNgay.Text = $"Số đêm: {soNgay} | Số phòng trống: {danhSachPhong.Count}";
@@ -67,7 +69,13 @@ namespace HotelManagement
                 return;
             }
 
-            var kh = db.KhachHangs.FirstOrDefault(k => k.TrangThai && (k.CCCD == keyword || k.SoDienThoai == keyword));
+            int.TryParse(keyword, out int maKH);
+
+            var kh = db.KhachHangs.FirstOrDefault(k => k.TrangThai && (
+                k.CCCD == keyword || 
+                k.SoDienThoai == keyword || 
+                (maKH > 0 && k.MaKhachHang == maKH)
+            ));
 
             if (kh == null)
             {
