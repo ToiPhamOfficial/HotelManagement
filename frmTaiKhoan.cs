@@ -17,6 +17,8 @@ namespace HotelManagement
         public frmTaiKhoan()
         {
             InitializeComponent();
+            dgvTaiKhoan.AutoGenerateColumns = false;
+            dgvTaiKhoan.AllowUserToAddRows = false;
             this.Load += frmTaiKhoan_Load;
         }
 
@@ -68,7 +70,6 @@ namespace HotelManagement
                            tk.NgayTao
                        };
             dgvTaiKhoan.DataSource = data.ToList();
-            FormatGrid();
         }
 
         // Load danh sách nhân viên vào combobox
@@ -245,14 +246,6 @@ namespace HotelManagement
             }
         }
 
-        // Nút Làm mới
-        private void btnLamMoi_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-            txtTimKiem.Clear();
-            LoadGridData();
-        }
-
         // Tìm kiếm
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
@@ -277,20 +270,6 @@ namespace HotelManagement
                            tk.NgayTao
                        };
             dgvTaiKhoan.DataSource = data.ToList();
-            FormatGrid();
-        }
-
-        // Định dạng lưới
-        private void FormatGrid()
-        {
-            if (dgvTaiKhoan.Columns.Count == 0) return;
-            if (dgvTaiKhoan.Columns.Contains("MaTaiKhoan")) dgvTaiKhoan.Columns["MaTaiKhoan"].Visible = false;
-            if (dgvTaiKhoan.Columns.Contains("TenDangNhap")) { dgvTaiKhoan.Columns["TenDangNhap"].HeaderText = "Tên Đăng Nhập"; dgvTaiKhoan.Columns["TenDangNhap"].Width = 150; }
-            if (dgvTaiKhoan.Columns.Contains("HoTen")) { dgvTaiKhoan.Columns["HoTen"].HeaderText = "Nhân Viên"; dgvTaiKhoan.Columns["HoTen"].Width = 180; }
-            if (dgvTaiKhoan.Columns.Contains("VaiTro")) { dgvTaiKhoan.Columns["VaiTro"].HeaderText = "Vai Trò"; dgvTaiKhoan.Columns["VaiTro"].Width = 100; }
-            if (dgvTaiKhoan.Columns.Contains("TrangThai")) { dgvTaiKhoan.Columns["TrangThai"].HeaderText = "Trạng Thái"; dgvTaiKhoan.Columns["TrangThai"].Width = 100; }
-            if (dgvTaiKhoan.Columns.Contains("LanDangNhapCuoi")) { dgvTaiKhoan.Columns["LanDangNhapCuoi"].HeaderText = "Lần Đăng Nhập Cuối"; dgvTaiKhoan.Columns["LanDangNhapCuoi"].Width = 160; }
-            if (dgvTaiKhoan.Columns.Contains("NgayTao")) { dgvTaiKhoan.Columns["NgayTao"].HeaderText = "Ngày Tạo"; dgvTaiKhoan.Columns["NgayTao"].Width = 120; }
         }
 
         private void ClearForm()

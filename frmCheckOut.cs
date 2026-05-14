@@ -14,6 +14,8 @@ namespace HotelManagement
         public frmCheckOut()
         {
             InitializeComponent();
+            dgvPhong.AutoGenerateColumns = false;
+            dgvDV.AutoGenerateColumns = false;
             LoadData();
         }
 
@@ -84,8 +86,8 @@ namespace HotelManagement
 
             if (tien != null)
             {
-                lblTienPhong.Text = $"Tiền phòng:      {tien.TienPhong:N0} đ";
-                lblTienDV.Text = $"Tiền dịch vụ:    {tien.TienDichVu:N0} đ";
+                lblTienPhong.Text = $"Tiền phòng:      {tien.TienPhong:N0}đ";
+                lblTienDV.Text = $"Tiền dịch vụ:    {tien.TienDichVu:N0}đ";
                 TinhTong();
             }
         }
@@ -94,12 +96,12 @@ namespace HotelManagement
         {
             try
             {
-                string sp = lblTienPhong.Text.Replace("Tiền phòng:      ", "").Replace(" đ", "").Replace(",", "");
-                string sv = lblTienDV.Text.Replace("Tiền dịch vụ:    ", "").Replace(" đ", "").Replace(",", "");
+                string sp = lblTienPhong.Text.Replace("Tiền phòng:      ", "").Replace("đ", "").Replace(",", "");
+                string sv = lblTienDV.Text.Replace("Tiền dịch vụ:    ", "").Replace("đ", "").Replace(",", "");
                 decimal tp = decimal.Parse(sp.Trim());
                 decimal tdv = decimal.Parse(sv.Trim());
                 decimal tong = tp + tdv - numGiamGia.Value;
-                lblTongCong.Text = $"TỔNG CỘNG: {Math.Max(0, tong):N0} đ";
+                lblTongCong.Text = $"TỔNG CỘNG: {Math.Max(0, tong):N0}đ";
             }
             catch
             {
@@ -114,16 +116,18 @@ namespace HotelManagement
                 return;
             }
 
+            // Validate phương thức thanh toán TRƯỚC khi tạo hóa đơn
+            if (cboPhuongThuc.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng chọn phương thức thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int maDatPhong = Convert.ToInt32(dgvPhong.CurrentRow.Cells["MaDatPhong"].Value);
+            string phuongThuc = cboPhuongThuc.SelectedItem.ToString();
 
             int maHD = TaoHoaDon(maDatPhong, (decimal)numGiamGia.Value);
             if (maHD == 0) return;
-
-            string phuongThuc = "";
-            if (cboPhuongThuc.SelectedItem != null)
-            {
-                phuongThuc = cboPhuongThuc.SelectedItem.ToString();
-            }
 
             bool thanhToanXong = ThanhToan(maHD, phuongThuc);
             if (!thanhToanXong) return;
@@ -144,6 +148,11 @@ namespace HotelManagement
         {
             try
             {
+                // Kiểm tra đã tồn tại hóa đơn cho đặt phòng này chưa (tránh vi phạm UNIQUE)
+                var existing = db.HoaDons.FirstOrDefault(h => h.MaDatPhong == maDatPhong);
+                if (existing != null)
+                    return existing.MaHoaDon;
+
                 var tien = db.Database.SqlQuery<TienResult>("EXEC SP_TinhTienPhong {0}", maDatPhong).FirstOrDefault();
 
                 if (tien == null)
@@ -156,11 +165,13 @@ namespace HotelManagement
                 {
                     MaDatPhong = maDatPhong,
                     MaNhanVienTao = SessionManager.MaNhanVien,
+                    NgayLap = DateTime.Now,
                     TienPhong = tien.TienPhong,
                     TienDichVu = tien.TienDichVu,
                     GiamGia = giamGia,
                     PhuongThucTT = "Tiền mặt",
-                    TrangThai = "Chưa thanh toán"
+                    TrangThai = "Chưa thanh toán",
+                    GhiChu = ""
                 };
 
                 db.HoaDons.Add(hd);
@@ -170,7 +181,10 @@ namespace HotelManagement
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tạo hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string msg = ex.InnerException?.InnerException?.Message
+                          ?? ex.InnerException?.Message
+                          ?? ex.Message;
+                MessageBox.Show("Lỗi tạo hóa đơn: " + msg, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }

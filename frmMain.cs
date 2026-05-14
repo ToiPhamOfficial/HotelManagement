@@ -130,6 +130,11 @@ namespace HotelManagement
             MoForm<frmDichVu>();
         }
 
+        private void mnuGoiDichVu_Click(object s, EventArgs e)
+        {
+            MoForm<frmGoiDichVu>();
+        }
+
         private void mnuHoaDon_Click(object s, EventArgs e)
         {
             MoForm<frmHoaDon>();

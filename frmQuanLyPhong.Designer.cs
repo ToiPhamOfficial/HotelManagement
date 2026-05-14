@@ -37,8 +37,6 @@ namespace HotelManagement
         private Button btnXoa;
         private Button btnLuu;
         private Button btnHuy;
-        private Button btnCapNhatTT;
-        private Button btnLamMoi;
 
         protected override void Dispose(bool disposing)
         {
@@ -52,6 +50,8 @@ namespace HotelManagement
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.txtMaPhong = new System.Windows.Forms.TextBox();
@@ -74,10 +74,17 @@ namespace HotelManagement
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnHuy = new System.Windows.Forms.Button();
-            this.btnCapNhatTT = new System.Windows.Forms.Button();
-            this.btnLamMoi = new System.Windows.Forms.Button();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.dgvPhong = new System.Windows.Forms.DataGridView();
+            this.MaPhong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoPhong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaLoaiPhong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TenLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiaMoiGio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiaMoiDem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrangThai = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MoTa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlToolbar = new System.Windows.Forms.Panel();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.cboLocTrangThai = new System.Windows.Forms.ComboBox();
@@ -114,13 +121,11 @@ namespace HotelManagement
             this.pnlLeft.Controls.Add(this.btnXoa);
             this.pnlLeft.Controls.Add(this.btnLuu);
             this.pnlLeft.Controls.Add(this.btnHuy);
-            this.pnlLeft.Controls.Add(this.btnCapNhatTT);
-            this.pnlLeft.Controls.Add(this.btnLamMoi);
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Padding = new System.Windows.Forms.Padding(9);
-            this.pnlLeft.Size = new System.Drawing.Size(257, 603);
+            this.pnlLeft.Size = new System.Drawing.Size(257, 566);
             this.pnlLeft.TabIndex = 1;
             // 
             // lblHeader
@@ -253,7 +258,6 @@ namespace HotelManagement
             this.txtGiaMoiGio.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtGiaMoiGio.Location = new System.Drawing.Point(9, 214);
             this.txtGiaMoiGio.Name = "txtGiaMoiGio";
-            this.txtGiaMoiGio.ReadOnly = true;
             this.txtGiaMoiGio.Size = new System.Drawing.Size(232, 25);
             this.txtGiaMoiGio.TabIndex = 9;
             // 
@@ -272,7 +276,6 @@ namespace HotelManagement
             this.txtGiaMoiDem.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtGiaMoiDem.Location = new System.Drawing.Point(9, 266);
             this.txtGiaMoiDem.Name = "txtGiaMoiDem";
-            this.txtGiaMoiDem.ReadOnly = true;
             this.txtGiaMoiDem.Size = new System.Drawing.Size(232, 25);
             this.txtGiaMoiDem.TabIndex = 11;
             // 
@@ -357,7 +360,7 @@ namespace HotelManagement
             this.btnLuu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLuu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLuu.ForeColor = System.Drawing.Color.White;
-            this.btnLuu.Location = new System.Drawing.Point(9, 520);
+            this.btnLuu.Location = new System.Drawing.Point(124, 481);
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(107, 30);
             this.btnLuu.TabIndex = 20;
@@ -375,47 +378,13 @@ namespace HotelManagement
             this.btnHuy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHuy.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnHuy.ForeColor = System.Drawing.Color.White;
-            this.btnHuy.Location = new System.Drawing.Point(124, 520);
+            this.btnHuy.Location = new System.Drawing.Point(9, 520);
             this.btnHuy.Name = "btnHuy";
-            this.btnHuy.Size = new System.Drawing.Size(107, 30);
+            this.btnHuy.Size = new System.Drawing.Size(222, 30);
             this.btnHuy.TabIndex = 21;
             this.btnHuy.Text = "Không lưu";
             this.btnHuy.UseVisualStyleBackColor = false;
             this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
-            // 
-            // btnCapNhatTT
-            // 
-            this.btnCapNhatTT.AutoSize = true;
-            this.btnCapNhatTT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(18)))));
-            this.btnCapNhatTT.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCapNhatTT.FlatAppearance.BorderSize = 0;
-            this.btnCapNhatTT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCapNhatTT.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCapNhatTT.ForeColor = System.Drawing.Color.White;
-            this.btnCapNhatTT.Location = new System.Drawing.Point(124, 481);
-            this.btnCapNhatTT.Name = "btnCapNhatTT";
-            this.btnCapNhatTT.Size = new System.Drawing.Size(107, 30);
-            this.btnCapNhatTT.TabIndex = 19;
-            this.btnCapNhatTT.Text = "C.Nhật TT";
-            this.btnCapNhatTT.UseVisualStyleBackColor = false;
-            this.btnCapNhatTT.Click += new System.EventHandler(this.btnCapNhatTT_Click);
-            // 
-            // btnLamMoi
-            // 
-            this.btnLamMoi.AutoSize = true;
-            this.btnLamMoi.BackColor = System.Drawing.Color.Gray;
-            this.btnLamMoi.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLamMoi.FlatAppearance.BorderSize = 0;
-            this.btnLamMoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLamMoi.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnLamMoi.ForeColor = System.Drawing.Color.White;
-            this.btnLamMoi.Location = new System.Drawing.Point(9, 559);
-            this.btnLamMoi.Name = "btnLamMoi";
-            this.btnLamMoi.Size = new System.Drawing.Size(107, 30);
-            this.btnLamMoi.TabIndex = 22;
-            this.btnLamMoi.Text = "Làm Mới";
-            this.btnLamMoi.UseVisualStyleBackColor = false;
-            this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
             // pnlRight
             // 
@@ -425,14 +394,14 @@ namespace HotelManagement
             this.pnlRight.Location = new System.Drawing.Point(257, 0);
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Padding = new System.Windows.Forms.Padding(9);
-            this.pnlRight.Size = new System.Drawing.Size(686, 603);
+            this.pnlRight.Size = new System.Drawing.Size(924, 566);
             this.pnlRight.TabIndex = 0;
             // 
             // dgvPhong
             // 
-            this.dgvPhong.AllowUserToAddRows = false;
             this.dgvPhong.BackgroundColor = System.Drawing.Color.White;
             this.dgvPhong.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvPhong.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -441,7 +410,18 @@ namespace HotelManagement
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvPhong.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvPhong.ColumnHeadersHeight = 35;
+            this.dgvPhong.ColumnHeadersHeight = 40;
+            this.dgvPhong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPhong.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MaPhong,
+            this.SoPhong,
+            this.Tang,
+            this.MaLoaiPhong,
+            this.TenLoai,
+            this.GiaMoiGio,
+            this.GiaMoiDem,
+            this.TrangThai,
+            this.MoTa});
             this.dgvPhong.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPhong.EnableHeadersVisualStyles = false;
             this.dgvPhong.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -450,10 +430,90 @@ namespace HotelManagement
             this.dgvPhong.Name = "dgvPhong";
             this.dgvPhong.ReadOnly = true;
             this.dgvPhong.RowHeadersVisible = false;
+            this.dgvPhong.RowTemplate.Height = 30;
+            this.dgvPhong.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvPhong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPhong.Size = new System.Drawing.Size(668, 546);
+            this.dgvPhong.Size = new System.Drawing.Size(906, 509);
             this.dgvPhong.TabIndex = 0;
             this.dgvPhong.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPhong_CellEnter);
+            // 
+            // MaPhong
+            // 
+            this.MaPhong.DataPropertyName = "MaPhong";
+            this.MaPhong.HeaderText = "Mã Phòng";
+            this.MaPhong.Name = "MaPhong";
+            this.MaPhong.ReadOnly = true;
+            this.MaPhong.Visible = false;
+            this.MaPhong.Width = 95;
+            // 
+            // SoPhong
+            // 
+            this.SoPhong.DataPropertyName = "SoPhong";
+            this.SoPhong.HeaderText = "Số Phòng";
+            this.SoPhong.Name = "SoPhong";
+            this.SoPhong.ReadOnly = true;
+            this.SoPhong.Width = 95;
+            // 
+            // Tang
+            // 
+            this.Tang.DataPropertyName = "Tang";
+            this.Tang.HeaderText = "Tầng";
+            this.Tang.Name = "Tang";
+            this.Tang.ReadOnly = true;
+            this.Tang.Width = 65;
+            // 
+            // MaLoaiPhong
+            // 
+            this.MaLoaiPhong.DataPropertyName = "MaLoaiPhong";
+            this.MaLoaiPhong.HeaderText = "Mã Loại";
+            this.MaLoaiPhong.Name = "MaLoaiPhong";
+            this.MaLoaiPhong.ReadOnly = true;
+            this.MaLoaiPhong.Visible = false;
+            this.MaLoaiPhong.Width = 70;
+            // 
+            // TenLoai
+            // 
+            this.TenLoai.DataPropertyName = "TenLoai";
+            this.TenLoai.HeaderText = "Loại Phòng";
+            this.TenLoai.Name = "TenLoai";
+            this.TenLoai.ReadOnly = true;
+            this.TenLoai.Width = 150;
+            // 
+            // GiaMoiGio
+            // 
+            this.GiaMoiGio.DataPropertyName = "GiaMoiGio";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N0";
+            this.GiaMoiGio.DefaultCellStyle = dataGridViewCellStyle2;
+            this.GiaMoiGio.HeaderText = "Giá/Giờ";
+            this.GiaMoiGio.Name = "GiaMoiGio";
+            this.GiaMoiGio.ReadOnly = true;
+            // 
+            // GiaMoiDem
+            // 
+            this.GiaMoiDem.DataPropertyName = "GiaMoiDem";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            this.GiaMoiDem.DefaultCellStyle = dataGridViewCellStyle3;
+            this.GiaMoiDem.HeaderText = "Giá/Đêm";
+            this.GiaMoiDem.Name = "GiaMoiDem";
+            this.GiaMoiDem.ReadOnly = true;
+            // 
+            // TrangThai
+            // 
+            this.TrangThai.DataPropertyName = "TrangThai";
+            this.TrangThai.HeaderText = "Trạng Thái";
+            this.TrangThai.Name = "TrangThai";
+            this.TrangThai.ReadOnly = true;
+            this.TrangThai.Width = 110;
+            // 
+            // MoTa
+            // 
+            this.MoTa.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.MoTa.DataPropertyName = "MoTa";
+            this.MoTa.HeaderText = "Mô Tả";
+            this.MoTa.Name = "MoTa";
+            this.MoTa.ReadOnly = true;
             // 
             // pnlToolbar
             // 
@@ -464,7 +524,7 @@ namespace HotelManagement
             this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlToolbar.Location = new System.Drawing.Point(9, 9);
             this.pnlToolbar.Name = "pnlToolbar";
-            this.pnlToolbar.Size = new System.Drawing.Size(668, 39);
+            this.pnlToolbar.Size = new System.Drawing.Size(906, 39);
             this.pnlToolbar.TabIndex = 1;
             // 
             // txtTimKiem
@@ -499,15 +559,16 @@ namespace HotelManagement
             this.lblTongPhong.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.lblTongPhong.Location = new System.Drawing.Point(326, 11);
             this.lblTongPhong.Name = "lblTongPhong";
-            this.lblTongPhong.Size = new System.Drawing.Size(0, 19);
+            this.lblTongPhong.Size = new System.Drawing.Size(106, 19);
             this.lblTongPhong.TabIndex = 2;
+            this.lblTongPhong.Text = "Tổng: 0 phòng";
             // 
             // frmQuanLyPhong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(943, 603);
+            this.ClientSize = new System.Drawing.Size(1181, 566);
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
             this.Name = "frmQuanLyPhong";
@@ -523,5 +584,15 @@ namespace HotelManagement
             this.ResumeLayout(false);
 
         }
+
+        private DataGridViewTextBoxColumn MaPhong;
+        private DataGridViewTextBoxColumn SoPhong;
+        private DataGridViewTextBoxColumn Tang;
+        private DataGridViewTextBoxColumn MaLoaiPhong;
+        private DataGridViewTextBoxColumn TenLoai;
+        private DataGridViewTextBoxColumn GiaMoiGio;
+        private DataGridViewTextBoxColumn GiaMoiDem;
+        private DataGridViewTextBoxColumn TrangThai;
+        private DataGridViewTextBoxColumn MoTa;
     }
 }
